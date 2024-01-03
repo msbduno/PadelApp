@@ -1,17 +1,43 @@
-
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="fr"> 
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<!--
 <head>
-    <meta charset="utf-8">
+   
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>4 Glass Walls</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    
 
-</head>
+      <style>
+        .navigation {
+            width: 2756px;
+            height: 202px;
+            flex-shrink: 0;
+        }
+
+        .image {
+            width: 230px;
+            height: 167px;
+            flex-shrink: 0;
+        }
+
+        .text {
+            width: 322px;
+            height: 64px;
+            color: #000;
+            font-feature-settings: 'clig' off, 'liga' off;
+            font-family: Inter;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 160%;
+           
+        }
+    </style>-->
 
 
 <body>
@@ -65,6 +91,12 @@
                 </div >  
 
        -->
+    <div class="navigation">
+        <div class="image">
+        <img style="width: 230px;height: 167px;" src="C:\Users\alexi\Desktop\ProjetInfraLogicielle\logo.jpg" />
+         </div>
+        <div class="text">4 Glass Walls</div>
+
 
     </div>
 
@@ -97,75 +129,6 @@
         }
     </script>
 
-<!-- Slideshow container -->
-<div class="slideshow-container">
-
-    <!-- Full-width images with number and caption text -->
-    <div class="mySlides fade">
-    
-      <img src="images/logo.jpg" width="1000" height="500">
-      <div class="text">Caption Text</div>
-    </div>
-  
-    <div class="mySlides fade">
-     
-      <img src="images/actualites_1.jpg"  width="1000" height="500">
-      <div class="text">Caption Two</div>
-    </div>
-  
-    <div class="mySlides fade">
-
-      <img src="images/connexion.jpg"  width="1000" height="500">
-      <div class="text">Caption Three</div>
-    </div>
-  
-    <!-- Next and previous buttons -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-  </div>
-  <br>
-  
-  <!-- The dots/circles -->
-  <div style="text-align:center">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-  </div>
-
-
-  <SCript>let slideIndex = 1;
-    showSlides(slideIndex);
-    
-    // Next/previous controls
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-    
-    // Thumbnail image controls
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-    
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-        setTimeout(showSlides, 5000); // Change image every 2 seconds</SCript>
-
-    }
-
 </body>
-
-
 
 </html>
