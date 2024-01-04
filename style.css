@@ -113,6 +113,8 @@ a:active {
     font-style: normal;
     font-weight: 700;
     line-height: 160%; /* 48px */
+    background-color: white;
+    border: none;
   
     
 }
@@ -192,6 +194,8 @@ a:active {
     font-style: normal;
     font-weight: 700;
     line-height: 160%; /* 48px */
+    background-color: white;
+    border: none;
 }
 
 .MonProfil_content{
@@ -346,5 +350,6 @@ a:active {
     background: #FAFAF5;
 }
 
-
-
+.linkbtn{
+    color: #FFF;
+}
