@@ -341,7 +341,7 @@ a:hover {
     padding: 22px;
     position: absolute; 
     top: 150px; left: 90px; 
-    height: 250px;
+    height: 550px;
     width: 650px;
 }
 input {
@@ -419,3 +419,36 @@ input {
     margin-left: 110px;
     margin-top: 15px;
   }
+
+
+  .Connexion2{
+    margin-top: 45px; 
+    margin-left: 750px;
+   
+  }
+
+  .PasDeCompte{
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: Inter;
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 88px */
+    margin-top: -135px; 
+    margin-left: 850px;
+  }
+
+  .CreationCompte{
+    color: white;
+    display: inline-flex;
+    padding: 4.5px 141px 4.5px 141px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #5551FF;
+    margin-left: 915px;
+    margin-top: 22px;
+}
+  
