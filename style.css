@@ -331,3 +331,56 @@ a:hover {
 }
 
 .button4 {background-color: #5551FF; color: white;} /* Gray */
+
+.Connexion{
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.50);
+    text-align: left;
+    border: 0.5px solid#ffffff;
+    border-radius: 10px;
+    padding: 22px;
+    position: absolute; 
+    top: 200px; left: 90px; 
+    height: 300px;
+}
+input {
+    width : 98%;
+    padding: 5px; 
+    color: #0c0b0b;
+    border-radius: 5px; 
+    border-radius: 10px;
+background: #D9D9D9;
+
+  }
+
+.button1{
+    width: 343px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    background: #5551FF; 
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 160%; /* 64px */
+    margin-top: 400px;
+    margin-left: 150px;
+    border: none;
+  }
+
+  .position{
+    margin-left: 400px;
+    margin-top: -50px;
+  }
+
+  .position1{
+    margin-left: 550px;
+    margin-top: -48px;
+  }
+  .position3{
+    margin-left: 890px;
+
+  }
