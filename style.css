@@ -261,21 +261,90 @@ a:active {
 
 }
 
-/*
-html, body {margin:0; padding:0}
-body {
-background-color:white;
-margin:0px 0px 0px 0px;
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin-top: 40px;
+  margin-left: 240px;
 }
-nav{
-    width: 2756px;
-    height: 202px;
-    flex-shrink: 0;
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.1s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
 }
-*/
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  color: white;
+  background-color: #5551FF;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #D9D9D9;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.position_dot{
+    margin-left: 100px;
+    margin-top: -30px;
+}
+
+.active, .dot:hover {
+  background-color: #5551FF;
+}
+
+
+.Réservation_btn{
+    color: white;
+    display: inline-flex;
+    padding: 4.5px 141px 10.5px 143px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #5551FF;
+    margin-left: 315px;
+    margin-top: 20px;
+}
 
 
 
+.fond{
+    
+    background: #5551FF; 
+    width : 1440px;  
+    height : 530px;
+    margin-top: 30px;
+    margin-left: 50px; 
+    border-radius: 24px;
+    border: 2px solid #E6E6E6;
+    background: #FAFAF5;
+}
 
 
 
