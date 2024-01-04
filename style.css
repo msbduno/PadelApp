@@ -4,45 +4,21 @@ a {
     text-decoration: none;
 }
 
-a:link {
-    color: #000; 
-}
-
-a:visited {
-    color: #000; 
-}
-
-a:focus {
-    color: #000; 
-}
-
 a:hover {
     color: #000; 
     text-decoration: none;
 }
 
-a:active {
-    color: #000; 
-
-}
-.Navigation{
-    
+.Navigation{ 
     height: 202px;
     flex-shrink: 0;
 }
 .AppLogo{
     margin-top: 0px;
-    margin-left: 0px;
-    
-}
-
-.button{
-    
-    
+    margin-left: 0px;  
 }
 
 .AppName{
-
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
@@ -51,11 +27,12 @@ a:active {
     font-weight: 600;
     line-height: 160%; /* 64px */
     margin-left: 90px;
-    margin-top: -58px;
-    
+    margin-top: -58px; 
 }
 
 .Page1{
+    color: #000; 
+    text-decoration: none;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
@@ -114,9 +91,7 @@ a:active {
     font-weight: 700;
     line-height: 160%; /* 48px */
     background-color: white;
-    border: none;
-  
-    
+    border: none; 
 }
 
 .Notifications_content{
@@ -131,7 +106,6 @@ a:active {
     border-left: 4px solid #A0A0A0;
     background: #FFF;  
     display: none;
-    
 }
 
 .Barre_Notifications{
@@ -145,7 +119,6 @@ a:active {
 }
 
 .Notifications-1{
-   
     width: 117px;
     height: 33px;
     flex-direction: column;
@@ -166,7 +139,6 @@ a:active {
 }
 
 .Notifications-2{
-    
     width: 111px;
     height: 40px;
     flex-direction: column;
@@ -262,9 +234,7 @@ a:active {
     align-items: center;
     border-radius: 4px;
     background: #5551FF;
-
 }
-
 
 /* Slideshow container */
 .slideshow-container {
@@ -336,8 +306,6 @@ a:active {
     margin-top: 22px;
 }
 
-
-
 .fond{
     
     background: #5551FF; 
@@ -350,6 +318,4 @@ a:active {
     background: #FAFAF5;
 }
 
-.linkbtn{
-    color: #FFF;
-}
+.button4 {background-color: #5551FF; color: white;} /* Gray */
