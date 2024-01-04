@@ -48,10 +48,10 @@ a:active {
     font-family: Inter;
     font-size: 30px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 160%; /* 64px */
-    margin-left: 120px;
-    margin-top: -65px;
+    margin-left: 90px;
+    margin-top: -58px;
     
 }
 
@@ -63,7 +63,7 @@ a:active {
     font-style: italic;
     font-weight: 300;
     line-height: 160%; /* 80px */
-    margin-left: 440px;
+    margin-left: 380px;
     margin-top: -70px;
 }
 
@@ -75,7 +75,7 @@ a:active {
     font-style: italic;
     font-weight: 300;
     line-height: 160%; /* 48px */
-    margin-left: 640px;
+    margin-left: 580px;
     margin-top: -60px;
 }
 
@@ -87,7 +87,7 @@ a:active {
     font-style: italic;
     font-weight: 300;
     line-height: 160%; /* 48px */  
-    margin-left: 805px;
+    margin-left: 745px;
     margin-top: -47px;  
 }
 
@@ -99,7 +99,7 @@ a:active {
     font-style: italic;
     font-weight: 300;
     line-height: 160%; /* 48px */
-    margin-left: 932px;
+    margin-left: 870px;
     margin-top: -48px;     
 }
 
@@ -327,13 +327,13 @@ a:active {
 .Réservation_btn{
     color: white;
     display: inline-flex;
-    padding: 4.5px 141px 10.5px 143px;
+    padding: 4.5px 141px 4.5px 141px;
     justify-content: center;
     align-items: center;
     border-radius: 4px;
     background: #5551FF;
     margin-left: 315px;
-    margin-top: 20px;
+    margin-top: 22px;
 }
 
 
@@ -343,7 +343,7 @@ a:active {
     background: #5551FF; 
     width : 1440px;  
     height : 530px;
-    margin-top: 30px;
+    margin-top: 40px;
     margin-left: 50px; 
     border-radius: 24px;
     border: 2px solid #E6E6E6;
