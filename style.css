@@ -452,3 +452,116 @@ input {
     margin-top: 22px;
 }
   
+
+.fondInscripition{
+    margin-top: -55px;
+    background-image:url("images/inscrpition.jpg");
+    width: 1536px;
+    height: 582px;
+    background-size: contain;
+    background-size: cover; 
+}
+
+.back{
+    position: absolute;
+    width: 950px;
+    height: 450px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.57);
+    margin-left: 300px;
+    margin-top: 90px;
+}
+
+.titre1{
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 80px */
+    margin-top: 30px;
+    margin-left: 300px;
+}
+
+.titre2{
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 50;
+    line-height: 100%; /* 48px */
+    margin-top: 20px;
+    margin-left: 150px;
+}
+
+.bloc1{
+    align-items: center;
+    word-wrap: break-word;
+    width: 420px;
+    height: 50px;
+    margin-left: 50px;
+    margin-top: 15px;
+}
+
+.bloc2{
+    align-items: center;
+    word-wrap: break-word;
+    width: 420px;
+    height: 50px;
+    margin-left: 500px;
+    margin-top: -50px;
+    
+}
+
+.bloc3{
+    align-items: center;
+    word-wrap: break-word;
+    width: 920px;
+    height: 50px;
+    margin-left: 50px;
+    margin-top: 55px;
+}
+
+.bloc4{
+    width: 705px;
+    height: 50px;
+    margin-left: 220px;
+    margin-top: -80px;
+}
+
+.bloc5{
+    width: 425px;
+    height: 50px;
+    margin-left: 50px;
+    margin-top: 25px;
+}
+
+
+.bloc6{
+    width: 425px;
+    height: 50px;
+    margin-left: 492px;
+    margin-top: -50px;
+}
+
+.CreationCompte1{
+    white-space: nowrap;
+    color: white;
+    display: inline-flex;
+    padding: 4.5px 141px 4.5px 141px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #5551FF;
+    margin-left: 270px;
+    margin-top: 52px;
+    border: none;
+    
+}
+
+.colorblanc{
+    color: #ffffff;
+   
+}
