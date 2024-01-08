@@ -1,128 +1,163 @@
-
 a {
-    color: #000; 
+    color: #000;
     text-decoration: none;
 }
 
 a:hover {
-    color: #000; 
+    color: #000;
     text-decoration: none;
 }
 
-.Navigation{ 
-    height: 202px;
-    flex-shrink: 0;
-}
-.AppLogo{
-    margin-top: 0px;
-    margin-left: 0px;  
+body {
+    width: 1024px;
+    height: 600px;
+
 }
 
-.AppName{
+.Navigation {
+    height: 100px;
+    flex-shrink: 1;
+}
+
+.AppLogo {
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.AppName {
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 25px;
     font-style: normal;
     font-weight: 600;
-    line-height: 160%; /* 64px */
-    margin-left: 90px;
-    margin-top: -58px; 
+    line-height: 160%;
+    /* 64px */
+    margin-left: 150px;
+    margin-top: -80px;
 }
 
-.Page1{
-    color: #000; 
+
+
+.Page1 {
+    color: #000;
+
     text-decoration: none;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 50px;
+    font-size: 25px;
     font-style: italic;
     font-weight: 300;
-    line-height: 160%; /* 80px */
-    margin-left: 380px;
-    margin-top: -70px;
+    line-height: 160%;
+    /* 80px */
+    margin-left: 420px;
+    margin-top: -40px;
 }
 
-.Page2{
+.Page1:hover{
+    font-weight: bold; 
+}
+
+.Page2 {
     color: #000;
+    
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 25px;
     font-style: italic;
     font-weight: 300;
-    line-height: 160%; /* 48px */
+    line-height: 160%;
+    /* 48px */
     margin-left: 580px;
-    margin-top: -60px;
+    margin-top: -40px;
 }
 
-.Page3{
+.Page2:hover{
+    font-weight: bold; 
+}
+
+.Page3 {
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 25px;
     font-style: italic;
     font-weight: 300;
-    line-height: 160%; /* 48px */  
+    line-height: 160%;
+    /* 48px */
     margin-left: 745px;
-    margin-top: -47px;  
+    margin-top: -40px;
 }
 
-.Page4{
+.Page3:hover{
+    font-weight: bold; 
+}
+
+.Page4 {
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 25px;
     font-style: italic;
     font-weight: 300;
-    line-height: 160%; /* 48px */
+    line-height: 160%;
+    /* 48px */
     margin-left: 870px;
-    margin-top: -48px;     
+    margin-top: -40px;
 }
 
-.Notifications_btn{
+.Page4:hover{
+    font-weight: bold; 
+}
+
+.Notifications_btn {
     position: absolute;
-    top: -150px; left: 720px;   
+    top: -125px;
+    left: 720px;
     color: #000;
+
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 25px;
     font-style: normal;
     font-weight: 700;
-    line-height: 160%; /* 48px */
+    line-height: 160%;
+    /* 48px */
     background-color: white;
-    border: none; 
+    border: none;
 }
 
-.Notifications_content{
+.Notifications_content {
     position: absolute;
-    top: -100px; left: 720px; 
+    top: -85px;
+    left: 720px;
     width: 480px;
     height: 570px;
     flex-shrink: 0;
     border-top: 1px solid #A0A0A0;
-    border-right: 4px solid #A0A0A0;   
-    border-bottom: 4px solid #A0A0A0; 
+    border-right: 4px solid #A0A0A0;
+    border-bottom: 4px solid #A0A0A0;
     border-left: 4px solid #A0A0A0;
-    background: #FFF;  
+    background: #FFF;
     display: none;
 }
 
-.Barre_Notifications{
+.Barre_Notifications {
     display: none;
     display: flex;
-    width: 240px;
+    width: 200px;
     height: 5px;
     flex-shrink: 0;
     border-radius: 5px;
     background: #5551FF;
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
-    margin-left: 3px;
-    margin-top: -40px;
+    margin-left: 2px;
+    margin-top: -37px;
 }
 
-.Notifications_btn1{
+.Notifications_btn1 {
     white-space: nowrap;
     width: 250px;
     height: 30px;
@@ -135,12 +170,13 @@ a:hover {
     font-size: 20px;
     font-style: italic;
     font-weight: 400;
-    line-height: 130%; /* 26px */
+    line-height: 130%;
+    /* 26px */
     background: rgba(85, 81, 255, 0.30);
     border: none;
 }
 
-.Notifications_btn2{
+.Notifications_btn2 {
     white-space: nowrap;
     width: 200px;
     height: 30px;
@@ -153,31 +189,35 @@ a:hover {
     font-size: 20px;
     font-style: italic;
     font-weight: 400;
-    line-height: 130%; /* 26px */
-    background:white;
+    line-height: 130%;
+    /* 26px */
+    background: white;
     margin-top: 0%;
     border: none;
 
 }
 
-.MonProfil_btn{
+.MonProfil_btn {
     white-space: nowrap;
     position: absolute;
-    top: -150px; left: 990px; 
+    top: -125px;
+    left: 990px;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 25px;
     font-style: normal;
     font-weight: 700;
-    line-height: 160%; /* 48px */
+    line-height: 160%;
+    /* 48px */
     background-color: white;
     border: none;
 }
 
-.MonProfil_content{
+.MonProfil_content {
     position: absolute;
-    top: -100px; left: 720px;  
+    top: -85px;
+    left: 720px;
     display: none;
     width: 480px;
     height: 315px;
@@ -189,21 +229,21 @@ a:hover {
     background: #FFF;
 }
 
-.Barre_MonProfil{
+.Barre_MonProfil {
     display: none;
     display: flex;
-    width: 190px;
+    width: 160px;
     height: 5px;
     flex-shrink: 0;
     border-radius: 5px;
     background: #5551FF;
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
-    margin-left: 275px;
-    margin-top: -10px;
+    margin-left: 272px;
+    margin-top: -7px;
 }
 
-.Profil{
+.Profil {
     display: none;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -212,10 +252,11 @@ a:hover {
     font-size: 30px;
     font-style: normal;
     font-weight: 600;
-    line-height: 160%; /* 48px */
+    line-height: 160%;
+    /* 48px */
 }
 
-.Gerer{
+.Gerer {
     display: none;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -224,10 +265,11 @@ a:hover {
     font-size: 30px;
     font-style: normal;
     font-weight: 600;
-    line-height: 160%; /* 48px */
+    line-height: 160%;
+    /* 48px */
 }
 
-.Deconnexion{
+.Deconnexion {
     display: none;
     color: #FFF;
     text-align: center;
@@ -236,7 +278,8 @@ a:hover {
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
-    line-height: 130%; /* 19.5px */
+    line-height: 130%;
+    /* 19.5px */
     display: flex;
     width: 332px;
     padding: 4.5px 110px 4.5px 110px;
@@ -250,63 +293,66 @@ a:hover {
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin-top: 40px;
-  margin-left: 240px;
+    max-width: 1000px;
+    position: relative;
+    margin-top: 40px;
+    margin-left: 240px;
 }
 
 /* Next & previous buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.1s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.1s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
 }
 
 /* Position the "next button" to the right */
 .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+    right: 0;
+    border-radius: 3px 0 0 3px;
 }
 
 /* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  color: white;
-  background-color: #5551FF;
+.prev:hover,
+.next:hover {
+    color: white;
+    background-color: #5551FF;
 }
 
 /* The dots/bullets/indicators */
 .dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #D9D9D9;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
 }
 
-.position_dot{
+.position_dot {
     margin-left: 10px;
     margin-top: -30px;
 }
 
-.active, .dot:hover {
-  background-color: #5551FF;
+.active,
+.dot:hover {
+    background-color: #5551FF;
 }
 
 
-.Réservation_btn{
+.Réservation_btn {
     color: white;
     display: inline-flex;
     padding: 4.5px 141px 4.5px 141px;
@@ -318,62 +364,70 @@ a:hover {
     margin-top: 22px;
 }
 
-.fond{
-    
-    background: #5551FF; 
-    width : 1440px;  
-    height : 530px;
+.fond {
+
+    background: #5551FF;
+    width: 1440px;
+    height: 530px;
     margin-top: 40px;
-    margin-left: 50px; 
+    margin-left: 50px;
     border-radius: 24px;
     border: 2px solid #E6E6E6;
     background: #FAFAF5;
 }
 
-.button4 {background-color: #5551FF; color: white;} /* Gray */
+.button4 {
+    background-color: #5551FF;
+    color: white;
+}
 
-.Connexion{
+/* Gray */
+
+.Connexion {
     background-color: #ffffff;
     color: rgba(0, 0, 0, 0.50);
     text-align: left;
     border: 0.5px solid#ffffff;
     border-radius: 10px;
     padding: 22px;
-    position: absolute; 
-    top: 150px; left: 90px; 
+    position: absolute;
+    top: 150px;
+    left: 90px;
     height: 550px;
     width: 650px;
 }
+
 input {
-    width : 98%;
-    padding: 10px; 
+    width: 98%;
+    padding: 10px;
     color: #0c0b0b;
-    border-radius: 4px; 
+    border-radius: 4px;
     background: #D9D9D9;
     border: none;
-   
-  }
 
-.button1{
+}
+
+.button1 {
     width: 350px;
     height: 55px;
     flex-shrink: 0;
     border-radius: 2px;
-    background: #5551FF; 
+    background: #5551FF;
     color: #FFF;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
     font-size: 25px;
     font-style: normal;
     font-weight: 700;
-    line-height: 160%; /* 64px */
+    line-height: 160%;
+    /* 64px */
     margin-top: 70px;
     margin-left: 100px;
     margin-bottom: 20px;
     border: none;
-  }
+}
 
-.titreConnexion{
+.titreConnexion {
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -381,13 +435,14 @@ input {
     font-size: 35px;
     font-style: normal;
     font-weight: 700;
-    line-height: 160%; /* 88px */
+    line-height: 160%;
+    /* 88px */
     margin-left: 100px;
-    margin-top: 10px; 
+    margin-top: 10px;
     margin-bottom: 50px;
-  }
+}
 
-  .mdpOublié{
+.mdpOublié {
     color: #000;
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -395,24 +450,25 @@ input {
     font-size: 17px;
     font-style: italic;
     font-weight: 150;
-    line-height: 160%; /* 40px */  
+    line-height: 160%;
+    /* 40px */
     margin-left: 200px;
-  }
+}
 
-  .barre{
+.barre {
     width: 330px;
     height: 0.5px;
     background-color: #000;
     margin-left: 110px;
     margin-top: 15px;
-  }
+}
 
-  .Connexion2{
-    margin-top: -40px; 
+.Connexion2 {
+    margin-top: -40px;
     margin-left: 750px;
-  }
+}
 
-  .PasDeCompte{
+.PasDeCompte {
     color: #FFF;
     font-feature-settings: 'clig' off, 'liga' off;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -420,12 +476,13 @@ input {
     font-size: 34px;
     font-style: normal;
     font-weight: 600;
-    line-height: 160%; /* 88px */
-    margin-top: -135px; 
+    line-height: 160%;
+    /* 88px */
+    margin-top: -135px;
     margin-left: 870px;
-  }
+}
 
-  .CreationCompte{
+.CreationCompte {
     color: white;
     display: inline-flex;
     padding: 4.5px 141px 4.5px 141px;
@@ -437,16 +494,16 @@ input {
     margin-top: 22px;
 }
 
-.fondInscripition{
+.fondInscripition {
     margin-top: -55px;
-    background-image:url("images/inscrpition.jpg");
+    background-image: url("images/inscrpition.jpg");
     width: 1536px;
     height: 582px;
     background-size: contain;
-    background-size: cover; 
+    background-size: cover;
 }
 
-.back{
+.back {
     position: absolute;
     width: 950px;
     height: 450px;
@@ -456,31 +513,33 @@ input {
     margin-top: 90px;
 }
 
-.titre1{
+.titre1 {
     color: #FFF;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
     font-size: 30px;
     font-style: normal;
     font-weight: 600;
-    line-height: 160%; /* 80px */
+    line-height: 160%;
+    /* 80px */
     margin-top: 30px;
     margin-left: 300px;
 }
 
-.titre2{
+.titre2 {
     color: #FFF;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
     font-size: 20px;
     font-style: italic;
     font-weight: 50;
-    line-height: 100%; /* 48px */
+    line-height: 100%;
+    /* 48px */
     margin-top: 20px;
     margin-left: 150px;
 }
 
-.bloc1{
+.bloc1 {
     align-items: center;
     word-wrap: break-word;
     width: 420px;
@@ -489,7 +548,7 @@ input {
     margin-top: 15px;
 }
 
-.bloc2{
+.bloc2 {
     align-items: center;
     word-wrap: break-word;
     width: 420px;
@@ -498,7 +557,7 @@ input {
     margin-top: -50px;
 }
 
-.bloc3{
+.bloc3 {
     align-items: center;
     word-wrap: break-word;
     width: 920px;
@@ -507,14 +566,14 @@ input {
     margin-top: 55px;
 }
 
-.bloc4{
+.bloc4 {
     width: 725px;
     height: 50px;
     margin-left: 50px;
     margin-top: -80px;
 }
 
-.bloc5{
+.bloc5 {
     width: 425px;
     height: 50px;
     margin-left: 50px;
@@ -522,14 +581,14 @@ input {
 }
 
 
-.bloc6{
+.bloc6 {
     width: 425px;
     height: 50px;
     margin-left: 492px;
     margin-top: -50px;
 }
 
-.CreationCompte1{
+.CreationCompte1 {
     white-space: nowrap;
     color: white;
     display: inline-flex;
@@ -543,64 +602,64 @@ input {
     border: none;
 }
 
-.colorblanc{
+.colorblanc {
     color: #ffffff;
 }
 
-.position{
+.position {
     margin-left: 400px;
     margin-top: -50px;
 }
 
-.position1{
+.position1 {
     margin-left: 530px;
     margin-top: -48px;
 }
 
-.position3{
+.position3 {
     margin-left: 890px;
 }
 
-.position4{
+.position4 {
     margin-left: 830px;
     margin-top: -69px;
 }
 
-.position5{
+.position5 {
     margin-left: 700px;
     margin-top: -70px;
 }
 
-.position6{
+.position6 {
     margin-left: 900px;
     margin-top: -57px;
 }
 
-.position7{
+.position7 {
     margin-left: 700px;
     margin-top: -47px;
 }
 
-.position8{
+.position8 {
     margin-left: 530px;
     margin-top: -67px;
 }
 
-.position9{
+.position9 {
     margin-left: 800px;
     margin-top: -57px;
 }
 
-.position10{
+.position10 {
     margin-left: 930px;
     margin-top: -47px;
 }
 
 
-.position11{
+.position11 {
     margin-left: 700px;
 }
 
-.position12{
+.position12 {
     margin-left: 830px;
 }
