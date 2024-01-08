@@ -16,80 +16,104 @@
     <div class="Navigation">
 
         <div class="AppLogo">
-            <img src="images/logo.jpg" width="170" height="137" />  
+            <img src="images/logo.jpg" width="170" height="137" />
         </div>
 
-        <div   class="AppName">
-            <a href="front.html">4 GLASS WALLS </a>  
+        <div class="AppName">
+            <a href="front.html">4 GLASS WALLS </a>
         </div>
 
-        <div  class="Page2 position">
-            <a href="front.html">Accueuil</a>  
+        <div class="Page1">
+            <a href="front.html">Accueil</a>
         </div>
 
-        <div class="Page2 position1">
+        <div class="Page2">
             <a href="reservations.html">Réservation </a>
         </div>
 
-        <div class="Page3 position11">
+        <div class="Page3">
             <a href="tournois.html">Tournois </a>
         </div>
 
-        <div class="Page4 position12">
-            <a href="blog.html">Blog</a> 
+        <div class="Page4">
+            <a href="blog.html">Blog</a>
         </div>
+    </div>
+
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+
+        <button id="noti_btn" class="Notifications_btn">NOTIFICATIONS </button>
+        <div id="noti_content" class="Notifications_content">
+            <!--  -->
+            <button id="noti_btn1" class="Notifications_btn1">A venir </button>
+            <button id="noti_btn2" class="Notifications_btn2">Non lues </button>
+
+            <div class="Barre_Notifications"> </div>
+        </div>
+
+
+        <button id="MonProf_btn" class="MonProfil_btn">MON PROFIL </button>
+        <div id="MonProf_content" class="MonProfil_content">
+            <!--  -->
+            <div class="Profil"> Profil </div>
+            <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
+            <div class="Barre_MonProfil"> </div>
+            <div class="Deconnexion "> <a class="button4" href="Connexion.html">CONNEXION</a> </div>
+        </div>
+
     </div>
 
     <div class="fondInscripition">
         <div class="back">
             <div class="titre1">CREATION DE COMPTE </div>
-            <div class="titre2">Crée un compte de façon simple afin de profiter des services de 4 GLASS WALLS  </div>
-            
-                <form method="post">
-                    <div class="bloc1">
-                        <label class="colorblanc" for="idnom">Nom</label>
-                        <input id="idnom" name="nom" type="text">
-                    </div>
-                    <div class="bloc2">
-                        <label class="colorblanc" for="idprenom">Prenom</label>
-                        <input id="idprenom" name="prenom" type="text">
-                    </div>
-                    
-                    <div class="bloc3">  
-                        <label class="colorblanc" for="annee">Niveau Padel</label>
-                        <select id="annee" name="annee" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            </select>
-                    </div>
+            <div class="titre2">Crée un compte de façon simple afin de profiter des services de 4 GLASS WALLS </div>
 
-                    <div class="bloc4">  
-                        <label class="colorblanc" for="idmail">Email</label>
-                        <input id="idmail" name="mail" type="text">  
-                    </div>
-                    
+            <form method="post">
+                <div class="bloc1">
+                    <label class="colorblanc" for="idnom">Nom</label>
+                    <input id="idnom" name="nom" type="text">
+                </div>
+                <div class="bloc2">
+                    <label class="colorblanc" for="idprenom">Prenom</label>
+                    <input id="idprenom" name="prenom" type="text">
+                </div>
 
-                    <div class="bloc5">  
-                        <label class="colorblanc" for="defaultLoginFormPassword">Mot de passe</label>
-                        <input name="password" type="password" id="defaultLoginFormPassword">
-                     </div>
+                <div class="bloc3">
+                    <label class="colorblanc" for="annee">Niveau Padel</label>
+                    <select id="annee" name="annee" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
 
-                     <div class="bloc6"> 
-                        <label class="colorblanc" for="confirmPassword">Confirmer votre mot de passe</label>
-                        <input type="password" name="confirmPassword" id="confirmPassword" required>
-                    </div>
+                <div class="bloc4">
+                    <label class="colorblanc" for="idmail">Email</label>
+                    <input id="idmail" name="mail" type="text">
+                </div>
 
-                </form>
 
-                <button class="CreationCompte1" value="1" type="submit">CREER MON COMPTE</button>
+                <div class="bloc5">
+                    <label class="colorblanc" for="defaultLoginFormPassword">Mot de passe</label>
+                    <input name="password" type="password" id="defaultLoginFormPassword">
+                </div>
+
+                <div class="bloc6">
+                    <label class="colorblanc" for="confirmPassword">Confirmer votre mot de passe</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword" required>
+                </div>
+
+            </form>
+
+            <button class="CreationCompte1" value="1" type="submit">CREER MON COMPTE</button>
 
         </div>
     </div>

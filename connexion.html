@@ -17,28 +17,52 @@
     <div class="Navigation">
 
         <div class="AppLogo">
-            <img src="images/logo.jpg" width="170" height="137" />  
+            <img src="images/logo.jpg" width="170" height="137" />
         </div>
 
-        <div   class="AppName">
-            <a href="front.html">4 GLASS WALLS </a>  
+        <div class="AppName">
+            <a href="front.html">4 GLASS WALLS </a>
         </div>
 
-        <div  class="Page2 position">
-            <a href="front.html">Accueuil</a>  
+        <div class="Page1">
+            <a href="front.html">Accueil</a>
         </div>
 
-        <div class="Page2 position1">
+        <div class="Page2">
             <a href="reservations.html">Réservation </a>
         </div>
 
-        <div class="Page3 position11">
+        <div class="Page3">
             <a href="tournois.html">Tournois </a>
         </div>
 
-        <div class="Page4 position12">
-            <a href="blog.html">Blog</a> 
+        <div class="Page4">
+            <a href="blog.html">Blog</a>
         </div>
+    </div>
+
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+
+        <button id="noti_btn" class="Notifications_btn">NOTIFICATIONS</button>
+        <div id="noti_content" class="Notifications_content">
+            <!--  -->
+            <button id="noti_btn1" class="Notifications_btn1">A venir </button>
+            <button id="noti_btn2" class="Notifications_btn2">Non lues </button>
+
+            <div class="Barre_Notifications"> </div>
+        </div>
+
+
+        <button id="MonProf_btn" class="MonProfil_btn">MON PROFIL</button>
+        <div id="MonProf_content" class="MonProfil_content">
+            <!--  -->
+            <div class="Profil"> Profil </div>
+            <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
+            <div class="Barre_MonProfil"> </div>
+            <div class="Deconnexion "> <a class="button4" href="Connexion.html">CONNEXION</a> </div>
+        </div>
+
     </div>
 
     <div class="Connexion">
@@ -46,7 +70,7 @@
         <div class="titreConnexion"> JE ME CONNECTE !</div>
 
         <form method="post">
-        
+
             <p>
                 <label for="idmail">Email</label>
                 <input id="idmail" name="mail" type="text">
@@ -55,28 +79,44 @@
                 <label for="defaultLoginFormPassword">Mot de passe</label>
                 <input name="password" type="password" id="defaultLoginFormPassword">
             </p>
-            
+
         </form>
-        
+
         <button class="connexion_submit button1" value="1" type="submit">SE CONNECTER</button>
 
-        <a  class="mdpOublié" href="inscription.html">Mot de passe oublié ?</a>
+        <a class="mdpOublié" href="inscription.html">Mot de passe oublié ?</a>
 
         <div class="barre"> </div>
 
     </div>
 
-    
-    <div class="Connexion2">
-        <img src="images/connexion.jpg" width="786" height="567" /> 
-   
-    </div>
 
-    <div class="PasDeCompte"> TU  N’AS PAS ENCRE DE COMPTE ?</div>
-    
-    <a  class="CreationCompte " href="inscription.html">CREER MON COMPTE</a> 
+    <div class="Connexion2"></div>
+        <div class="ConnexionImage">
 
+            <div class="PasDeCompte"> TU N’AS PAS ENCORE DE COMPTE ?</div>
+
+            <a class="CreationCompte " href="inscription.html">CREER MON COMPTE</a>
+        </div>
+    
 
 </body>
+<!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
+<script>
+
+    // Get the button, and when the user clicks on it, execute myFunction
+    document.getElementById("noti_btn").onclick = function () { Notificationsbtn() };
+    document.getElementById("MonProf_btn").onclick = function () { MonProfilbtn() };
+
+    /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
+    function Notificationsbtn() {
+        document.getElementById("noti_content").classList.toggle("show");
+
+    }
+    function MonProfilbtn() {
+        document.getElementById("MonProf_content").classList.toggle("show");
+    }
+
+</script>
 
 </html>

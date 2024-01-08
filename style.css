@@ -55,13 +55,13 @@ body {
     margin-top: -40px;
 }
 
-.Page1:hover{
-    font-weight: bold; 
+.Page1:hover {
+    font-weight: bold;
 }
 
 .Page2 {
     color: #000;
-    
+
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
     font-size: 25px;
@@ -73,8 +73,8 @@ body {
     margin-top: -40px;
 }
 
-.Page2:hover{
-    font-weight: bold; 
+.Page2:hover {
+    font-weight: bold;
 }
 
 .Page3 {
@@ -90,8 +90,8 @@ body {
     margin-top: -40px;
 }
 
-.Page3:hover{
-    font-weight: bold; 
+.Page3:hover {
+    font-weight: bold;
 }
 
 .Page4 {
@@ -107,13 +107,13 @@ body {
     margin-top: -40px;
 }
 
-.Page4:hover{
-    font-weight: bold; 
+.Page4:hover {
+    font-weight: bold;
 }
 
 .Notifications_btn {
     position: absolute;
-    top: -125px;
+    top: -85px;
     left: 720px;
     color: #000;
 
@@ -130,7 +130,7 @@ body {
 
 .Notifications_content {
     position: absolute;
-    top: -85px;
+    top: -40px;
     left: 720px;
     width: 480px;
     height: 570px;
@@ -200,7 +200,7 @@ body {
 .MonProfil_btn {
     white-space: nowrap;
     position: absolute;
-    top: -125px;
+    top: -85px;
     left: 990px;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -216,7 +216,7 @@ body {
 
 .MonProfil_content {
     position: absolute;
-    top: -85px;
+    top: -40px;
     left: 720px;
     display: none;
     width: 480px;
@@ -362,6 +362,7 @@ body {
     background: #5551FF;
     margin-left: 275px;
     margin-top: 22px;
+    
 }
 
 .fond {
@@ -379,6 +380,7 @@ body {
 .button4 {
     background-color: #5551FF;
     color: white;
+    text-align: center;
 }
 
 /* Gray */
@@ -437,7 +439,7 @@ input {
     font-weight: 700;
     line-height: 160%;
     /* 88px */
-    margin-left: 100px;
+    margin-left: 125px;
     margin-top: 10px;
     margin-bottom: 50px;
 }
@@ -464,8 +466,16 @@ input {
 }
 
 .Connexion2 {
-    margin-top: -40px;
+    margin-top: 600px;
     margin-left: 750px;
+     
+}
+
+.ConnexionImage {
+    width: 100%;
+    height: auto;
+    background-image: url("images/connexion.jpg");
+    border-radius: 6px;
 }
 
 .PasDeCompte {
@@ -478,7 +488,7 @@ input {
     font-weight: 600;
     line-height: 160%;
     /* 88px */
-    margin-top: -135px;
+    margin-top: -500px;
     margin-left: 870px;
 }
 
@@ -495,12 +505,16 @@ input {
 }
 
 .fondInscripition {
-    margin-top: -55px;
+    margin-top: 10px;
     background-image: url("images/inscrpition.jpg");
-    width: 1536px;
-    height: 582px;
+    width: 1024px;
+    height: 550px;
     background-size: contain;
     background-size: cover;
+
+    margin-left: 300px;
+
+    ;
 }
 
 .back {
@@ -509,8 +523,8 @@ input {
     height: 450px;
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.57);
-    margin-left: 300px;
-    margin-top: 90px;
+    margin-left: 37px;
+    margin-top: 50px;
 }
 
 .titre1 {
