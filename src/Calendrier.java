@@ -4,6 +4,7 @@ import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javafx.event.Event;
@@ -18,18 +19,24 @@ public class Calendrier {
     public Month currentMonth;
     public DayOfWeek currentDay;
     private HBox view;
+    List<DayOfWeek> daysInMonth = new ArrayList<DayOfWeek>();
+    int jourActuel;
+    int moisActuel;
+    int longueurMois;
+    DayOfWeek jourPrecis;
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
                             new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"), 
                             new Text("Aout") , new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
-                            new Text("Decembre")};
-                            /* 
-    private static Text[] jours = new Text[] { new Text("Lundi"), new Text("Mardi"), new Text("Mercredi"), 
-                            new Text("Jeudi"), new Text("Vendredi"), new Text("Samedi"), new Text("Dimanche")};
-                            */
-    //private Date currentDate;
+                            new Text("Decembre")};             
 
     public Calendrier(LocalDate date){
-        //Créer l'affichage des mois
+        //Initialisation des variables
+        this.jourActuel = date.getDayOfMonth();
+        this.moisActuel = date.getMonthValue();
+        this.longueurMois = date.getMonth().length(true);
+        this.jourPrecis = date.getDayOfWeek();
+
+        //Affichage des mois
         GridPane monthBox = new GridPane();
         monthBox.setPrefSize(100, 600);
         monthBox.setGridLinesVisible(true);
@@ -41,9 +48,7 @@ public class Calendrier {
                 @Override
                 public void handle(Event event) {
                     if (ap.getStyle() == "-fx-background-color: #FFFFFF"){
-                        ap.setStyle("-fx-background-color: #5D5BB9");
-                        //opé
-                        
+                        ap.setStyle("-fx-background-color: #5D5BB9");                        
                     }
                     else {
                         ap.setStyle("-fx-background-color: #FFFFFF");
@@ -60,44 +65,45 @@ public class Calendrier {
             monthBox.add(ap,0, i);
         }
 
-        //Créer l'affichage des jours 
-        int jourActuel = date.getDayOfMonth();
-        int moisActuel = date.getMonthValue();
-        int longueurMois = date.getMonth().length(true);
-        DayOfWeek jourPrecis = date.getDayOfWeek();
-        System.out.println(jourPrecis.getDisplayName(TextStyle.FULL, Locale.FRENCH));
-        System.out.println(jourPrecis.plus(1).getDisplayName(TextStyle.FULL, Locale.FRENCH));
-        System.out.println(jourActuel);
-        System.out.println(moisActuel);
-        System.out.println(longueurMois);
-        
-
+        //Affichage des jours 
+        setDaysInMonth(date); //Initialise les jours correspondant au mois
+        System.out.println(daysInMonth.get((daysInMonth.size()-1)).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
+        for (int i = 0; i < daysInMonth.size(); i++){
+            System.out.println(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH));
+        } 
         ScrollPane scrollDays = new ScrollPane();
         scrollDays.setPrefSize(110, 600);
         GridPane dayBox = new GridPane();
         scrollDays.setContent(dayBox);
-        //dayBox.setPrefSize(100, 600);
         dayBox.setGridLinesVisible(true);
-        
-        DayOfWeek[] jours;
-        for (int i = jourActuel; i < longueurMois; i++){
+        for (int i = 0; i < daysInMonth.size(); i++){
             AnchorPaneNode ap = new AnchorPaneNode();
             ap.setPrefSize(100, 100);
-            /*
-            ap.setTopAnchor(jours[i], 10.0);
-            ap.setLeftAnchor(jours[i], 10.0);
-            ap.getChildren().add(jours[i]);
-            dayBox.add(ap, 0, i);
-             */
+            dayBox.add(ap,0,i);
+            Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH));
+            ap.setTopAnchor(jourNom, 10.0);
+            ap.setLeftAnchor(jourNom, 10.0);
+            ap.getChildren().add(jourNom);
+            Text jourNumero = new Text(String.valueOf(jourActuel));
+            jourActuel += 1;
+            ap.setBottomAnchor(jourNumero, 15.0);
+            ap.setLeftAnchor(jourNumero, 10.0);
+            ap.getChildren().add(jourNumero);
         }
-         
-        
 
         //Affichage futur des reservations
         GridPane resaLayout = new GridPane();
         resaLayout.setPrefSize(600, 600);
 
         view = new HBox(monthBox, scrollDays, resaLayout);
+    }
+
+    public void setDaysInMonth(LocalDate date) {
+        daysInMonth.add(jourPrecis);
+        for (int i = 1; i < (longueurMois - jourActuel) + 1; i++){
+            daysInMonth.add(daysInMonth.get(i-1).plus(1));
+        }
+
     }
 
     public HBox getView() {
