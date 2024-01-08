@@ -23,10 +23,6 @@ public class Calendrier {
     public DayOfWeek currentDay;
     private HBox view;
     List<DayOfWeek> daysInMonth = new ArrayList<DayOfWeek>();
-    int jourActuel;
-    int moisActuel;
-    int longueurMois;
-    DayOfWeek jourPrecis;
     ScrollPane scrollDays = new ScrollPane();
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
                             new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"), 
@@ -34,16 +30,10 @@ public class Calendrier {
                             new Text("Decembre")};             
 
     public Calendrier(LocalDate date){
-        //Initialisation des variables
-        
-        this.longueurMois = date.getMonth().length(true);
-        this.jourPrecis = date.getDayOfWeek();
-
         //Affichage des mois
         GridPane monthBox = new GridPane();
         monthBox.setPrefSize(100, 600);
         monthBox.setGridLinesVisible(true);
-        
 
         for (int i = 0; i < 12; i++){
             AnchorPaneNode ap = new AnchorPaneNode();
@@ -94,7 +84,7 @@ public class Calendrier {
         if (date.getMonth().getValue() == month){
             dayBox.getChildren().clear();
             daysInMonth.clear();
-            daysInMonth.add(jourPrecis);
+            daysInMonth.add(date.getDayOfWeek());
 
             for (int i = 1; i < (date.getMonth().length(true) - date.getDayOfMonth()) + 1; i++){
                 daysInMonth.add(daysInMonth.get(i-1).plus(1));
@@ -150,7 +140,7 @@ public class Calendrier {
         }
 
         return days;
-}
+    }
 
     public HBox getView() {
         return view;
