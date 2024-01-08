@@ -31,3 +31,11 @@ body {
     line-height: 160%;
     /* 64px */
 }
+
+.selection1{
+    display: inline-flex;
+}
+
+.selection2{
+    display: inline-flex;
+}
