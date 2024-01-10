@@ -20,23 +20,23 @@
         </div>
 
         <div class="AppName">
-            <a href="front.html">4 GLASS WALLS </a>
+            <a href="index.php">4 GLASS WALLS </a>
         </div>
 
         <div class="Page1">
-            <a href="front.html">Accueil</a>
+            <a href="index.php">Accueil</a>
         </div>
 
         <div class="Page2">
-            <a href="reservations.html">Réservation </a>
+            <a href="reservations.php">Réservation </a>
         </div>
 
         <div class="Page3">
-            <a href="tournois.html" style="font-weight: bold;">Tournois</a>
+            <a href="tournois.php" style="font-weight: bold;">Tournois</a>
         </div>
 
         <div class="Page4">
-            <a href="blog.html">Blog</a>
+            <a href="blog.php">Blog</a>
         </div>
     </div>
 
@@ -59,7 +59,7 @@
             <div class="Profil"> Profil </div>
             <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="Connexion.html">CONNEXION</a> </div>
+            <div class="Deconnexion "> <a class="button4" href="Connexion.php">CONNEXION</a> </div>
         </div>
 
     </div>
@@ -98,7 +98,7 @@
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
             <!--  Bouton pour aller à la réservation -->
-            <a class="Réservation_btn button4" href="inscriptiontournoi.html"> INSCRIPTION TOURNOIS</a>
+            <a class="Réservation_btn button4" href="inscriptiontournoi.php"> INSCRIPTION TOURNOIS</a>
 
         </div>
     </div>

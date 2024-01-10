@@ -7,9 +7,9 @@
     // informations nécessaires à la connexion
 
     $infoBdd = ['server' => 'localhost',
-                'login' => 'root',
-                'password' => '',
-                'db_name' => 'projet infralogiciel'  ];  
+                'login' => 'moodle_user',
+                'password' => 'network',
+                'db_name' => 'moodle'  ];  
 
      // Création d'une connexion à la base
     

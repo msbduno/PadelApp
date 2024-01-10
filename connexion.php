@@ -21,23 +21,23 @@
         </div>
 
         <div class="AppName">
-            <a href="front.html">4 GLASS WALLS </a>
+            <a href="index.php">4 GLASS WALLS </a>
         </div>
 
         <div class="Page1">
-            <a href="front.html">Accueil</a>
+            <a href="index.php">Accueil</a>
         </div>
 
         <div class="Page2">
-            <a href="reservations.html">Réservation </a>
+            <a href="reservations.php">Réservation </a>
         </div>
 
         <div class="Page3">
-            <a href="tournois.html">Tournois </a>
+            <a href="tournois.php">Tournois </a>
         </div>
 
         <div class="Page4">
-            <a href="blog.html">Blog</a>
+            <a href="blog.php">Blog</a>
         </div>
     </div>
 
@@ -60,7 +60,7 @@
             <div class="Profil"> Profil </div>
             <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="Connexion.html">CONNEXION</a> </div>
+            <div class="Deconnexion "> <a class="button4" href="Connexion.php">CONNEXION</a> </div>
         </div>
 
     </div>
@@ -84,7 +84,7 @@
 
         <button class="connexion_submit button1" value="1" type="submit">SE CONNECTER</button>
 
-        <a class="mdpOublié" href="inscription.html">Mot de passe oublié ?</a>
+        <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
 
         <div class="barre"> </div>
 
@@ -96,7 +96,7 @@
 
             <div class="PasDeCompte"> TU N’AS PAS ENCORE DE COMPTE ?</div>
 
-            <a class="CreationCompte " href="inscription.html">CREER MON COMPTE</a>
+            <a class="CreationCompte " href="inscription.php">CREER MON COMPTE</a>
         </div>
     
 

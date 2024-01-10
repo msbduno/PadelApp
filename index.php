@@ -1,3 +1,84 @@
+<?php
+include 'core.php';
+include 'blog.php'; 
+include 'inscription.php'; 
+include 'inscriptiontournoi.php'; 
+include 'reservation.php'; 
+include 'tournois.php'; 
+
+$variable1 ="  &nbsp &nbsp "; 
+
+if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
+    if (!empty($_POST['mail']) && !empty($_POST['password'])) {
+        $mail_escaped = $mysqli->real_escape_string(trim($_POST['mail']));
+        //ligne échappe les caractères spéciaux dans la valeur du champ de courriel
+        $password_escaped = $mysqli->real_escape_string(trim($_POST['password']));
+        //ligne échappe les caractères spéciaux dans la valeur du champ de mot de passe
+        $sql = "SELECT *
+            FROM Etudiant 
+            WHERE email = '" . $mail_escaped . "'
+            AND motDePasse = '" . $password_escaped . "'";
+
+        $result = $mysqli->query($sql);
+        //le résultat de la requête est stocké dans la variable $result.
+        if (!$result) {
+            exit($mysqli->error);
+        }
+        $nb = $result->num_rows;
+        //Cette ligne récupère le nombre de lignes retournées par la requête SQL et le stocke dans la variable $nb.
+        if ($nb) {
+            //récupération de l’id de l’étudiant
+            $row = $result->fetch_assoc();
+            $_SESSION['compte'] = $row['id'];
+            $_PROFIL = $row; 
+
+        }
+    }
+}
+
+if (isset($_POST['inscription_submit']) && $_POST['inscription_submit'] == 1) {
+    if (
+        !empty($_POST['nom']) &&
+        !empty($_POST['prenom']) &&
+        !empty($_POST['niveau']) &&
+        !empty($_POST['mail']) &&
+        !empty($_POST['password']) &&
+        !empty($_POST['confirmPassword'])
+    ) {
+        if ($_POST['password'] == $_POST['confirmPassword']) {
+            $nom_escaped = $mysqli->real_escape_string(trim($_POST['nom']));
+            $prenom_escaped = $mysqli->real_escape_string(trim($_POST['prenom']));
+            $annee_escaped = $mysqli->real_escape_string(trim($_POST['annee']));
+            $mail_escaped = $mysqli->real_escape_string(trim($_POST['mail']));
+            $password_escaped = $mysqli->real_escape_string(trim($_POST['password']));
+            $confirmPassword_escaped = $mysqli->real_escape_string(trim($_POST['confirmPassword']));
+   
+            $sql2 = "INSERT INTO Etudiant
+                     SET    nom             = '$nom_escaped',
+                            prenom          = '$prenom_escaped',
+                            niveau = '$annee_escaped',
+                            email           = '$mail_escaped',
+                            motDePasse      = '$password_escaped',
+                            ";
+   
+            $result = $mysqli->query($sql2);
+            if (!$result) {
+                exit($mysqli->error);
+            }
+            
+            $idEtudiant = mysqli_insert_id($mysqli); 
+            if ($idEtudiant) {
+                $_SESSION['compte'] = $idEtudiant;
+            }
+
+        }
+    }
+}
+
+
+$mysqli->close();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -22,23 +103,23 @@
         </div>
 
         <div class="AppName">
-            <a href="front.html">4 GLASS WALLS </a>
+            <a href="index.php">4 GLASS WALLS </a>
         </div>
 
         <div class="Page1">
-            <a href="front.html" style="font-weight: bold;">Accueil</a>
+            <a href="index.php" style="font-weight: bold;">Accueil</a>
         </div>
 
         <div class="Page2">
-            <a href="reservations.html">Réservation </a>
+            <a href="reservations.php">Réservation </a>
         </div>
 
         <div class="Page3">
-            <a href="tournois.html">Tournois </a>
+            <a href="tournois.php">Tournois </a>
         </div>
 
         <div class="Page4">
-            <a href="blog.html">Blog</a>
+            <a href="blog.php">Blog</a>
         </div>
     </div>
 
@@ -64,7 +145,7 @@
             <div class="Profil"> Profil </div>
             <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="Connexion.html">CONNEXION</a> </div>
+            <div class="Deconnexion "> <a class="button4" href="Connexion.php">CONNEXION</a> </div>
         </div>
 
     </div>
@@ -100,7 +181,7 @@
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
         <!--  Bouton pour aller à la réservation -->
-        <a class="Réservation_btn button4" href="reservations.html"> RESERVER UN TERRAIN</a>
+        <a class="Réservation_btn button4" href="reservations.php"> RESERVER UN TERRAIN</a>
 
     </div>
 
