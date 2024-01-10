@@ -8,6 +8,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    private Calendrier calendrier;
+
+    public App() {
+        this.calendrier = new Calendrier(LocalDate.now());
+    }
+
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -15,7 +21,6 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("4GlassWalls");
-
         ToolBar toolBar = new ToolBar();
 
         Button button1 = new Button("Reservations");
@@ -24,7 +29,7 @@ public class App extends Application {
         Button button2 = new Button("Blog");
         toolBar.getItems().add(button2);
         
-        VBox vBox = new VBox(toolBar, new Calendrier(LocalDate.now()).getView());
+        VBox vBox = new VBox(toolBar, this.calendrier.getView());
         
         primaryStage.setScene(new Scene(vBox));
         primaryStage.show();

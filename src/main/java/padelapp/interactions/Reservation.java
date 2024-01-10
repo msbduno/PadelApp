@@ -2,18 +2,21 @@ package padelapp.interactions;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import padelapp.utilisateurs.Joueur;
 
 public class Reservation {
-    private Joueur[] joueurs;
+    private List<Joueur> joueurs;
     private boolean estPaye;
     private boolean publique; 
     private LocalTime heureDebut;
     private LocalDate date;
     private Terrain terrain;
 
-    public Reservation(Joueur[] joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain){
+    public Reservation (){}
+
+    public Reservation(List<Joueur> joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain){
         this.joueurs = joueurs;
         this.estPaye = estPaye;
         this.publique = publique;
@@ -22,7 +25,7 @@ public class Reservation {
         this.terrain = terrain;
     }
 
-    public Joueur[] getJoueurs() {
+    public List<Joueur> getJoueurs() {
         return joueurs;
     }
 
@@ -46,7 +49,7 @@ public class Reservation {
         return terrain;
     }
 
-    public void setJoueurs(Joueur[] joueurs) {
+    public void setJoueurs(List<Joueur> joueurs) {
         this.joueurs = joueurs;
     }
 
@@ -68,5 +71,17 @@ public class Reservation {
 
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
+    }
+
+    public String toString(){
+        String res = ""; 
+        for (int i = 0; i < joueurs.size(); i++){
+            res += " Joueur " + i +  "\n Nom :" + this.joueurs.get(i).getNom() + "+ Prenom " + this.joueurs.get(i).getPrenom() + " \n"
+            + String.valueOf(this.joueurs.get(i).getId()) + "\n" + String.valueOf(this.joueurs.get(i).getNiveau()) + "\n";
+        }
+        res += this.date.toString() + "\n" + this.heureDebut.toString() + "\n" + String.valueOf(this.estPaye) + "\n" 
+        + String.valueOf(this.publique) + "\n" + String.valueOf(this.terrain.getNumero()) + "\n" 
+        + String.valueOf(this.terrain.getEstReserve()) + "\n";
+        return res;
     }
 }

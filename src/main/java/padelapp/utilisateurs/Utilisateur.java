@@ -6,6 +6,8 @@ public class Utilisateur {
     private String nom;
     private String prenom;
 
+    public Utilisateur(){}
+
     public Utilisateur(String em, String mdp, String n, String p){
         this.email = em;
         this.motDePasse = mdp;

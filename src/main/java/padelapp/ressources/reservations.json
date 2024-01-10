@@ -1,0 +1,53 @@
+[
+    {
+      "joueurs": [
+        {
+          "email": "joueur1@example.com",
+          "motDePasse": "password1",
+          "nom": "Nom1",
+          "prenom": "Prenom1",
+          "id": 1,
+          "niveau": 5,
+          "dateDeNaissance": "1980-01-01"
+        },
+        {
+          "email": "joueur2@example.com",
+          "motDePasse": "password2",
+          "nom": "Nom2",
+          "prenom": "Prenom2",
+          "id": 2,
+          "niveau": 4,
+          "dateDeNaissance": "1985-01-01"
+        }
+      ],
+      "estPaye": true,
+      "publique": false,
+      "heureDebut": "10:30:00",
+      "date": "2024-01-10",
+      "terrain": {
+        "numero": 1,
+        "estReserve": true
+      }
+    },
+    {
+      "joueurs": [
+        {
+          "email": "joueur3@example.com",
+          "motDePasse": "password3",
+          "nom": "Nom3",
+          "prenom": "Prenom3",
+          "id": 3,
+          "niveau": 3,
+          "dateDeNaissance": "1990-01-01"
+        }
+      ],
+      "estPaye": false,
+      "publique": true,
+      "heureDebut": "11:00:00",
+      "date": "2022-01-02",
+      "terrain": {
+        "numero": 2,
+        "estReserve": false
+      }
+    }
+  ]
