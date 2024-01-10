@@ -730,7 +730,7 @@ input {
     padding: 0;
     width: 20px;
     display: inline-block;
-    display: inline;
+    *display: inline;
 }
 .calendarWrap li.calendarTitle{
     width: 170px;

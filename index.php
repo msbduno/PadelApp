@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 $_TITRE_PAGE = 'bathis mossard';
@@ -73,6 +74,8 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
 
 
 
+=======
+>>>>>>> 9f4f686de66a366d6a433775406496c70ed86999
 <!DOCTYPE html>
 <html lang="fr">
 
