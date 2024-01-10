@@ -1,3 +1,43 @@
+<?php
+
+include '/core.php';
+
+$_TITRE_PAGE = 'gathis muillou';
+
+
+
+if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
+    if (!empty($_POST['password']) && !empty($_POST['user'])) {
+
+
+        $user_escaped = $mysqli->real_escape_string(trim($_POST['user']));
+        $password_escaped = $mysqli->real_escape_string(trim($_POST['password']));
+
+        $sql1 = "SELECT id
+                    FROM test_connexion
+                    WHERE user = '" . $user_escaped . "'
+                    AND password = '" . $password_escaped . "'";
+
+        $result = $mysqli->query($sql1);
+        if (!$result) {
+            exit($mysqli->$error);
+        }
+
+        $nb = $result->num_rows;
+        if ($nb) {
+            //récupération de l'id de l'étudiant
+            $row = $result->fetch_assoc();
+            $_SESSION['compte'] = $row['id'];
+        }
+    }
+}
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,7 +47,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>4 Glass Walls</title>
+    <title><?php echo $_TITRE_PAGE ?></title>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
@@ -65,58 +105,83 @@
 
     </div>
 
+    <?php 
+        if(empty($_SESSION['compte'])) {
+    ?>
+
     <div class="Connexion">
+     
 
         <div class="titreConnexion"> JE ME CONNECTE !</div>
 
-        <form method="post">
+        
+
 
             <p>
                 <label for="idmail">Email</label>
-                <input id="idmail" name="mail" type="text">
+                <input id="iduser" name="user" type="text">
             </p>
             <p>
                 <label for="defaultLoginFormPassword">Mot de passe</label>
-                <input name="password" type="password" id="defaultLoginFormPassword">
+                <input name="idpassword" type="password" id="defaultLoginFormPassword">
             </p>
 
-        </form>
+        
 
-        <button class="connexion_submit button1" value="1" type="submit">SE CONNECTER</button>
+
+
+
+        <button class="connexion_submit button1" name="connexion_submit" value="1" type="submit">SE CONNECTER</button>
 
         <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
 
         <div class="barre"> </div>
+        <?php
 
+        if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
+
+
+        ?>
+            <div>
+                <h2>Vous êtes connecté !</h2>
+
+            </div>
+        <?php
+        }
+        ?>
+    
     </div>
 
 
     <div class="Connexion2"></div>
-        <div class="ConnexionImage">
+    <div class="ConnexionImage">
 
-            <div class="PasDeCompte"> TU N’AS PAS ENCORE DE COMPTE ?</div>
+        <div class="PasDeCompte"> TU N’AS PAS ENCORE DE COMPTE ?</div>
 
-            <a class="CreationCompte " href="inscription.php">CREER MON COMPTE</a>
-        </div>
-    
+        <a class="CreationCompte " href="inscription.php">CREER MON COMPTE</a>
+    </div>
+   
 
 </body>
 <!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
 <script>
-
     // Get the button, and when the user clicks on it, execute myFunction
-    document.getElementById("noti_btn").onclick = function () { Notificationsbtn() };
-    document.getElementById("MonProf_btn").onclick = function () { MonProfilbtn() };
+    document.getElementById("noti_btn").onclick = function() {
+        Notificationsbtn()
+    };
+    document.getElementById("MonProf_btn").onclick = function() {
+        MonProfilbtn()
+    };
 
     /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
     function Notificationsbtn() {
         document.getElementById("noti_content").classList.toggle("show");
 
     }
+
     function MonProfilbtn() {
         document.getElementById("MonProf_content").classList.toggle("show");
     }
-
 </script>
 
 </html>
