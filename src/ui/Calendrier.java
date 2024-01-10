@@ -1,3 +1,4 @@
+package ui;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -15,11 +16,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public class Calendrier {
-    public int currentMonth;
-    public DayOfWeek currentDay;
+    private int currentMonth;
+    private DayOfWeek currentDay;
     private HBox view;
-    List<DayOfWeek> daysInMonth = new ArrayList<DayOfWeek>();
-    ScrollPane scrollDays = new ScrollPane();
+    private List<DayOfWeek> daysInMonth = new ArrayList<DayOfWeek>();
+    private ScrollPane scrollDays = new ScrollPane();
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
                             new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"), 
                             new Text("Aout") , new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
@@ -27,12 +28,14 @@ public class Calendrier {
 
     public Calendrier(LocalDate date){
         //Affichage des mois
-        GridPane monthBox = new GridPane();
-        monthBox.setPrefSize(100, 600);
-        monthBox.setGridLinesVisible(true);
-
+        GridPane monthBox = new GridPane();       
         for (int i = 0; i < 12; i++){
             AnchorPaneNode ap = new AnchorPaneNode();
+            if (i == 0){
+                ap.setStyle("-fx-background-color: blue;");
+                updateDaysDisplay(date, date.getMonthValue());
+                setCurrentMonth(0); 
+            }
             int month = i + 1;
             ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -41,29 +44,29 @@ public class Calendrier {
                     for (Node node : monthBox.getChildren()){
                         if (node instanceof AnchorPaneNode){
                             node.setStyle("-fx-background-color: white;");
-                            monthBox.setGridLinesVisible(true);
                         }
                     }
-
                     //Mettre a jour l'affichage des jours du mois cliqué
                     updateDaysDisplay(date, month); 
 
                     //Surligner en Bleu le mois cliqué
                     ap.setStyle("-fx-background-color: blue;");
-                    monthBox.setGridLinesVisible(true);
+                    
+                    //Definir le mois cliqué
+                    setCurrentMonth(month - 1);
+                    System.out.println("Mois : " + mois[getCurrentMonth()].getText().toUpperCase());
                 }  
             });
 
             ap.setPrefSize(100, 50);
-            AnchorPaneNode.setTopAnchor(mois[i], 10.0);
-            AnchorPaneNode.setLeftAnchor(mois[i], 10.0);
+            AnchorPaneNode.setTopAnchor(mois[i], 15.0);
+            AnchorPaneNode.setLeftAnchor(mois[i], 18.0);
             ap.getChildren().add(mois[i]);
             monthBox.add(ap,0, i);
         }
 
         //Affichage des jours 
         scrollDays.setPrefSize(110, 600);
-        updateDaysDisplay(date, date.getMonthValue());
         
 
         //Affichage futur des reservations
@@ -88,16 +91,38 @@ public class Calendrier {
             int jourActuel = date.getDayOfMonth();
             for (int i = 0; i < daysInMonth.size(); i++){
                 AnchorPaneNode ap = new AnchorPaneNode();
+                int index = i;
+                ap.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        //Surligner en blanc tous les jours
+                        for (Node node : dayBox.getChildren()){
+                            if (node instanceof AnchorPaneNode){
+                                node.setStyle("-fx-background-color: white;");
+                                dayBox.setGridLinesVisible(true);
+                                scrollDays.setVvalue(0.0);
+                            }
+                        }
+
+                        //Surligner en Bleu le mois cliqué
+                        ap.setStyle("-fx-background-color: blue;");
+                        
+                        //Definir le jour cliqué
+                        setCurrentDay(daysInMonth.get(index));
+                        System.out.println("Jour : " + getCurrentDay().getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
+                    }  
+                });
+                
                 ap.setPrefSize(100, 100);
                 dayBox.add(ap,0,i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
                 AnchorPaneNode.setTopAnchor(jourNom, 15.0);
-                AnchorPaneNode.setLeftAnchor(jourNom, 15.0);
+                AnchorPaneNode.setLeftAnchor(jourNom, 20.0);
                 ap.getChildren().add(jourNom);
                 Text jourNumero = new Text(String.valueOf(jourActuel));
                 jourActuel += 1;
-                AnchorPaneNode.setBottomAnchor(jourNumero, 15.0);
-                AnchorPaneNode.setLeftAnchor(jourNumero, 10.0);
+                AnchorPaneNode.setBottomAnchor(jourNumero, 10.0);
+                AnchorPaneNode.setLeftAnchor(jourNumero, 30.0);
                 ap.getChildren().add(jourNumero);
             }
         }
@@ -108,6 +133,26 @@ public class Calendrier {
             int jourDebut = 1;
             for (int i = 0; i < daysInMonth.size(); i++){
                 AnchorPaneNode ap = new AnchorPaneNode();
+                int index = i;
+                ap.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        //Surligner en blanc tous les jours
+                        for (Node node : dayBox.getChildren()){
+                            if (node instanceof AnchorPaneNode){
+                                node.setStyle("-fx-background-color: white;");
+                                scrollDays.setVvalue(scrollDays.getVmin()); //remet le scroll au debut (fonctionne pas)
+                            }
+                        }
+
+                        //Surligner en Bleu le mois cliqué
+                        ap.setStyle("-fx-background-color: blue;");
+                        
+                        //Definir le jour cliqué
+                        setCurrentDay(daysInMonth.get(index));
+                        System.out.println("Jour : " + getCurrentDay().getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
+                    }  
+                });
                 ap.setPrefSize(100, 100);
                 dayBox.add(ap,0,i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());

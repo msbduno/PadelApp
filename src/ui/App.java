@@ -1,5 +1,6 @@
-import java.time.LocalDate;
+package ui;
 
+import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
