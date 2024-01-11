@@ -1,0 +1,14 @@
+[
+    {
+        "email": "moderateur1@example.com",
+        "motDePasse": "password1",
+        "nom": "Doe",
+        "prenom": "John"
+    },
+    {
+        "email": "moderateur2@example.com",
+        "motDePasse": "password2",
+        "nom": "Smith",
+        "prenom": "Jane"
+    }
+]

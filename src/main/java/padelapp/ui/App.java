@@ -6,16 +6,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import padelapp.utilisateurs.Moderateur;
 
 public class App extends Application {
     private Calendrier calendrier;
 
-    public App() {
-        this.calendrier = new Calendrier(LocalDate.now());
+    public App(Moderateur moderateur) {
+        this.calendrier = new Calendrier(LocalDate.now(),moderateur);
     }
 
     public static void main(String[] args) {
-        Application.launch(args);
+        Application.launch(Connexion.class,args);
     }
 
     @Override
@@ -31,10 +32,14 @@ public class App extends Application {
         
         VBox vBox = new VBox(toolBar, this.calendrier.getView());
         
-        primaryStage.setScene(new Scene(vBox));
+        Scene scene = new Scene(vBox, 1280, 720);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        toolBar.getStyleClass().add("tool-bar");
+        button1.getStyleClass().add("button");
+        button2.getStyleClass().add("button");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    
     
 }

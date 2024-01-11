@@ -1,0 +1,131 @@
+.month-pane {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+    -fx-background-color: #A0A0A0;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-weight: BOLD;
+}
+
+.month-pane-highlighted {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+    -fx-background-color: #5D5BB9;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-weight: BOLD;
+    
+}
+
+.day-pane {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+    -fx-background-color: #E4DDDD;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-weight: BOLD;
+}
+
+.day-pane-highlighted {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+    -fx-background-color: #5D5BB9;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-weight: BOLD;
+}
+
+.resa-pane {
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-background-color: #60606A;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 20px;
+    -fx-font-weight: BOLD;
+    -fx-line-spacing: 44.8px;
+}
+
+.scroll-bar {
+    -fx-background-color: #F0F0F0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #AAA;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #CCC;
+}
+
+.tool-bar {
+    -fx-border-color: #000;
+    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FFF, transparent);
+}
+
+.button {
+    -fx-border-color: #000;
+    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #878282, rgba(0, 0, 0, 0.46), transparent);
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 20px;
+    -fx-font-weight: BOLD;
+}
+
+.connexion-pane{
+    -fx-background-color: #FFF;
+    -fx-background-radius: 141px;
+    -fx-border-radius: 141px;
+}
+
+.label-soft{
+    -fx-text-fill: rgba(0, 0, 0, 0.50);
+    -fx-font-family: 'Inter';
+    -fx-font-size: 18px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-line-spacing: 14.4px; /* 160% of 24px is 38.4px, so the line spacing is 38.4px - 24px = 14.4px */
+}
+
+.label-bold {
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 50px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-line-spacing: 57.6px; /* 160% of 96px is 153.6px, so the line spacing is 153.6px - 96px = 57.6px */
+}
+
+.background-connexion{
+    -fx-border-width: 2px;
+    -fx-border-color: #000;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, #F5F3F3, rgba(116, 116, 116, 0.00));
+}
+
+.box-connexion{
+    -fx-background-radius: 10px;
+    -fx-background-color: #D9D9D9;
+    -fx-border-radius: 10px;
+}
+
+.login-button{
+    -fx-background-radius: 25px;
+    -fx-background-color: #5551FF;
+    -fx-border-radius: 25px;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 24px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-background-radius: 25px;
+    -fx-background-color: #5551FF;
+    -fx-border-radius: 25px;
+
+}
