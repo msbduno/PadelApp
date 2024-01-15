@@ -1,4 +1,6 @@
 <?php
+
+// Titre des différentes pages
 $_TITRE_PAGE = '4 GLASS WALLS';
 
 // Permet de voir apparaître les erreurs directement dans la page web

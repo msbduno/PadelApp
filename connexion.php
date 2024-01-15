@@ -1,36 +1,38 @@
 <?php
 
+include 'core.php';
 
-
-$_TITRE_PAGE = '4 GLASS WALLS';
-
+$_SESSION['compte'] = '';
 
 
 if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
-    if (!empty($_POST['password']) && !empty($_POST['user'])) {
+    if (!empty($_POST['userpassword']) && !empty($_POST['usermail'])) {
+        
 
+        $usermail_escaped = $conn->real_escape_string(trim($_POST['usermail']));
+        $userpassword_escaped = $conn->real_escape_string(trim($_POST['userpassword']));
 
-        $user_escaped = $mysqli->real_escape_string(trim($_POST['user']));
-        $password_escaped = $mysqli->real_escape_string(trim($_POST['password']));
+        $sql1 = "SELECT idUtilisateur
+                    FROM utilisateur
+                    WHERE email = '" . $usermail_escaped . "'
+                    AND motDePasse = '" . $userpassword_escaped . "'";
 
-        $sql1 = "SELECT id
-                    FROM test_connexion
-                    WHERE user = '" . $user_escaped . "'
-                    AND password = '" . $password_escaped . "'";
-
-        $result = $mysqli->query($sql1);
+        $result = $conn->query($sql1);
         if (!$result) {
-            exit($mysqli->$error);
+            exit($conn->$error);
         }
 
         $nb = $result->num_rows;
         if ($nb) {
             //récupération de l'id de l'étudiant
             $row = $result->fetch_assoc();
-            $_SESSION['compte'] = $row['id'];
+            $_SESSION['compte'] = $row['idUtilisateur'];
         }
     }
 }
+
+
+
 
 
 ?>
@@ -107,50 +109,53 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
     </div>
 
-    
+
 
     <div class="Connexion">
 
 
         <div class="titreConnexion"> JE ME CONNECTE !</div>
 
+        <form method="POST">
+<?php if (empty($_SESSION['compte'])) { ?>
+
+            <p>
+                <label for="user">Email</label>
+                <input id="usermail" name="usermail" type="text" placeholder="Veuillez renseigner votre adresse mail">
+            </p>
+            <p>
+                <label for="password">Mot de passe</label>
+                <input name="userpassword" type="password" id="defaultLoginFormPassword" placeholder="Veuillez renseigner votre mot de passe">
+            </p>
 
 
 
-        <p>
-            <label for="idmail">Email</label>
-            <input id="iduser" name="user" type="text">
-        </p>
-        <p>
-            <label for="defaultLoginFormPassword">Mot de passe</label>
-            <input name="idpassword" type="password" id="defaultLoginFormPassword">
-        </p>
 
 
 
+            <button class="connexion_submit button1" name="connexion_submit" value="1" type="submit">SE
+                CONNECTER</button>
+
+            <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
+
+            <div class="barre"> </div>
+            <?php }else{ 
+
+            if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
 
+                ?>
+                <div>
+                    <h2>Vous êtes connecté !</h2>
 
-        <button class="connexion_submit button1" name="connexion_submit" value="1" type="submit">SE CONNECTER</button>
-
-        <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
-
-        <div class="barre"> </div>
-        <?php
-
-        if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
-
-
-        ?>
-        <div>
-            <h2>Vous êtes connecté !</h2>
-
-        </div>
-        <?php
+                </div>
+                <?php
+            }
         }
-        ?>
-
+            ?>
+        </form>
     </div>
+
 
 
     <div class="Connexion2"></div>

@@ -1,7 +1,7 @@
 <?php
 include 'core.php';
 
-
+$_SESSION['compte'] = '';
 
 
 if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
@@ -121,59 +121,64 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
             <div class="titre2">Crée un compte de façon simple afin de profiter des services de 4 GLASS WALLS </div>
 
             <form method="POST">
-                <div class="bloc1">
-                    <label class="colorblanc" for="nom">Nom</label>
-                    <input id="nom" name="nom" type="text">
-                </div>
-                <div class="bloc2">
-                    <label class="colorblanc" for="prenom">Prenom</label>
-                    <input id="prenom" name="prenom" type="text">
-                </div>
-
-                <div class="bloc3">
-                    <label class="colorblanc" for="niveau">Niveau Padel</label>
-                    <select id="niveau" name="niveau" required>
-                        <option value="null"></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </div>
-
-                <div class="bloc4">
-                    <label class="colorblanc" for="mail">Email</label>
-                    <input id="idmail" name="mail" type="text">
-                </div>
-
-
-                <div class="bloc5">
-                    <label class="colorblanc" for="password">Mot de passe</label>
-                    <input name="password" type="password" id="defaultLoginFormPassword">
-                </div>
-
-                <div class="bloc6">
-                    <label class="colorblanc" for="confirmPassword">Confirmer votre mot de passe</label>
-                    <input type="password" name="confirmPassword" id="defaultLoginFormPassword">
-                </div>
-
-
-
-                <button name="subscribe_submit" class="CreationCompte1" value="1" type="submit">CREER MON
-                    COMPTE</button>
-
-                <?php if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
+                <?php
+                if (empty($_SESSION['compte'])) {
                     ?>
-                    <div>
-                        <h2>Vous êtes inscrit !</h2>
+                    <div class="bloc1">
+                        <label class="colorblanc" for="nom">Nom</label>
+                        <input id="nom" name="nom" type="text" placeholder="Veuillez renseigner votre nom">
                     </div>
-                <?php } ?>
+                    <div class="bloc2">
+                        <label class="colorblanc" for="prenom">Prenom</label>
+                        <input id="prenom" name="prenom" type="text" placeholder="Veuillez renseigner votre prénom">
+                    </div>
+
+                    <div class="bloc3">
+                        <label class="colorblanc" for="niveau">Niveau Padel</label>
+                        <select id="niveau" name="niveau" required>
+                            <option value="null"></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+
+                    <div class="bloc4">
+                        <label class="colorblanc" for="mail">Email</label>
+                        <input id="idmail" name="mail" type="text" placeholder="Veuillez renseigner votre adresse mail">
+                    </div>
+
+
+                    <div class="bloc5">
+                        <label class="colorblanc" for="password">Mot de passe</label>
+                        <input name="password" type="password" id="defaultLoginFormPassword" placeholder="Veuillez renseigner votre mot de passe">
+                    </div>
+
+                    <div class="bloc6">
+                        <label class="colorblanc" for="confirmPassword">Confirmer votre mot de passe</label>
+                        <input type="password" name="confirmPassword" id="defaultLoginFormPassword" placeholder="Veuillez confirmer votre mot de passe">
+                    </div>
+
+
+
+                    <button name="subscribe_submit" class="CreationCompte1" value="1" type="submit">CREER MON
+                        COMPTE</button>
+
+                <?php } else {
+                    if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
+                        ?>
+                        <div style="margin-left : 350px; margin-top : 100px;  color: cornsilk;">
+                            <h2>Vous êtes inscrit !</h2>
+                        </div>
+                    <?php }
+                } ?>
 
             </form>
 
@@ -182,5 +187,26 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
 
 
 </body>
+
+<!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
+<script>
+    // Get the button, and when the user clicks on it, execute myFunction
+    document.getElementById("noti_btn").onclick = function () {
+        Notificationsbtn()
+    };
+    document.getElementById("MonProf_btn").onclick = function () {
+        MonProfilbtn()
+    };
+
+    /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
+    function Notificationsbtn() {
+        document.getElementById("noti_content").classList.toggle("show");
+
+    }
+
+    function MonProfilbtn() {
+        document.getElementById("MonProf_content").classList.toggle("show");
+    }
+</script>
 
 </html>
