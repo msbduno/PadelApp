@@ -1,81 +1,11 @@
-<<<<<<< HEAD
 <?php
 
-$_TITRE_PAGE = 'bathis mossard';
-
-
-
-if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
-    if (!empty($_POST['password']) && !empty($_POST['mail'])) {
-        
-
-        $mail_escaped = $mysqli->real_escape_string(trim($_POST['mail']));
-        $password_escaped = $mysqli->real_escape_string(trim($_POST['password']));
-
-        $sql1 = "SELECT id
-                    FROM Etudiant
-                    WHERE email = '" . $mail_escaped . "'
-                    AND motDePasse = '" . $password_escaped . "'";
-
-        $result = $mysqli->query($sql1);
-        if (!$result) {
-            exit($mysqli->$error);
-        }
-
-        $nb = $result->num_rows;
-        if ($nb) {
-            //récupération de l'id de l'étudiant
-            $row = $result->fetch_assoc();
-            $_SESSION['compte'] = $row['id'];
-        }
-    }
-}
-
-if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
-    if (
-        !empty($_POST['nom']) &&
-        !empty($_POST['prenom']) &&
-        !empty($_POST['anneescolaire']) &&
-        !empty($_POST['email']) &&
-        !empty($_POST['mdp']) &&
-        !empty($_POST['mdpconf'])
-    ) {
-
-        if ($_POST['mdp'] == $_POST['mdpconf']) {
-            $nom_escaped = $mysqli->real_escape_string(trim($_POST['nom']));
-            $prenom_escaped = $mysqli->real_escape_string(trim($_POST['prenom']));
-            $anneescolaire_escaped = $mysqli->real_escape_string(trim($_POST['anneescolaire']));
-            $email_escaped = $mysqli->real_escape_string(trim($_POST['email']));
-            $mdp_escaped = $mysqli->real_escape_string(trim($_POST['mdp']));
-
-            $sql2 = "INSERT INTO Etudiant 
-                    SET nom = '$nom_escaped',
-                        prenom = '$prenom_escaped',
-                        email = '$email_escaped',
-                        motDePasse = '$mdp_escaped',
-                        dateIns  = NOW(),
-                        dateModif = NOW(),
-                        id_AnneeScolaire = '$anneescolaire_escaped'";
-
-            $result = $mysqli->query($sql2);
-            if (!$result) {
-                exit($mysqli->$error);
-            }
-
-            if ($idEtu = $mysqli->insert_id) {
-                $_SESSION['compte'] = $idEtu;
-            }
-        }
-    }
-}
-
+$_TITRE_PAGE = '4 GLASS WALLS';
 
 ?>
 
 
 
-=======
->>>>>>> 9f4f686de66a366d6a433775406496c70ed86999
 <!DOCTYPE html>
 <html lang="fr">
 

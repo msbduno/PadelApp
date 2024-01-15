@@ -1,8 +1,8 @@
 <?php
 
-include '/core.php';
 
-$_TITRE_PAGE = 'gathis muillou';
+
+$_TITRE_PAGE = '4 GLASS WALLS';
 
 
 
@@ -47,7 +47,9 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title><?php echo $_TITRE_PAGE ?></title>
+    <title>
+        <?php echo $_TITRE_PAGE ?>
+    </title>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
@@ -100,33 +102,31 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
             <div class="Profil"> Profil </div>
             <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="Connexion.php">CONNEXION</a> </div>
+            <div class="Deconnexion "> <a class="button4" href="connexion.php">CONNEXION</a> </div>
         </div>
 
     </div>
 
-    <?php 
-        if(empty($_SESSION['compte'])) {
-    ?>
+    
 
     <div class="Connexion">
-     
+
 
         <div class="titreConnexion"> JE ME CONNECTE !</div>
 
-        
 
 
-            <p>
-                <label for="idmail">Email</label>
-                <input id="iduser" name="user" type="text">
-            </p>
-            <p>
-                <label for="defaultLoginFormPassword">Mot de passe</label>
-                <input name="idpassword" type="password" id="defaultLoginFormPassword">
-            </p>
 
-        
+        <p>
+            <label for="idmail">Email</label>
+            <input id="iduser" name="user" type="text">
+        </p>
+        <p>
+            <label for="defaultLoginFormPassword">Mot de passe</label>
+            <input name="idpassword" type="password" id="defaultLoginFormPassword">
+        </p>
+
+
 
 
 
@@ -142,14 +142,14 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
 
         ?>
-            <div>
-                <h2>Vous êtes connecté !</h2>
+        <div>
+            <h2>Vous êtes connecté !</h2>
 
-            </div>
+        </div>
         <?php
         }
         ?>
-    
+
     </div>
 
 
@@ -160,16 +160,18 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
         <a class="CreationCompte " href="inscription.php">CREER MON COMPTE</a>
     </div>
-   
+
 
 </body>
+
+
 <!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
 <script>
     // Get the button, and when the user clicks on it, execute myFunction
-    document.getElementById("noti_btn").onclick = function() {
+    document.getElementById("noti_btn").onclick = function () {
         Notificationsbtn()
     };
-    document.getElementById("MonProf_btn").onclick = function() {
+    document.getElementById("MonProf_btn").onclick = function () {
         MonProfilbtn()
     };
 

@@ -1,3 +1,52 @@
+<?php
+include 'core.php';
+
+
+
+
+if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
+    if (
+        !empty($_POST['nom']) &&
+        !empty($_POST['prenom']) &&
+        !empty($_POST['niveau']) &&
+        !empty($_POST['mail']) &&
+        !empty($_POST['password']) &&
+        !empty($_POST['confirmPassword'])
+    ) {
+        if ($_POST['password'] == $_POST['confirmPassword']) {
+            $nom_escaped = $conn->real_escape_string(trim($_POST['nom']));
+            $prenom_escaped = $conn->real_escape_string(trim($_POST['prenom']));
+            $niveau_escaped = $conn->real_escape_string(trim($_POST['niveau']));
+            $email_escaped = $conn->real_escape_string(trim($_POST['mail']));
+            $password_escaped = $conn->real_escape_string(trim($_POST['password']));
+
+            $sql = "INSERT INTO utilisateur 
+            SET email = '$email_escaped',
+                motDePasse = '$password_escaped',
+                nom = '$nom_escaped',
+                prenom = '$prenom_escaped',
+                niveau = '$niveau_escaped',
+                numeroTelephone = '0788553227'";
+
+            $result = $conn->query($sql);
+            if (!$result) {
+                exit($conn->$error);
+            }
+            if ($idUtilisateur = $conn->insert_id) {
+                $_SESSION['compte'] = $idUtilisateur;
+            }
+
+
+        }
+    }
+}
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,7 +56,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>4 Glass Walls</title>
+    <title>
+        <?php echo $_TITRE_PAGE ?>
+    </title>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
@@ -69,19 +120,20 @@
             <div class="titre1">CREATION DE COMPTE </div>
             <div class="titre2">Crée un compte de façon simple afin de profiter des services de 4 GLASS WALLS </div>
 
-            <form method="post">
+            <form method="POST">
                 <div class="bloc1">
-                    <label class="colorblanc" for="idnom">Nom</label>
-                    <input id="idnom" name="nom" type="text">
+                    <label class="colorblanc" for="nom">Nom</label>
+                    <input id="nom" name="nom" type="text">
                 </div>
                 <div class="bloc2">
-                    <label class="colorblanc" for="idprenom">Prenom</label>
-                    <input id="idprenom" name="prenom" type="text">
+                    <label class="colorblanc" for="prenom">Prenom</label>
+                    <input id="prenom" name="prenom" type="text">
                 </div>
 
                 <div class="bloc3">
-                    <label class="colorblanc" for="annee">Niveau Padel</label>
-                    <select id="annee" name="annee" required>
+                    <label class="colorblanc" for="niveau">Niveau Padel</label>
+                    <select id="niveau" name="niveau" required>
+                        <option value="null"></option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -96,24 +148,34 @@
                 </div>
 
                 <div class="bloc4">
-                    <label class="colorblanc" for="idmail">Email</label>
+                    <label class="colorblanc" for="mail">Email</label>
                     <input id="idmail" name="mail" type="text">
                 </div>
 
 
                 <div class="bloc5">
-                    <label class="colorblanc" for="defaultLoginFormPassword">Mot de passe</label>
+                    <label class="colorblanc" for="password">Mot de passe</label>
                     <input name="password" type="password" id="defaultLoginFormPassword">
                 </div>
 
                 <div class="bloc6">
                     <label class="colorblanc" for="confirmPassword">Confirmer votre mot de passe</label>
-                    <input type="password" name="confirmPassword" id="confirmPassword" required>
+                    <input type="password" name="confirmPassword" id="defaultLoginFormPassword">
                 </div>
 
-            </form>
 
-            <button class="CreationCompte1" value="1" type="submit">CREER MON COMPTE</button>
+
+                <button name="subscribe_submit" class="CreationCompte1" value="1" type="submit">CREER MON
+                    COMPTE</button>
+
+                <?php if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
+                    ?>
+                    <div>
+                        <h2>Vous êtes inscrit !</h2>
+                    </div>
+                <?php } ?>
+
+            </form>
 
         </div>
     </div>

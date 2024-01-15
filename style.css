@@ -624,6 +624,10 @@ input {
     border: none;
 }
 
+.CreationCompte1:hover {
+    font-weight: bold;
+}
+
 .colorblanc {
     color: #ffffff;
 }
@@ -730,7 +734,7 @@ input {
     padding: 0;
     width: 20px;
     display: inline-block;
-    *display: inline;
+    display: inline;
 }
 .calendarWrap li.calendarTitle{
     width: 170px;
