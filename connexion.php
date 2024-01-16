@@ -7,7 +7,7 @@ $_SESSION['compte'] = '';
 
 if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
     if (!empty($_POST['userpassword']) && !empty($_POST['usermail'])) {
-        
+
 
         $usermail_escaped = $conn->real_escape_string(trim($_POST['usermail']));
         $userpassword_escaped = $conn->real_escape_string(trim($_POST['userpassword']));
@@ -65,23 +65,55 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
         </div>
 
         <div class="AppName">
-            <a href="index.php">4 GLASS WALLS </a>
+            <a id="glasswalls">4 GLASS WALLS
+                <?php
+                echo '<script type="text/javascript">
+                glasswalls.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
 
         <div class="Page1">
-            <a href="index.php">Accueil</a>
+
+            <a id="accueil">Accueil
+                <?php
+                echo '<script type="text/javascript">
+                accueil.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
+
         </div>
 
         <div class="Page2">
-            <a href="reservations.php">Réservation </a>
+            <a id="reservation">Réservation
+                <?php
+                echo '<script type="text/javascript">
+                reservation.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
 
         <div class="Page3">
-            <a href="tournois.php">Tournois </a>
+            <a id="tournois">Tournois
+                <?php
+                echo '<script type="text/javascript">
+                tournois.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
 
         <div class="Page4">
-            <a href="blog.php">Blog</a>
+            <a id="blog">Blog
+                <?php
+                echo '<script type="text/javascript">
+                blog.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
     </div>
 
@@ -117,41 +149,42 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
         <div class="titreConnexion"> JE ME CONNECTE !</div>
 
         <form method="POST">
-<?php if (empty($_SESSION['compte'])) { ?>
+            <?php if (empty($_SESSION['compte'])) { ?>
 
-            <p>
-                <label for="user">Email</label>
-                <input id="usermail" name="usermail" type="text" placeholder="Veuillez renseigner votre adresse mail">
-            </p>
-            <p>
-                <label for="password">Mot de passe</label>
-                <input name="userpassword" type="password" id="defaultLoginFormPassword" placeholder="Veuillez renseigner votre mot de passe">
-            </p>
-
-
-
+                <p>
+                    <label for="user">Email</label>
+                    <input id="usermail" name="usermail" type="text" placeholder="Veuillez renseigner votre adresse mail">
+                </p>
+                <p>
+                    <label for="password">Mot de passe</label>
+                    <input name="userpassword" type="password" id="defaultLoginFormPassword"
+                        placeholder="Veuillez renseigner votre mot de passe">
+                </p>
 
 
 
-            <button class="connexion_submit button1" name="connexion_submit" value="1" type="submit">SE
-                CONNECTER</button>
-
-            <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
-
-            <div class="barre"> </div>
-            <?php }else{ 
-
-            if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
 
-                ?>
-                <div>
-                    <h2>Vous êtes connecté !</h2>
 
-                </div>
-                <?php
+                <button class="connexion_submit button1" name="connexion_submit" value="1" type="submit">SE
+                    CONNECTER</button>
+
+                <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
+
+                <div class="barre"> </div>
+            <?php } else {
+
+                if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
+
+
+                    ?>
+                    <div>
+                        <h2>Vous êtes connecté !</h2>
+
+                    </div>
+                    <?php
+                }
             }
-        }
             ?>
         </form>
     </div>

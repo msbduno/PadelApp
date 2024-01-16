@@ -21,11 +21,11 @@
         </div>
 
         <div class="AppName">
-            <a href="index.php">4 GLASS WALLS</a>
+            <a href="accueil.php">4 GLASS WALLS</a>
         </div>
 
         <div class="Page1">
-            <a href="index.php">Accueil</a>
+            <a href="accueil.php">Accueil</a>
         </div>
 
         <div class="Page2">

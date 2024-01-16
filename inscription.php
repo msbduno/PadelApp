@@ -71,23 +71,55 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
         </div>
 
         <div class="AppName">
-            <a href="index.php">4 GLASS WALLS </a>
+            <a id="glasswalls">4 GLASS WALLS
+                <?php
+                echo '<script type="text/javascript">
+                glasswalls.onclick = function () { alert("Veuillez vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
 
         <div class="Page1">
-            <a href="index.php">Accueil</a>
+
+            <a id="accueil">Accueil
+                <?php
+                echo '<script type="text/javascript">
+                accueil.onclick = function () { alert("Veuillez vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
+
         </div>
 
         <div class="Page2">
-            <a href="reservations.php">Réservation </a>
+            <a id="reservation">Réservation
+                <?php
+                echo '<script type="text/javascript">
+                reservation.onclick = function () { alert("Veuillez vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
 
         <div class="Page3">
-            <a href="tournois.php">Tournois </a>
+            <a id="tournois">Tournois
+                <?php
+                echo '<script type="text/javascript">
+                tournois.onclick = function () { alert("Veuillez vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
 
         <div class="Page4">
-            <a href="blog.php">Blog</a>
+            <a id="blog">Blog
+                <?php
+                echo '<script type="text/javascript">
+                blog.onclick = function () { alert("Veuillez vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+                ?>
+            </a>
         </div>
     </div>
 
@@ -158,12 +190,14 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
 
                     <div class="bloc5">
                         <label class="colorblanc" for="password">Mot de passe</label>
-                        <input name="password" type="password" id="defaultLoginFormPassword" placeholder="Veuillez renseigner votre mot de passe">
+                        <input name="password" type="password" id="defaultLoginFormPassword"
+                            placeholder="Veuillez renseigner votre mot de passe">
                     </div>
 
                     <div class="bloc6">
                         <label class="colorblanc" for="confirmPassword">Confirmer votre mot de passe</label>
-                        <input type="password" name="confirmPassword" id="defaultLoginFormPassword" placeholder="Veuillez confirmer votre mot de passe">
+                        <input type="password" name="confirmPassword" id="defaultLoginFormPassword"
+                            placeholder="Veuillez confirmer votre mot de passe">
                     </div>
 
 
@@ -173,11 +207,8 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
 
                 <?php } else {
                     if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
-                        ?>
-                        <div style="margin-left : 350px; margin-top : 100px;  color: cornsilk;">
-                            <h2>Vous êtes inscrit !</h2>
-                        </div>
-                    <?php }
+                        header("Location: accueil.php");
+                    }
                 } ?>
 
             </form>
@@ -207,6 +238,7 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
     function MonProfilbtn() {
         document.getElementById("MonProf_content").classList.toggle("show");
     }
+
 </script>
 
 </html>
