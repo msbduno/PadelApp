@@ -52,7 +52,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
     <title>
         <?php echo $_TITRE_PAGE ?>
     </title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="style2.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -74,7 +74,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
             </a>
         </div>
 
-        <div class="Page1">
+        <div class="accueil">
 
             <a id="accueil">Accueil
                 <?php
@@ -86,7 +86,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
         </div>
 
-        <div class="Page2">
+        <div class="reservation">
             <a id="reservation">Réservation
                 <?php
                 echo '<script type="text/javascript">
@@ -96,7 +96,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
             </a>
         </div>
 
-        <div class="Page3">
+        <div class="tournois">
             <a id="tournois">Tournois
                 <?php
                 echo '<script type="text/javascript">
@@ -106,7 +106,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
             </a>
         </div>
 
-        <div class="Page4">
+        <div class="blog">
             <a id="blog">Blog
                 <?php
                 echo '<script type="text/javascript">
@@ -115,31 +115,26 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
                 ?>
             </a>
         </div>
-    </div>
+        <button id="noti_btn" class="Notifications_btn">NOTIFICATIONS
 
-    <!-- Slideshow container -->
-    <div class="slideshow-container">
+            <?php
+            echo '<script type="text/javascript">
+            noti_btn.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+            ?>
+        </button>
 
-        <button id="noti_btn" class="Notifications_btn">NOTIFICATIONS</button>
-        <div id="noti_content" class="Notifications_content">
-            <!--  -->
-            <button id="noti_btn1" class="Notifications_btn1">A venir </button>
-            <button id="noti_btn2" class="Notifications_btn2">Non lues </button>
-
-            <div class="Barre_Notifications"> </div>
-        </div>
-
-
-        <button id="MonProf_btn" class="MonProfil_btn">MON PROFIL</button>
-        <div id="MonProf_content" class="MonProfil_content">
-            <!--  -->
-            <div class="Profil"> Profil </div>
-            <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
-            <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="connexion.php">CONNEXION</a> </div>
-        </div>
+        <button id="MonProf_btn" class="MonProfil_btn">MON PROFIL
+            <?php
+            echo '<script type="text/javascript">
+            MonProf_btn.onclick = function () { alert("Veuillez vous connecter ou vous inscrire pour accéder aux fonctionnalités de 4 GLASS WALLS !"); } 
+                </script>';
+            ?>
+        </button>
 
     </div>
+
+    
 
 
 
@@ -166,7 +161,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
 
 
-                <button class="connexion_submit button1" name="connexion_submit" value="1" type="submit">SE
+                <button class="buttonGeneral" name="connexion_submit" value="1" type="submit">SE
                     CONNECTER</button>
 
                 <a class="mdpOublié" href="inscription.php">Mot de passe oublié ?</a>
@@ -186,39 +181,14 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
         </form>
     </div>
 
-
-
-    <div class="Connexion2"></div>
-    <div class="ConnexionImage">
-
+    <div class="ConnexionInscription">
         <div class="PasDeCompte"> TU N’AS PAS ENCORE DE COMPTE ?</div>
-
         <a class="CreationCompte " href="inscription.php">CREER MON COMPTE</a>
     </div>
-
 
 </body>
 
 
-<!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
-<script>
-    // Get the button, and when the user clicks on it, execute myFunction
-    document.getElementById("noti_btn").onclick = function () {
-        Notificationsbtn()
-    };
-    document.getElementById("MonProf_btn").onclick = function () {
-        MonProfilbtn()
-    };
 
-    /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
-    function Notificationsbtn() {
-        document.getElementById("noti_content").classList.toggle("show");
-
-    }
-
-    function MonProfilbtn() {
-        document.getElementById("MonProf_content").classList.toggle("show");
-    }
-</script>
 
 </html>

@@ -136,7 +136,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
             <div class="Profil"> Profil </div>
             <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="connexion.php">CONNEXION</a> </div>
+            <div class="Deconnexion "> <a class="button4" href="index.php">DECONNEXION</a> </div>
         </div>
 
     </div>

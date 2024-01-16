@@ -1,5 +1,5 @@
 a {
-    color: #000;
+    color: #000000;
     text-decoration: none;
 }
 
@@ -8,28 +8,23 @@ a:hover {
     text-decoration: none;
 }
 
-body{
+body {
 
-    position : flex; 
+    position: relative;
 }
 
-.Navigation{ 
-    height: 202px;
-    flex-shrink: 0;
-}
-.AppLogo{
+
+
+.AppLogo {
     margin-top: 0px;
-    margin-left: 0px;  
+    margin-left: 0px;
 }
 
 .Navigation {
     height: 100px;
     flex-shrink: 1;
-}
-
-.AppLogo {
-    margin-top: 0px;
-    margin-left: 0px;
+    
+    
 }
 
 .AppName {
@@ -47,7 +42,7 @@ body{
 
 
 
-.Page1 {
+.accueil {
     color: #000;
 
     text-decoration: none;
@@ -63,11 +58,11 @@ body{
     margin-top: -40px;
 }
 
-.Page1:hover {
+.accueil:hover {
     font-weight: bold;
 }
 
-.Page2 {
+.reservation {
     color: #000;
 
     font-feature-settings: 'clig' off, 'liga' off;
@@ -77,15 +72,15 @@ body{
     font-weight: 300;
     line-height: 160%;
     /* 48px */
-    margin-left: 580px;
+    margin-left: 530px;
     margin-top: -40px;
 }
 
-.Page2:hover {
+.reservation:hover {
     font-weight: bold;
 }
 
-.Page3 {
+.tournois {
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
@@ -94,15 +89,15 @@ body{
     font-weight: 300;
     line-height: 160%;
     /* 48px */
-    margin-left: 745px;
+    margin-left: 680px;
     margin-top: -40px;
 }
 
-.Page3:hover {
+.tournois:hover {
     font-weight: bold;
 }
 
-.Page4 {
+.blog {
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
@@ -111,18 +106,18 @@ body{
     font-weight: 300;
     line-height: 160%;
     /* 48px */
-    margin-left: 870px;
+    margin-left: 800px;
     margin-top: -40px;
 }
 
-.Page4:hover {
+.blog:hover {
     font-weight: bold;
 }
 
 .Notifications_btn {
     position: absolute;
-    top: -85px;
-    left: 720px;
+    top: 55px;
+    left: 1000px;
     color: #000;
 
     font-feature-settings: 'clig' off, 'liga' off;
@@ -137,9 +132,10 @@ body{
 }
 
 .Notifications_content {
-    position: absolute;
-    top: -40px;
-    left: 720px;
+    position: fixed;
+    z-index: 1;
+    top: 100px;
+    left: 1000px;
     width: 480px;
     height: 570px;
     flex-shrink: 0;
@@ -206,10 +202,10 @@ body{
 }
 
 .MonProfil_btn {
-    white-space: nowrap;
+    
     position: absolute;
-    top: -85px;
-    left: 990px;
+    top: 55px;
+    left: 1250px;
     color: #000;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Inter;
@@ -223,9 +219,10 @@ body{
 }
 
 .MonProfil_content {
-    position: absolute;
-    top: -40px;
-    left: 720px;
+    position: fixed;
+    z-index: 1;
+    top: 100px;
+    left: 980px;
     display: none;
     width: 480px;
     height: 315px;
@@ -264,18 +261,7 @@ body{
     /* 48px */
 }
 
-.Gerer {
-    display: none;
-    color: #000;
-    font-feature-settings: 'clig' off, 'liga' off;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: Inter;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 160%;
-    /* 48px */
-}
+
 
 .Deconnexion {
     display: none;
@@ -368,9 +354,10 @@ body{
     align-items: center;
     border-radius: 4px;
     background: #5551FF;
-    margin-left: 275px;
+    margin-left: 280px;
     margin-top: 22px;
-    
+    text-align: center;
+
 }
 
 .fond {
@@ -384,14 +371,6 @@ body{
     border: 2px solid #E6E6E6;
     background: #FAFAF5;
 }
-
-.button4 {
-    background-color: #5551FF;
-    color: white;
-    text-align: center;
-}
-
-/* Gray */
 
 .Connexion {
     background-color: #ffffff;
@@ -417,7 +396,7 @@ input {
 
 }
 
-.button1 {
+.buttonGeneral {
     width: 350px;
     height: 55px;
     flex-shrink: 0;
@@ -473,15 +452,19 @@ input {
     margin-top: 15px;
 }
 
-.Connexion2 {
+.ConnexionInscription {
     margin-top: 600px;
-    margin-left: 750px;
-     
+    margin-left: 500px;
+    background-color: blue;
+    height: 550px;
+    width: 650px;
+
 }
 
 .ConnexionImage {
     width: 100%;
-    height: auto;
+
+    size-adjust: 60%;
     background-image: url("images/connexion.jpg");
     border-radius: 6px;
 }
@@ -496,8 +479,8 @@ input {
     font-weight: 600;
     line-height: 160%;
     /* 88px */
-    margin-top: -500px;
-    margin-left: 870px;
+    margin-top: 0px;
+    margin-left: 0px;
 }
 
 .CreationCompte {
@@ -512,105 +495,11 @@ input {
     margin-top: 22px;
 }
 
-.fondInscripition {
-    margin-top: 10px;
-    background-image: url("images/inscrpition.jpg");
-    width: 1024px;
-    height: 550px;
-    background-size: contain;
-    background-size: cover;
-
-    margin-left: 300px;
-
-    ;
+.CreationCompte:hover {
+    font-weight: bold;
 }
 
-.back {
-    position: absolute;
-    width: 950px;
-    height: 450px;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.57);
-    margin-left: 37px;
-    margin-top: 50px;
-}
-
-.titre1 {
-    color: #FFF;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 160%;
-    /* 80px */
-    margin-top: 30px;
-    margin-left: 300px;
-}
-
-.titre2 {
-    color: #FFF;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
-    font-size: 20px;
-    font-style: italic;
-    font-weight: 50;
-    line-height: 100%;
-    /* 48px */
-    margin-top: 20px;
-    margin-left: 150px;
-}
-
-.bloc1 {
-    align-items: center;
-    word-wrap: break-word;
-    width: 420px;
-    height: 50px;
-    margin-left: 50px;
-    margin-top: 15px;
-}
-
-.bloc2 {
-    align-items: center;
-    word-wrap: break-word;
-    width: 420px;
-    height: 50px;
-    margin-left: 500px;
-    margin-top: -50px;
-}
-
-.bloc3 {
-    align-items: center;
-    word-wrap: break-word;
-    width: 920px;
-    height: 50px;
-    margin-left: 775px;
-    margin-top: 55px;
-}
-
-.bloc4 {
-    width: 725px;
-    height: 50px;
-    margin-left: 50px;
-    margin-top: -80px;
-}
-
-.bloc5 {
-    width: 425px;
-    height: 50px;
-    margin-left: 50px;
-    margin-top: 25px;
-}
-
-
-.bloc6 {
-    width: 425px;
-    height: 50px;
-    margin-left: 492px;
-    margin-top: -50px;
-}
-
-.CreationCompte1 {
+.InscriptionCompte {
     white-space: nowrap;
     color: white;
     display: inline-flex;
@@ -624,164 +513,110 @@ input {
     border: none;
 }
 
-.CreationCompte1:hover {
+.InscriptionCompte:hover {
     font-weight: bold;
 }
+
+.fondInscripitionImage {
+    margin-top: 10px;
+    background-image: url("images/inscrpition.jpg");
+    width: 1024px;
+    height: 550px;
+    background-size: contain;
+    background-size: cover;
+
+    margin-left: 300px;
+
+    ;
+}
+
+.fondInscripition {
+    position: absolute;
+    width: 950px;
+    height: 450px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.57);
+    margin-left: 37px;
+    margin-top: 50px;
+}
+
+.titreInscription1 {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%;
+    /* 80px */
+    margin-top: 30px;
+    margin-left: 300px;
+}
+
+.titreInscription2 {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 50;
+    line-height: 100%;
+    /* 48px */
+    margin-top: 20px;
+    margin-left: 150px;
+}
+
+.inscriptionNom {
+    align-items: center;
+    word-wrap: break-word;
+    width: 420px;
+    height: 50px;
+    margin-left: 50px;
+    margin-top: 15px;
+}
+
+.inscriptionPrenom {
+    align-items: center;
+    word-wrap: break-word;
+    width: 420px;
+    height: 50px;
+    margin-left: 500px;
+    margin-top: -50px;
+}
+
+.inscriptionNiveau {
+    align-items: center;
+    word-wrap: break-word;
+    width: 920px;
+    height: 50px;
+    margin-left: 775px;
+    margin-top: 55px;
+}
+
+.inscriptionMail {
+    width: 725px;
+    height: 50px;
+    margin-left: 50px;
+    margin-top: -80px;
+}
+
+.inscriptionPassword {
+    width: 425px;
+    height: 50px;
+    margin-left: 50px;
+    margin-top: 25px;
+}
+
+
+.inscriptionConfirmPassword {
+    width: 425px;
+    height: 50px;
+    margin-left: 492px;
+    margin-top: -50px;
+}
+
+
 
 .colorblanc {
     color: #ffffff;
 }
-
-.position {
-    margin-left: 400px;
-    margin-top: -50px;
-}
-
-.position1 {
-    margin-left: 530px;
-    margin-top: -48px;
-}
-
-.position3 {
-    margin-left: 890px;
-}
-
-.position4 {
-    margin-left: 830px;
-    margin-top: -69px;
-}
-
-.position5 {
-    margin-left: 700px;
-    margin-top: -70px;
-}
-
-.position6 {
-    margin-left: 900px;
-    margin-top: -57px;
-}
-
-.position7 {
-    margin-left: 700px;
-    margin-top: -47px;
-}
-
-.position8 {
-    margin-left: 530px;
-    margin-top: -67px;
-}
-
-.position9 {
-    margin-left: 800px;
-    margin-top: -57px;
-}
-
-.position10 {
-    margin-left: 930px;
-    margin-top: -47px;
-}
-
-
-.position11 {
-    margin-left: 700px;
-}
-
-.position12 {
-    margin-left: 830px;
-}
-
-
-/* DEBUT calendrier JS : jsSimpleDatePickr */
-#calendarMain1, #calendarMain2{
-    margin-left: 20%;
-}
-/* conteneur calendrier */
-.calendarWrap{
-    display: none;
-    position: absolute;
-    z-index: 1000;
-    width: 210px;
-    padding: 5px 10px 10px 10px;
-    background-color: #2e373f;
-    /*background-color: rgba(46, 55, 63, 0.95);*/
-    border-radius: 10px;
-    -moz-box-shadow: 0 0 10px #555;
-    -webkit-box-shadow: 0 0 10px #555;
-    box-shadow: 0 0 10px #555;
-    font-size: 12px;
-}
-/* bouton d'affichage*/
-#calendarMain1 > input, #calendarMain2 > input{
-    display: block;
-    width: 100px;
-    height: 22px;
-    padding-top: 2px;
-    background-color: #2e373f;
-    color: #fff;
-    border-radius: 5px;
-    border: none;
-}
-#calendarMain1 > input:hover, #calendarMain2 > input:hover{
-    background-color: #2673cb;
-}
-/* navigation dans le calendrier */
-.calendarWrap ul{
-    margin: 5px 0 10px 0;
-    padding: 0;
-}
-.calendarWrap li{
-    margin: 0;
-    padding: 0;
-    width: 20px;
-    display: inline-block;
-    display: inline;
-}
-.calendarWrap li.calendarTitle{
-    width: 170px;
-    color: #ccc;
-    text-align: center;
-}
-.calendarWrap li input{
-    width: 20px;
-    background-color: #5d6f7f;
-    border: none;
-    color: #fff;
-}
-.calendarWrap li input:hover{
-    background-color: #6f8598;
-}
-/* calendrier */
-.jsCalendar{
-    color: #fff;
-    border-collapse: collapse;
-}
-.jsCalendar th{
-    color: #8ba7bf;
-    font-size: 16px;
-    font-weight: normal;
-    text-align: center;
-}
-.jsCalendar td{
-    padding: 0;
-    border: none;
-}
-.jsCalendar a{
-    display: block;
-    width: 30px;
-    padding: 3px 0 3px 0;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    text-align: center;
-}
-.jsCalendar .day:hover a{
-    background-color: #2673cb;
-    border-color: #2673cb;
-}
-.jsCalendar .selectedDay a{
-    background-color: #c44d38;
-    border-color: #c44d38;
-}
-/* FIN calendrier JS : jsSimpleDatePickr */
-
-

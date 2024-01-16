@@ -13,11 +13,11 @@ $_TITRE_PAGE = '4 GLASS WALLS';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title><?php echo $_TITRE_PAGE ?></title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    
+    <title>
+        <?php echo $_TITRE_PAGE ?>
+    </title>
+    <link href="style2.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
@@ -34,28 +34,23 @@ $_TITRE_PAGE = '4 GLASS WALLS';
             <a href="accueil.php">4 GLASS WALLS </a>
         </div>
 
-        <div class="Page1">
+        <div class="accueil">
             <a href="accueil.php" style="font-weight: bold;">Accueil</a>
         </div>
 
-        <div class="Page2">
+        <div class="reservation">
             <a href="reservations.php">Réservation </a>
         </div>
 
-        <div class="Page3">
+        <div class="tournois">
             <a href="tournois.php">Tournois </a>
         </div>
 
-        <div class="Page4">
+        <div class="blog">
             <a href="blog.php">Blog</a>
         </div>
-    </div>
 
 
-
-
-    <!-- Slideshow container -->
-    <div class="slideshow-container">
 
         <button id="noti_btn" class="Notifications_btn">NOTIFICATIONS </button>
         <div id="noti_content" class="Notifications_content">
@@ -71,108 +66,63 @@ $_TITRE_PAGE = '4 GLASS WALLS';
         <div id="MonProf_content" class="MonProfil_content">
             <!--  -->
             <div class="Profil"> Profil </div>
-            <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
-            <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="connexion.php">CONNEXION</a> </div>
-        </div>
 
+            <div class="Barre_MonProfil"> </div>
+            <div class="Deconnexion "> <a style="color:white" href="index.php">DECONNEXION</a> </div>
+        </div>
     </div>
+
+
+
+
+
+
 
     <!-- Fond de couleur beige  -->
     <div class="fond">
-        <!-- Full-width images -->
-        <div class="mySlides" style="text-align: center;">
-            <img src="images/tournois_1.png" width="1000" height="430">
-        </div>
-
-        <div class="mySlides" style="text-align: center;">
-            <img src="images/actualites_1.jpg" width="1000" height="430">
-        </div>
-
-        <div class="mySlides" style="text-align: center;">
-            <img src="images/niveaux_padel.jpg" width="1000" height="430">
-        </div>
-
-
-        <!-- The dots/circles -->
-        <div style="text-align:center">
-            <div class="position_dot">
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
+        <div class="slideshow-container">
+            <!-- Full-width images -->
+            <div class="mySlides" style="text-align: center;">
+                <img src="images/tournois_1.png" width="1000" height="430">
             </div>
+
+            <div class="mySlides" style="text-align: center;">
+                <img src="images/actualites_1.jpg" width="1000" height="430">
+            </div>
+
+            <div class="mySlides" style="text-align: center;">
+                <img src="images/niveaux_padel.jpg" width="1000" height="430">
+            </div>
+
+
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+                <div class="position_dot">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <!--  Bouton pour aller à la réservation -->
+            <a class="Réservation_btn" href="reservations.php"> RESERVER UN TERRAIN</a>
+
         </div>
-
-
-        <!-- Next and previous buttons -->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-        <!--  Bouton pour aller à la réservation -->
-        <a class="Réservation_btn button4" href="reservations.php"> RESERVER UN TERRAIN</a>
-
     </div>
-
 
 
 </body>
 
 <!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
-<script>
-    // Get the button, and when the user clicks on it, execute myFunction
-    document.getElementById("noti_btn").onclick = function() {
-        Notificationsbtn()
-    };
-    document.getElementById("MonProf_btn").onclick = function() {
-        MonProfilbtn()
-    };
-
-    /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
-    function Notificationsbtn() {
-        document.getElementById("noti_content").classList.toggle("show");
-
-    }
-
-    function MonProfilbtn() {
-        document.getElementById("MonProf_content").classList.toggle("show");
-    }
-</script>
-
-
+<script src="js/bouton.js"></script>
 <!-- Code javaScript por le carrousel d'images  -->
-<script>
-    let slideIndex = 2;
-    showSlides(slideIndex);
+<script src="js/caroussel.js"></script>
 
-    // Next/previous controls
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
 
-    // Thumbnail image controls
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {
-            slideIndex = 1
-        }
-        if (n < 1) {
-            slideIndex = slides.length
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-    }
-</script>
 
 </html>

@@ -24,4 +24,9 @@ if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
 }
 
+if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+    unset($_SESSION['compte']);
+    header("Location: ./");
+}
+
 ?>
