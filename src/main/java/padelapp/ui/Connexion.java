@@ -2,6 +2,7 @@ package padelapp.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -27,6 +28,7 @@ import padelapp.utilisateurs.Moderateur;
 public class Connexion extends Application {
     Moderateur moderateur;
     StackPane stackPane;
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -100,7 +102,7 @@ public class Connexion extends Application {
 
     // method to check login credentials
     public boolean checkLogin(String email, String password) {
-        List<Moderateur> moderateurs = loadModerateursFromJson("C:/Users/mathe/source/repos/padelapp/src/main/java/padelapp/ressources/moderateurs.json");
+        List<Moderateur> moderateurs = loadModerateursFromJson("/padelapp/ressources/moderateurs.json");
         for (int i = 0; i < moderateurs.size(); i ++){
             if (moderateurs.get(i).getEmail().equals(email) && moderateurs.get(i).getMotDePasse().equals(password)){
                 this.moderateur = moderateurs.get(i);
@@ -114,7 +116,8 @@ public class Connexion extends Application {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         try {
-            return mapper.readValue(new File(filename), new TypeReference<List<Moderateur>>(){});
+            InputStream is = getClass().getResourceAsStream(filename);
+            return mapper.readValue(is, new TypeReference<List<Moderateur>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }

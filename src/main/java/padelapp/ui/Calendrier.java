@@ -2,6 +2,7 @@ package padelapp.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -45,7 +46,7 @@ public class Calendrier {
     public Calendrier(LocalDate date,Moderateur moderateur){
         this.moderateur = moderateur;
         //Chargement des reservations
-        this.reservations = loadReservationsFromJson("C:/Users/mathe/source/repos/padelapp/src/main/java/padelapp/ressources/reservations.json");
+        this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
         System.out.println(this.moderateur.getEmail());
 
@@ -248,7 +249,8 @@ public class Calendrier {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         try {
-            return mapper.readValue(new File(filename), new TypeReference<List<Reservation>>(){});
+            InputStream is = getClass().getResourceAsStream(filename);
+            return mapper.readValue(is, new TypeReference<List<Reservation>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
