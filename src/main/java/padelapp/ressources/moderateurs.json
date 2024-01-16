@@ -10,5 +10,11 @@
         "motDePasse": "password2",
         "nom": "Smith",
         "prenom": "Jane"
+    },
+    {
+        "email": "",
+        "motDePasse": "",
+        "nom": "Prout",
+        "prenom": "Caca"
     }
 ]

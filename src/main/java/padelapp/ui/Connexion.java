@@ -69,6 +69,8 @@ public class Connexion extends Application {
                 alert.showAndWait();
             }
         });
+
+        
         VBox vbox = new VBox(10, emailLabel, emailField, passwordLabel, passwordField, loginButton);
         vbox.setPadding(new Insets(10));
         vbox.setMinSize(400, 400); // Set the size of the VBox

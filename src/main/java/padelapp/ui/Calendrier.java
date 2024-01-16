@@ -22,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -64,7 +65,7 @@ public class Calendrier {
 
         //Affichage des mois        
         for (int i = 0; i < 12; i++){
-            AnchorPaneNode ap = new AnchorPaneNode();
+            AnchorPane ap = new AnchorPane();
             //Lancement de l'application 
             if (i == date.getMonthValue() - 1){ 
                 ap.getStyleClass().remove("month-pane");
@@ -80,14 +81,14 @@ public class Calendrier {
             //Etape necessaire pour que la variable soit accessible dans la fonction handle
             final LocalDate finalDate = date;
             final int finalMonth = i+ 1;
-            final AnchorPaneNode finalAp = ap;
+            final AnchorPane finalAp = ap;
             ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     
                     //Surligner en blanc tous les mois
                     for (Node node : monthBox.getChildren()){
-                        if (node instanceof AnchorPaneNode){
+                        if (node instanceof AnchorPane){
                             node.getStyleClass().remove("month-pane-highlighted");
                             node.getStyleClass().add("month-pane");
                         }
@@ -106,8 +107,8 @@ public class Calendrier {
             });
 
             ap.setPrefSize(140, 80);
-            AnchorPaneNode.setTopAnchor(mois[i], 15.0);
-            AnchorPaneNode.setLeftAnchor(mois[i], 18.0);
+            AnchorPane.setTopAnchor(mois[i], 15.0);
+            AnchorPane.setLeftAnchor(mois[i], 18.0);
             ap.getChildren().add(mois[i]);
             monthBox.add(ap,0, i);
         }
@@ -140,7 +141,7 @@ public class Calendrier {
             }
             int jourActuel = date.getDayOfMonth();
             for (int i = 0; i < daysInMonth.size(); i++){
-                AnchorPaneNode ap = new AnchorPaneNode();
+                AnchorPane ap = new AnchorPane();
                 //Lancement de l'application
                 if (i == 0){
                     ap.getStyleClass().remove("day-pane");
@@ -153,13 +154,13 @@ public class Calendrier {
                 }
                 //etape necessaire pour que la variable soit accessible dans la fonction handle
                 final int index = i;
-                final AnchorPaneNode finalAp = ap;
+                final AnchorPane finalAp = ap;
                 ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         //Surligner en blanc tous les jours
                         for (Node node : dayBox.getChildren()){
-                            if (node instanceof AnchorPaneNode){
+                            if (node instanceof AnchorPane){
                                 node.getStyleClass().remove("day-pane-highlighted");
                                 node.getStyleClass().add("day-pane");
                                 dayBox.setGridLinesVisible(true);
@@ -183,13 +184,13 @@ public class Calendrier {
                 ap.setPrefSize(240, 80);
                 dayBox.add(ap,0,i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
-                AnchorPaneNode.setTopAnchor(jourNom, 15.0);
-                AnchorPaneNode.setLeftAnchor(jourNom, 20.0);
+                AnchorPane.setTopAnchor(jourNom, 15.0);
+                AnchorPane.setLeftAnchor(jourNom, 20.0);
                 ap.getChildren().add(jourNom);
                 Text jourNumero = new Text(String.valueOf(jourActuel));
                 jourActuel += 1;
-                AnchorPaneNode.setBottomAnchor(jourNumero, 10.0);
-                AnchorPaneNode.setLeftAnchor(jourNumero, 30.0);
+                AnchorPane.setBottomAnchor(jourNumero, 10.0);
+                AnchorPane.setLeftAnchor(jourNumero, 30.0);
                 ap.getChildren().add(jourNumero);
             }
         }
@@ -199,16 +200,20 @@ public class Calendrier {
             daysInMonth = getDaysOfMonth(date.getYear(), month);
             int jourDebut = 1;
             for (int i = 0; i < daysInMonth.size(); i++){
-                AnchorPaneNode ap = new AnchorPaneNode();
+                AnchorPane ap = new AnchorPane();
+                //Afficher le bon style au changement de mois
+                ap.getStyleClass().remove("day-pane-highlighted");
+                ap.getStyleClass().add("day-pane");
                 //Etape necessaire pour que la variable soit accessible dans la fonction handle
                 final int index = i;
-                final AnchorPaneNode finalAp = ap;
+                final AnchorPane finalAp = ap;
+                
                 ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         //Surligner en blanc tous les jours
                         for (Node node : dayBox.getChildren()){
-                            if (node instanceof AnchorPaneNode){
+                            if (node instanceof AnchorPane){
                                 node.getStyleClass().remove("day-pane-highlighted");
                                 node.getStyleClass().add("day-pane");
                                 scrollDays.setVvalue(scrollDays.getVmin()); //remet le scroll au debut (fonctionne pas)
@@ -230,13 +235,13 @@ public class Calendrier {
                 ap.setPrefSize(240, 80);
                 dayBox.add(ap,0,i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
-                AnchorPaneNode.setTopAnchor(jourNom, 15.0);
-                AnchorPaneNode.setLeftAnchor(jourNom, 15.0);
+                AnchorPane.setTopAnchor(jourNom, 15.0);
+                AnchorPane.setLeftAnchor(jourNom, 15.0);
                 ap.getChildren().add(jourNom);
                 Text jourNumero = new Text(String.valueOf(jourDebut));
                 jourDebut += 1;
-                AnchorPaneNode.setBottomAnchor(jourNumero, 15.0);
-                AnchorPaneNode.setLeftAnchor(jourNumero, 10.0);
+                AnchorPane.setBottomAnchor(jourNumero, 15.0);
+                AnchorPane.setLeftAnchor(jourNumero, 10.0);
                 ap.getChildren().add(jourNumero);
             }
         }
@@ -271,34 +276,49 @@ public class Calendrier {
 
     private void afficherReservations(int day){
         resaLayout.getChildren().clear();
-        //System.out.println(resaLayout.isVisible());
         for (int i=0; i < Horaires.values().length; i++){
-            AnchorPaneNode ap = new AnchorPaneNode();
+            AnchorPane ap = new AnchorPane();
             ap.getStyleClass().add("resa-pane");
             ap.setPrefSize(1000,120);
             resaLayout.add(ap,0,i);
+            AnchorPane ap2 = new AnchorPane();
             Text horaire = new Text(Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
-            AnchorPaneNode.setTopAnchor(horaire, 10.0);
-            AnchorPaneNode.setLeftAnchor(horaire, 10.0);
-            ap.getChildren().add(horaire);
-            //System.out.println(Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
+            ap2.getStyleClass().add("horaire-pane-non-reserve");
+            ap2.setTopAnchor(horaire, 0.0);
+            ap2.setLeftAnchor(horaire, 10.0);
+            ap2.setRightAnchor(horaire, 10.0);
+            ap.setTopAnchor(ap2, 10.0);
+            ap.setLeftAnchor(ap2, 20.0);
+            ap.getChildren().add(ap2);
+            ap2.getChildren().add(horaire);
             for (int j=0; j < reservations.size(); j++){
-                //Verification de la date et de l'heure
-                //System.out.println("1) expect : " + reservations.get(j).getHeureDebut() + " get : " + Horaires.values()[i].getDebut());
-                //System.out.println("2) expect : " + reservations.get(j).getDate() + " get : " + LocalDate.of(2024, currentMonth + 1, day));
                 if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day))){
                     //affichage des joueurs
+                    AnchorPane ap3 = new AnchorPane(); //Pane pour les joueurs
                     Text joueurs = new Text();
                     for (int k = 0; k < reservations.get(j).getJoueurs().size(); k++){
                         joueurs.setText(joueurs.getText() + reservations.get(j).getJoueurs().get(k).getNom().toUpperCase() + " " + reservations.get(j).getJoueurs().get(k).getPrenom() + "\n");      
                     }
-                    AnchorPaneNode.setTopAnchor(joueurs, 10.0);
-                    AnchorPaneNode.setLeftAnchor(joueurs, 300.0);
-                    ap.getChildren().add(joueurs);
-                    Text terrain = new Text("Terrain : " + String.valueOf(reservations.get(j).getTerrain().getNumero()));
-                    AnchorPaneNode.setTopAnchor(terrain, 30.0);
-                    AnchorPaneNode.setLeftAnchor(terrain, 10.0);
-                    ap.getChildren().add(terrain);
+                    ap3.getStyleClass().add("joueurs-pane");
+                    ap3.setTopAnchor(joueurs, 10.0);
+                    ap3.setLeftAnchor(joueurs, 10.0);
+                    ap3.setRightAnchor(joueurs, 10.0);
+                    ap.setTopAnchor(ap3, 10.0);
+                    ap.setLeftAnchor(ap3, 400.0);
+                    ap.getChildren().add(ap3);
+                    ap3.getChildren().add(joueurs);
+                    AnchorPane ap4 = new AnchorPane(); //Pane du terrain
+                    Text terrain = new Text("Terrain " + String.valueOf(reservations.get(j).getTerrain().getNumero()));
+                    
+                    ap4.getStyleClass().add("terrain-pane");
+                    ap4.setTopAnchor(terrain, 5.0);
+                    ap4.setBottomAnchor(terrain, 5.0);
+                    ap4.setLeftAnchor(terrain, 10.0);
+                    ap4.setRightAnchor(terrain, 10.0);
+                    ap.setTopAnchor(ap4, 70.0);
+                    ap.setLeftAnchor(ap4, 20.0);
+                    ap.getChildren().add(ap4);
+                    ap4.getChildren().add(terrain);
                 }
             }
         }

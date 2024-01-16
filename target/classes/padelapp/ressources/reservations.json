@@ -18,6 +18,24 @@
           "id": 2,
           "niveau": 4,
           "dateDeNaissance": "1985-01-01"
+        },
+        {
+          "email": "joueur2@example.com",
+          "motDePasse": "password2",
+          "nom": "Nom2",
+          "prenom": "Prenom2",
+          "id": 2,
+          "niveau": 4,
+          "dateDeNaissance": "1985-01-01"
+        },
+        {
+          "email": "joueur2@example.com",
+          "motDePasse": "password2",
+          "nom": "Nom2",
+          "prenom": "Prenom2",
+          "id": 2,
+          "niveau": 4,
+          "dateDeNaissance": "1985-01-01"
         }
       ],
       "estPaye": true,
