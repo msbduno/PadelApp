@@ -1,6 +1,5 @@
 package padelapp.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -49,19 +48,10 @@ public class Calendrier {
 
     public Calendrier(LocalDate date,Moderateur moderateur){
         this.moderateur = moderateur;
-        //Chargement des reservations
-        String url = "jdbc:mysql://192.168.56.81/PadelApp";
-        String username = "admin";
-        String password = "network";
-        try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            System.out.println("Oops, error!");
-            e.printStackTrace();
-        }
+        
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
-        System.out.println(this.moderateur.getEmail());
+        //System.out.println(this.moderateur.getEmail());
 
         //Affichage des mois        
         for (int i = 0; i < 12; i++){
@@ -325,13 +315,14 @@ public class Calendrier {
     }
 
     public void updateReservationsBDD() throws SQLException{
-        String url = "jdbc:mysql://http://192.168.56.81/myadmin"; //Url de connexion a la BDD
-        String username = "admin"; //ID de connexion    
-        String password = "network"; //MDP de connexion
+        //Chargement des reservations
+        String url = "jdbc:mysql://192.168.56.81/PadelApp";
+        String username = "admin";
+        String password = "network";
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            System.out.println("Oops, error!");
+            System.out.println("Connexion a la BDD impossible");
             e.printStackTrace();
         }
         
@@ -364,7 +355,6 @@ public class Calendrier {
 
     public Moderateur getModerateur() {
         return moderateur;
-    }
-    
+    }  
 
 }
