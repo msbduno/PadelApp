@@ -19,11 +19,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import padelapp.interactions.Horaires;
 import padelapp.interactions.Reservation;
@@ -46,7 +48,7 @@ public class Calendrier {
                             new Text("Aout") , new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
                             new Text("Decembre")};             
 
-    public Calendrier(LocalDate date,Moderateur moderateur){
+    public Calendrier(LocalDate date, Moderateur moderateur){
         this.moderateur = moderateur;
         
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
@@ -55,7 +57,7 @@ public class Calendrier {
 
         //Affichage des mois        
         for (int i = 0; i < 12; i++){
-            AnchorPane ap = new AnchorPane();
+            StackPane ap = new StackPane();
             //Lancement de l'application 
             if (i == date.getMonthValue() - 1){ 
                 ap.getStyleClass().remove("month-pane");
@@ -71,14 +73,14 @@ public class Calendrier {
             //Etape necessaire pour que la variable soit accessible dans la fonction handle
             final LocalDate finalDate = date;
             final int finalMonth = i+ 1;
-            final AnchorPane finalAp = ap;
+            final StackPane finalAp = ap;
             ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     
                     //Surligner en blanc tous les mois
                     for (Node node : monthBox.getChildren()){
-                        if (node instanceof AnchorPane){
+                        if (node instanceof StackPane){
                             node.getStyleClass().remove("month-pane-highlighted");
                             node.getStyleClass().add("month-pane");
                         }
@@ -97,9 +99,14 @@ public class Calendrier {
             });
 
             ap.setPrefSize(140, 80);
-            AnchorPane.setTopAnchor(mois[i], 15.0);
-            AnchorPane.setLeftAnchor(mois[i], 18.0);
+            /*
+            ap.setTopAnchor(mois[i], 0.0);
+            ap.setLeftAnchor(mois[i], 0.0);
+            ap.setBottomAnchor(mois[i], 0.0);
+            ap.setRightAnchor(mois[i], 0.0);
+            */
             ap.getChildren().add(mois[i]);
+             
             monthBox.add(ap,0, i);
         }
 
@@ -175,12 +182,12 @@ public class Calendrier {
                 dayBox.add(ap,0,i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
                 AnchorPane.setTopAnchor(jourNom, 15.0);
-                AnchorPane.setLeftAnchor(jourNom, 20.0);
+                AnchorPane.setLeftAnchor(jourNom, 15.0);
                 ap.getChildren().add(jourNom);
                 Text jourNumero = new Text(String.valueOf(jourActuel));
                 jourActuel += 1;
-                AnchorPane.setBottomAnchor(jourNumero, 10.0);
-                AnchorPane.setLeftAnchor(jourNumero, 30.0);
+                AnchorPane.setBottomAnchor(jourNumero, 15.0);
+                AnchorPane.setLeftAnchor(jourNumero, 10.0);
                 ap.getChildren().add(jourNumero);
             }
         }
@@ -266,51 +273,76 @@ public class Calendrier {
 
     private void afficherReservations(int day){
         resaLayout.getChildren().clear();
-        for (int i=0; i < Horaires.values().length; i++){
-            AnchorPane ap = new AnchorPane();
-            ap.getStyleClass().add("resa-pane");
-            ap.setPrefSize(1000,120);
-            resaLayout.add(ap,0,i);
-            AnchorPane ap2 = new AnchorPane();
-            Text horaire = new Text(Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
-            ap2.getStyleClass().add("horaire-pane-non-reserve");
-            ap2.setTopAnchor(horaire, 0.0);
-            ap2.setLeftAnchor(horaire, 10.0);
-            ap2.setRightAnchor(horaire, 10.0);
-            ap.setTopAnchor(ap2, 10.0);
-            ap.setLeftAnchor(ap2, 20.0);
-            ap.getChildren().add(ap2);
-            ap2.getChildren().add(horaire);
-            for (int j=0; j < reservations.size(); j++){
-                if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day))){
-                    //affichage des joueurs
-                    AnchorPane ap3 = new AnchorPane(); //Pane pour les joueurs
-                    Text joueurs = new Text();
-                    for (int k = 0; k < reservations.get(j).getJoueurs().size(); k++){
-                        joueurs.setText(joueurs.getText() + reservations.get(j).getJoueurs().get(k).getNom().toUpperCase() + " " + reservations.get(j).getJoueurs().get(k).getPrenom() + "\n");      
+        int m = 0;
+        for (int i=0; i < Horaires.values().length; i++){ //Chaque horaire
+            for (int l = 0; l < 4; l++){ //Pour chaque terrain par heure 
+                AnchorPane ap = new AnchorPane();
+                //Afficher une reservation
+                ap.getStyleClass().add("resa-pane");
+                ap.setPrefSize(1000,120);
+                resaLayout.add(ap,0,m);
+                m++;
+                //Afficher l'horaire
+                AnchorPane ap2 = new AnchorPane();
+                Text horaire = new Text(Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
+                ap2.getStyleClass().add("horaire-pane-non-reserve");
+                ap2.setTopAnchor(horaire, 0.0);
+                ap2.setLeftAnchor(horaire, 10.0);
+                ap2.setRightAnchor(horaire, 10.0);
+                ap.setTopAnchor(ap2, 20.0);
+                ap.setLeftAnchor(ap2, 20.0);
+                ap.getChildren().add(ap2);
+                ap2.getChildren().add(horaire);
+
+                //Afficher le terrain
+                StackPane ap4 = new StackPane(); 
+                Text terrain = new Text(" Terrain " + String.valueOf(l+1) + " ");
+                ap4.getStyleClass().add("terrain-pane");
+                ap.setTopAnchor(ap4, 70.0);
+                ap.setLeftAnchor(ap4, 40.0);
+                ap.getChildren().add(ap4);
+                ap4.getChildren().add(terrain);
+
+                //Afficher le bouton supprimer
+                Button supprBtn = new Button("SUPPRIMER");
+                supprBtn.getStyleClass().add("boutons-pane");
+                AnchorPane.setTopAnchor(supprBtn, 20.0);
+                AnchorPane.setLeftAnchor(supprBtn, 800.0);
+                ap.getChildren().add(supprBtn);
+
+                //Afficher le bouton modifier
+                Button modifBtn = new Button("MODIFIER");
+                modifBtn.getStyleClass().add("boutons-pane");
+                AnchorPane.setTopAnchor(modifBtn, 70.0);
+                AnchorPane.setLeftAnchor(modifBtn, 800.0);
+                ap.getChildren().add(modifBtn);
+
+                for (int j=0; j < reservations.size(); j++){
+                    if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) 
+                    && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day)) 
+                    && reservations.get(j).getTerrain().getNumero() == l+1){
+                        //affichage des joueurs
+                        AnchorPane ap3 = new AnchorPane(); //Pane pour les joueurs
+                        Text joueurs = new Text();
+                        for (int k = 0; k < reservations.get(j).getJoueurs().size(); k++){
+                            joueurs.setText(joueurs.getText() + reservations.get(j).getJoueurs().get(k).getNom().toUpperCase() + " " + reservations.get(j).getJoueurs().get(k).getPrenom() + "\n");      
+                        }
+                        ap3.getStyleClass().add("joueurs-pane");
+                        ap3.setTopAnchor(joueurs, 10.0);
+                        ap3.setLeftAnchor(joueurs, 10.0);
+                        ap3.setRightAnchor(joueurs, 10.0);
+                        ap.setTopAnchor(ap3, 10.0);
+                        ap.setLeftAnchor(ap3, 400.0);
+                        ap.getChildren().add(ap3);
+                        ap3.getChildren().add(joueurs);
+
+                        //Changement de l'horaire en reservé
+                        ap2.getStyleClass().remove("horaire-pane-non-reserve");
+                        ap2.getStyleClass().add("horaire-pane-reserve");
                     }
-                    ap3.getStyleClass().add("joueurs-pane");
-                    ap3.setTopAnchor(joueurs, 10.0);
-                    ap3.setLeftAnchor(joueurs, 10.0);
-                    ap3.setRightAnchor(joueurs, 10.0);
-                    ap.setTopAnchor(ap3, 10.0);
-                    ap.setLeftAnchor(ap3, 400.0);
-                    ap.getChildren().add(ap3);
-                    ap3.getChildren().add(joueurs);
-                    AnchorPane ap4 = new AnchorPane(); //Pane du terrain
-                    Text terrain = new Text("Terrain " + String.valueOf(reservations.get(j).getTerrain().getNumero()));
-                    
-                    ap4.getStyleClass().add("terrain-pane");
-                    ap4.setTopAnchor(terrain, 5.0);
-                    ap4.setBottomAnchor(terrain, 5.0);
-                    ap4.setLeftAnchor(terrain, 10.0);
-                    ap4.setRightAnchor(terrain, 10.0);
-                    ap.setTopAnchor(ap4, 70.0);
-                    ap.setLeftAnchor(ap4, 20.0);
-                    ap.getChildren().add(ap4);
-                    ap4.getChildren().add(terrain);
                 }
             }
+            
         }
     }
 

@@ -15,6 +15,7 @@ public class Utilisateur {
         this.prenom = p;
     }
 
+
     public String getEmail() {
         return email;
     }
