@@ -31,6 +31,8 @@ public class DatabaseThread extends Thread {
             // Etape 4 : Ecriture des données au format JSON dans un fichier
             writeDataToJsonFile(this.reservations);
 
+            System.out.println("Données extraites de la base de données et écrites dans le fichier " + outputPath);
+
             // Fermeture de la connexion
             connection.close();
         } catch (SQLException e) {
