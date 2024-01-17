@@ -14,10 +14,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import padelapp.interactions.Reservation;
 
 public class DatabaseThread extends Thread {
-    String url = "jdbc:mysql://http://192.168.56.81/myadmin"; //Url de connexion a la BDD
+    String url = "jdbc:mysql://192.168.56.81/PadelApp"; //Url de connexion a la BDD
     String username = "admin"; //ID de connexion    
     String password = "network"; //MDP de connexion
-    String outputPath = "/padelapp/ressources/reservations.json";
+    String outputPath = "src/main/java/padelapp/ressources/reservations.json";
+    List<Reservation> reservations = new ArrayList<Reservation>();
 
     @Override
     public void run() {
@@ -25,10 +26,10 @@ public class DatabaseThread extends Thread {
             Connection connection = DriverManager.getConnection(url, username, password);
 
             // Etape 3 : Extraction des données
-            List<Reservation> data = fetchDataFromDatabase(connection);
+            this.reservations = fetchDataFromDatabase(connection);
 
             // Etape 4 : Ecriture des données au format JSON dans un fichier
-            writeDataToJsonFile(data);
+            writeDataToJsonFile(this.reservations);
 
             // Fermeture de la connexion
             connection.close();
@@ -41,7 +42,7 @@ public class DatabaseThread extends Thread {
         List<Reservation> dataList = new ArrayList<>();
 
         // Utilisez PreparedStatement pour éviter les attaques par injection SQL
-        String query = "SELECT * FROM Reservation";
+        String query = "SELECT * FROM reservation";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -64,6 +65,10 @@ public class DatabaseThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
     public static void main(String[] args) {

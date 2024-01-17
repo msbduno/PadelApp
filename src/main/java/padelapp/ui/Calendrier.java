@@ -43,6 +43,7 @@ public class Calendrier {
     private GridPane dayBox = new GridPane();
     private ScrollPane scrollResa = new ScrollPane();
     private List<Reservation> reservations;
+    private DatabaseThread dbThread = new DatabaseThread();
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
                             new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"), 
                             new Text("Aout") , new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
@@ -50,6 +51,8 @@ public class Calendrier {
 
     public Calendrier(LocalDate date, Moderateur moderateur){
         this.moderateur = moderateur;
+
+        this.dbThread.run();
         
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
