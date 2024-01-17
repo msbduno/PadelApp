@@ -22,8 +22,8 @@
         {
           "email": "joueur2@example.com",
           "motDePasse": "password2",
-          "nom": "Nom2",
-          "prenom": "Prenom2",
+          "nom": "Nom3",
+          "prenom": "Prenom3",
           "id": 2,
           "niveau": 4,
           "dateDeNaissance": "1985-01-01"
@@ -31,8 +31,8 @@
         {
           "email": "joueur2@example.com",
           "motDePasse": "password2",
-          "nom": "Nom2",
-          "prenom": "Prenom2",
+          "nom": "Nom3",
+          "prenom": "Prenom3",
           "id": 2,
           "niveau": 4,
           "dateDeNaissance": "1985-01-01"
@@ -41,7 +41,7 @@
       "estPaye": true,
       "publique": false,
       "heureDebut": "10:30:00",
-      "date": "2024-01-16",
+      "date": "2024-01-17",
       "terrain": {
         "numero": 1,
         "estReserve": true
@@ -62,7 +62,7 @@
       "estPaye": false,
       "publique": true,
       "heureDebut": "13:30:00",
-      "date": "2024-01-13",
+      "date": "2024-01-17",
       "terrain": {
         "numero": 2,
         "estReserve": false

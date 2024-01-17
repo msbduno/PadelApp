@@ -1,6 +1,6 @@
 .month-pane {
     -fx-border-color: #000;
-    -fx-border-width: 1px;
+    -fx-border-width: 0.5px;
     -fx-background-color: #A0A0A0;
     -fx-text-fill: #000;
     -fx-font-family: 'Inter';
@@ -10,8 +10,8 @@
 
 .month-pane-highlighted {
     -fx-border-color: #000;
-    -fx-border-width: 1px;
-    -fx-background-color: #5D5BB9;
+    -fx-border-width: 0.5px;
+    -fx-background-color: #5551FF;
     -fx-text-fill: #000;
     -fx-font-family: 'Inter';
     -fx-font-size: 16px;
@@ -21,7 +21,7 @@
 
 .day-pane {
     -fx-border-color: #000;
-    -fx-border-width: 1px;
+    -fx-border-width: 0.5px;
     -fx-background-color: #E4DDDD;
     -fx-text-fill: #000;
     -fx-font-family: 'Inter';
@@ -31,8 +31,8 @@
 
 .day-pane-highlighted {
     -fx-border-color: #000;
-    -fx-border-width: 1px;
-    -fx-background-color: #5D5BB9;
+    -fx-border-width: 0.5px;
+    -fx-background-color: #5551FF;
     -fx-text-fill: #000;
     -fx-font-family: 'Inter';
     -fx-font-size: 16px;
@@ -72,10 +72,20 @@
     -fx-line-spacing: 44.8px;
 }
 
+.boutons-pane {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: #FFFF;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 20px;
+    -fx-font-weight: BOLD;
+}
+
 .horaire-pane-reserve {
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-background-color: #3F0;
+    -fx-background-color: #F00;
     -fx-text-fill: #000;
     -fx-font-family: 'Inter';
     -fx-font-size: 20px;
@@ -86,7 +96,7 @@
 .horaire-pane-non-reserve {
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-background-color: #F00;
+    -fx-background-color: #3F0;
     -fx-text-fill: #000;
     -fx-font-family: 'Inter';
     -fx-font-size: 20px;
