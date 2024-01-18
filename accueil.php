@@ -1,7 +1,6 @@
 <?php
 
-$_TITRE_PAGE = '4 GLASS WALLS';
-
+include 'informationProfil.php';
 ?>
 
 
@@ -16,7 +15,7 @@ $_TITRE_PAGE = '4 GLASS WALLS';
     <title>
         <?php echo $_TITRE_PAGE ?>
     </title>
-    <link href="style2.css" rel="stylesheet" type="text/css" />
+    <link href="style3.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -68,7 +67,21 @@ $_TITRE_PAGE = '4 GLASS WALLS';
             <div class="Profil"> Profil </div>
 
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a style="color:white" href="index.php">DECONNEXION</a> </div>
+            <div class="photoProfil">
+                <img src="images/default_profil_picture.png" alt="Photo de profil par défaut" width=150px height=150px>
+            </div>
+            <div class="afficherNomProfil">
+                Bonjour
+                <?php echo $prenomUtilisateur ?>
+                <?php echo $nomUtilisateur ?>
+
+            </div>
+            <div class="afficherNiveauProfil">
+                Votre niveau de Padel :
+                <?php echo $niveauUtilisateur ?>
+            </div>
+
+            <div class="Deconnexion"> <a style="color:white" href="index.php">DECONNEXION</a> </div>
         </div>
     </div>
 

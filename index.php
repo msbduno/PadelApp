@@ -2,7 +2,9 @@
 
 include 'core.php';
 
-$_SESSION['compte'] = '';
+
+//$_SESSION['compte'] = '';
+unset($_SESSION['compte']);
 
 
 if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
@@ -32,9 +34,6 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 }
 
 
-
-
-
 ?>
 
 
@@ -52,7 +51,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
     <title>
         <?php echo $_TITRE_PAGE ?>
     </title>
-    <link href="style2.css" rel="stylesheet" type="text/css" />
+    <link href="style3.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -134,7 +133,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
 
     </div>
 
-    
+
 
 
 

@@ -1,3 +1,9 @@
+<?php
+include 'informationProfil.php';
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>4 Glass Walls</title>
-    <link href="style2.css" rel="stylesheet" type="text/css" />
+    <link href="style3.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -57,9 +63,23 @@
         <div id="MonProf_content" class="MonProfil_content">
             <!--  -->
             <div class="Profil"> Profil </div>
-            <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
+
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a style="color:white" href="index.php">DECONNEXION</a> </div>
+            <div class="photoProfil">
+                <img src="images/default_profil_picture.png" alt="Photo de profil par défaut" width=150px height=150px>
+            </div>
+            <div class="afficherNomProfil">
+                Bonjour
+                <?php echo $prenomUtilisateur ?>
+                <?php echo $nomUtilisateur ?>
+
+            </div>
+            <div class="afficherNiveauProfil">
+                Votre niveau de Padel :
+                <?php echo $niveauUtilisateur ?>
+            </div>
+
+            <div class="Deconnexion"> <a style="color:white" href="index.php">DECONNEXION</a> </div>
         </div>
     </div>
 

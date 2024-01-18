@@ -1,5 +1,6 @@
 <?php
 
+
 // Titre des différentes pages
 $_TITRE_PAGE = '4 GLASS WALLS';
 
@@ -12,7 +13,7 @@ session_start();
 
 // Informations BDD
 $servername = "localhost";
-$username = "moodle_user";
+$username = "moodle_use";
 $password = "network";
 $dbname = "moodle";
 
@@ -24,9 +25,12 @@ if ($conn->connect_error) {
     die("Échec de la connexion : " . $conn->connect_error);
 }
 
+/*
 if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     unset($_SESSION['compte']);
     header("Location: ./");
 }
+*/
+
 
 ?>

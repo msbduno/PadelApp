@@ -1,6 +1,7 @@
 <?php
 
 include 'core.php';
+include 'informationProfil.php';
 
 $_SESSION['compte'] = '';
 
@@ -52,7 +53,7 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
     <title>
         <?php echo $_TITRE_PAGE ?>
     </title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style3.css" />
 
 </head>
 
@@ -130,13 +131,27 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
         </div>
 
 
-        <button id="MonProf_btn" class="MonProfil_btn">MON PROFIL</button>
+        <<button id="MonProf_btn" class="MonProfil_btn">MON PROFIL </button>
         <div id="MonProf_content" class="MonProfil_content">
             <!--  -->
             <div class="Profil"> Profil </div>
-            <div class="Gerer"> Gerer <a> Paramètres du compte </a> </div>
+
             <div class="Barre_MonProfil"> </div>
-            <div class="Deconnexion "> <a class="button4" href="index.php">DECONNEXION</a> </div>
+            <div class="photoProfil">
+                <img src="images/default_profil_picture.png" alt="Photo de profil par défaut" width=150px height=150px>
+            </div>
+            <div class="afficherNomProfil">
+                Bonjour
+                <?php echo $prenomUtilisateur ?>
+                <?php echo $nomUtilisateur ?>
+
+            </div>
+            <div class="afficherNiveauProfil">
+                Votre niveau de Padel :
+                <?php echo $niveauUtilisateur ?>
+            </div>
+
+            <div class="Deconnexion"> <a style="color:white" href="index.php">DECONNEXION</a> </div>
         </div>
 
     </div>

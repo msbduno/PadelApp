@@ -1,7 +1,8 @@
 <?php
 include 'core.php';
 
-$_SESSION['compte'] = '';
+//$_SESSION['compte'] = '';
+unset($_SESSION['compte']);
 
 
 if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
@@ -26,7 +27,7 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
                 nom = '$nom_escaped',
                 prenom = '$prenom_escaped',
                 niveau = '$niveau_escaped',
-                numeroTelephone = '0788553227'";
+                estModerateur = '0'";
 
             $result = $conn->query($sql);
             if (!$result) {
@@ -59,7 +60,7 @@ if (isset($_POST['subscribe_submit']) && $_POST['subscribe_submit'] == 1) {
     <title>
         <?php echo $_TITRE_PAGE ?>
     </title>
-    <link href="style2.css" rel="stylesheet" type="text/css" />
+    <link href="style3.css" rel="stylesheet" type="text/css" />
 
 </head>
 
