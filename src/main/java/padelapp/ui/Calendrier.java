@@ -335,6 +335,10 @@ public class Calendrier {
                     if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) 
                     && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day)) 
                     && reservations.get(j).getTerrain().getNumero() == l+1){
+                        //Pour que les variables soient tjrs accessibles
+                        final boolean finalEstPaye = reservations.get(j).getEstPaye();
+                        final int indexRes = j;
+
                         //Affichage des joueurs
                         AnchorPane ap3 = new AnchorPane(); //Pane pour les joueurs
                         Text joueurs = new Text();
@@ -360,30 +364,20 @@ public class Calendrier {
                             payeBtn.setText("Statut : Payé");
                             payeBtn.getStyleClass().remove("non-paye-button");
                             payeBtn.getStyleClass().add("paye-button");
-                            //Ajouter une fonction pour changer le statut dans la BDD
                         }
                         else {
                             payeBtn.setText("Statut : Non Payé");
                             payeBtn.getStyleClass().remove("paye-button");
                             payeBtn.getStyleClass().add("non-paye-button");
-                            //Ajouter une fonction pour changer le statut dans la BDD
                         }
+                        
                         payeBtn.setOnAction(event -> {
-                            if (payeBtn.getText().equals("Statut : Payé")) {
-                                payeBtn.setText("Statut : Non Payé");
-                                payeBtn.getStyleClass().remove("paye-button");
-                                payeBtn.getStyleClass().add("non-paye-button");
-                            } else {
-                                payeBtn.setText("Statut : Payé");
-                                payeBtn.getStyleClass().remove("non-paye-button");
-                                payeBtn.getStyleClass().add("paye-button");
-                            }
+                            updatePaye(payeBtn, finalEstPaye, indexRes);
                         });
                         AnchorPane.setTopAnchor(payeBtn, 30.0);
                         AnchorPane.setLeftAnchor(payeBtn, 500.0);
                         ap.getChildren().add(payeBtn);
 
-                        final int indexRes = j;
                         //Event pour le bouton supprimer
                         supprBtn.setOnAction(event -> {
                             deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation());
@@ -419,7 +413,7 @@ public class Calendrier {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
-            //Gérer la reservation supprimée (dans reservations.json et dans la BDD)
+            //TO DO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
             System.out.println("Reservation " + idReservation + " supprimée");
             bouton.getStyleClass().remove("boutons-clique");
             bouton.getStyleClass().add("boutons-normal");
@@ -428,6 +422,22 @@ public class Calendrier {
             System.out.println("Reservation " + idReservation + " gardée");
             bouton.getStyleClass().remove("boutons-clique");
             bouton.getStyleClass().add("boutons-normal");
+        }
+    }
+
+    public void updatePaye(Button bouton, boolean estPaye, int idReservation){
+        if (bouton.getText().equals("Statut : Payé")) {
+            bouton.setText("Statut : Non Payé");
+            bouton.getStyleClass().remove("paye-button");
+            bouton.getStyleClass().add("non-paye-button");
+            System.out.println("Reservation " + idReservation + " non payée");
+            //TO DO : Gérer le statut payé (dans reservations.json et dans la BDD)
+        } else {
+            bouton.setText("Statut : Payé");
+            bouton.getStyleClass().remove("non-paye-button");
+            bouton.getStyleClass().add("paye-button");
+            System.out.println("Reservation " + idReservation + " payée");
+            //TO DO : Gérer le statut payé (dans reservations.json et dans la BDD)
         }
     }
 

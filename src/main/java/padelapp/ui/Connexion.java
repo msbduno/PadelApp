@@ -70,7 +70,7 @@ public class Connexion extends Application {
         });
 
         
-        VBox vbox = new VBox(10, emailLabel, emailField, passwordLabel, passwordField, loginButton);
+        VBox vbox = new VBox(10, titleLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton);
         vbox.setPadding(new Insets(10));
         vbox.setMinSize(400, 400); // Set the size of the VBox
         vbox.setMaxSize(400, 400); // Set the size of the VBox
@@ -82,14 +82,16 @@ public class Connexion extends Application {
         AnchorPane.setLeftAnchor(vbox, 440.0);
         AnchorPane.setRightAnchor(vbox, 440.0);
 
+        /* 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(anchorPane);
         borderPane.setTop(titleLabel);
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
-        
-        Scene scene = new Scene(borderPane, 1280, 720);
+        */
+
+        Scene scene = new Scene(anchorPane, 1280, 720);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        borderPane.getStyleClass().add("connexion-pane");
+        anchorPane.getStyleClass().add("connexion-pane");
         emailLabel.getStyleClass().add("label-soft");
         passwordLabel.getStyleClass().add("label-soft");
         titleLabel.getStyleClass().add("label-bold");
