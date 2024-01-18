@@ -319,7 +319,7 @@ public class Calendrier {
                 AnchorPane.setTopAnchor(modifBtn, 70.0);
                 AnchorPane.setLeftAnchor(modifBtn, 800.0);
                 ap.getChildren().add(modifBtn);
-                
+
                 for (int j=0; j < reservations.size(); j++){
                     if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) 
                     && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day)) 
