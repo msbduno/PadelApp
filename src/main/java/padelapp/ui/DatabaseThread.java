@@ -25,6 +25,7 @@ public class DatabaseThread extends Thread {
     String password = "network"; //MDP de connexion
     String outputPath = "src/main/java/padelapp/ressources/reservations.json";
     List<Reservation> reservations = new ArrayList<Reservation>();
+    List<Moderateur> moderateurs = new ArrayList<Moderateur>();
 
     @Override
     public void run() {
@@ -33,9 +34,11 @@ public class DatabaseThread extends Thread {
 
             // Etape 3 : Extraction des données
             this.reservations = fetchReseravationFromDatabase(connection);
+            this.moderateurs = fetchModerateursFromDatabase(connection);
 
             // Etape 4 : Ecriture des données au format JSON dans un fichier
-            writeDataToJsonFile(this.reservations);
+            writeReservationToJsonFile(this.reservations);
+            writeModerateurToJsonFile(this.reservations);
 
             System.out.println("Données extraites de la base de données et écrites dans le fichier " + outputPath);
 
@@ -130,10 +133,10 @@ public class DatabaseThread extends Thread {
         return joueurs;
     }
 
-    private List<Moderateur> fetchModerateursFromDatabase(Connection connection, String idJoueurs) throws SQLException {
+    private List<Moderateur> fetchModerateursFromDatabase(Connection connection) throws SQLException {
         List<Moderateur> moderateurs = new ArrayList<>();
 
-        String query = "SELECT * FROM utilisateur WHERE estModerateur = 1 AND idUtilisateur = " + idJoueurs;
+        String query = "SELECT * FROM utilisateur WHERE estModerateur = 1";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             //preparedStatement.setInt(1, Integer.parseInt(id));
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -154,7 +157,22 @@ public class DatabaseThread extends Thread {
 
     
 
-    private void writeDataToJsonFile(List<Reservation> data) {
+    private void writeReservationToJsonFile(List<Reservation> data) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+
+        try {
+            // Utilisation de Jackson pour convertir les objets en format JSON
+            objectMapper.writeValue(new File(outputPath), data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeModerateurToJsonFile(List<Reservation> data) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -171,6 +189,10 @@ public class DatabaseThread extends Thread {
 
     public List<Reservation> getReservations() {
         return reservations;
+    }
+
+    public List<Moderateur> getModerateurs(){
+        return moderateurs;
     }
 
     public static void main(String[] args) {
