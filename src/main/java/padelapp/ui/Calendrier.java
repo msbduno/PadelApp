@@ -12,6 +12,7 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +20,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -55,8 +58,6 @@ public class Calendrier {
         this.dbThread.run();
         
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
-
-        //System.out.println(this.moderateur.getEmail());
 
         //Affichage des mois        
         for (int i = 0; i < 12; i++){
@@ -127,7 +128,7 @@ public class Calendrier {
         scrollResa.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         resaLayout.setVgap(5);
 
-        view = new HBox(monthBox, scrollDays, scrollResa);
+        this.view = new HBox(monthBox, scrollDays, scrollResa);
     }
 
     private void updateDaysDisplay(LocalDate date, int month) {
@@ -308,23 +309,37 @@ public class Calendrier {
 
                 //Afficher le bouton supprimer
                 Button supprBtn = new Button("SUPPRIMER");
-                supprBtn.getStyleClass().add("boutons-pane");
+                supprBtn.getStyleClass().add("boutons-normal");
+                
                 AnchorPane.setTopAnchor(supprBtn, 20.0);
                 AnchorPane.setLeftAnchor(supprBtn, 800.0);
                 ap.getChildren().add(supprBtn);
 
                 //Afficher le bouton modifier
                 Button modifBtn = new Button("MODIFIER");
-                modifBtn.getStyleClass().add("boutons-pane");
+                modifBtn.getStyleClass().add("boutons-normal");
+                modifBtn.setOnAction(event -> {
+                    if (modifBtn.getStyleClass().contains("boutons-normal")) {
+                        modifBtn.getStyleClass().remove("boutons-normal");
+                        modifBtn.getStyleClass().add("boutons-clique");
+                    } else {
+                        modifBtn.getStyleClass().remove("boutons-clique");
+                        modifBtn.getStyleClass().add("boutons-normal");
+                    }
+                });
                 AnchorPane.setTopAnchor(modifBtn, 70.0);
                 AnchorPane.setLeftAnchor(modifBtn, 800.0);
                 ap.getChildren().add(modifBtn);
-                
+
                 for (int j=0; j < reservations.size(); j++){
                     if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) 
                     && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day)) 
                     && reservations.get(j).getTerrain().getNumero() == l+1){
-                        //affichage des joueurs
+                        //Pour que les variables soient tjrs accessibles
+                        final boolean finalEstPaye = reservations.get(j).getEstPaye();
+                        final int indexRes = j;
+
+                        //Affichage des joueurs
                         AnchorPane ap3 = new AnchorPane(); //Pane pour les joueurs
                         Text joueurs = new Text();
                         for (int k = 0; k < reservations.get(j).getJoueurs().size(); k++){
@@ -335,13 +350,38 @@ public class Calendrier {
                         ap3.setLeftAnchor(joueurs, 10.0);
                         ap3.setRightAnchor(joueurs, 10.0);
                         ap.setTopAnchor(ap3, 10.0);
-                        ap.setLeftAnchor(ap3, 400.0);
+                        ap.setLeftAnchor(ap3, 250.0);
                         ap.getChildren().add(ap3);
                         ap3.getChildren().add(joueurs);
 
                         //Changement de l'horaire en reservé
                         ap2.getStyleClass().remove("horaire-pane-non-reserve");
                         ap2.getStyleClass().add("horaire-pane-reserve");
+
+                        //Affichage du statut (payé ou non)
+                        Button payeBtn = new Button(); //Bouton pour le statut
+                        if (reservations.get(j).getEstPaye() == true){
+                            payeBtn.setText("Statut : Payé");
+                            payeBtn.getStyleClass().remove("non-paye-button");
+                            payeBtn.getStyleClass().add("paye-button");
+                        }
+                        else {
+                            payeBtn.setText("Statut : Non Payé");
+                            payeBtn.getStyleClass().remove("paye-button");
+                            payeBtn.getStyleClass().add("non-paye-button");
+                        }
+                        
+                        payeBtn.setOnAction(event -> {
+                            updatePaye(payeBtn, finalEstPaye, indexRes);
+                        });
+                        AnchorPane.setTopAnchor(payeBtn, 30.0);
+                        AnchorPane.setLeftAnchor(payeBtn, 500.0);
+                        ap.getChildren().add(payeBtn);
+
+                        //Event pour le bouton supprimer
+                        supprBtn.setOnAction(event -> {
+                            deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation());
+                        });
                     }
                 }
             }
@@ -361,6 +401,44 @@ public class Calendrier {
             e.printStackTrace();
         }
         
+    }
+
+    public void deleteReservation(Button bouton, int idReservation){
+        bouton.getStyleClass().remove("boutons-normal");
+        bouton.getStyleClass().add("boutons-clique");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText("Suppression de la réservation " + idReservation);
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer cette réservation ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            //TO DO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
+            System.out.println("Reservation " + idReservation + " supprimée");
+            bouton.getStyleClass().remove("boutons-clique");
+            bouton.getStyleClass().add("boutons-normal");
+        }
+        else if (result.isPresent() && result.get() == ButtonType.CANCEL){
+            System.out.println("Reservation " + idReservation + " gardée");
+            bouton.getStyleClass().remove("boutons-clique");
+            bouton.getStyleClass().add("boutons-normal");
+        }
+    }
+
+    public void updatePaye(Button bouton, boolean estPaye, int idReservation){
+        if (bouton.getText().equals("Statut : Payé")) {
+            bouton.setText("Statut : Non Payé");
+            bouton.getStyleClass().remove("paye-button");
+            bouton.getStyleClass().add("non-paye-button");
+            System.out.println("Reservation " + idReservation + " non payée");
+            //TO DO : Gérer le statut payé (dans reservations.json et dans la BDD)
+        } else {
+            bouton.setText("Statut : Payé");
+            bouton.getStyleClass().remove("non-paye-button");
+            bouton.getStyleClass().add("paye-button");
+            System.out.println("Reservation " + idReservation + " payée");
+            //TO DO : Gérer le statut payé (dans reservations.json et dans la BDD)
+        }
     }
 
     public HBox getView() {
