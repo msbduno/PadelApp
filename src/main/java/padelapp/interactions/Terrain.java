@@ -6,7 +6,7 @@ public class Terrain {
 
     public Terrain (){}
 
-    public Terrain(int idT, int num, boolean estReserve){
+    public Terrain(int idT, int num){
         this.idTerrain = idT;
         this.numero = num;
     }

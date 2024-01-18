@@ -21,12 +21,12 @@ import padelapp.utilisateurs.Joueur;
 import padelapp.utilisateurs.Moderateur;
 
 public class DatabaseThread extends Thread {
-<<<<<<< HEAD
     String url; 
     String username; //ID de connexion    
     String password; //MDP de connexion
     String outputPath;
     List<Reservation> reservations;
+    List<Moderateur> moderateurs = new ArrayList<Moderateur>();
     private CountDownLatch latch;
     public boolean isDone;
 
@@ -50,14 +50,6 @@ public class DatabaseThread extends Thread {
         this.latch = ct;
         this.isDone = false;
     }
-=======
-    String url = "jdbc:mysql://192.168.56.81/PadelApp"; //Url de connexion a la BDD
-    String username = "admin"; //ID de connexion    
-    String password = "network"; //MDP de connexion
-    String outputPath = "src/main/java/padelapp/ressources/reservations.json";
-    List<Reservation> reservations = new ArrayList<Reservation>();
-    List<Moderateur> moderateurs = new ArrayList<Moderateur>();
->>>>>>> 7453d4e1652d5cd89fee4461421418e27a633722
 
     @Override
     public void run() {
@@ -183,7 +175,7 @@ public class DatabaseThread extends Thread {
                 moderateur.setNom(resultSet.getString("nom"));
                 moderateur.setPrenom(resultSet.getString("prenom"));
 
-                moderateurs.add((Moderateur) moderateurs);
+                moderateurs.add((Moderateur) moderateur);
             }
         }
 
@@ -226,17 +218,12 @@ public class DatabaseThread extends Thread {
         return reservations;
     }
 
-<<<<<<< HEAD
     public void setIsDown(boolean isDone) {
         this.isDone = isDone;
     }
 
     public boolean getIsDown() {
         return this.isDone;
-=======
-    public List<Moderateur> getModerateurs(){
-        return moderateurs;
->>>>>>> 7453d4e1652d5cd89fee4461421418e27a633722
     }
 
     public static void main(String[] args) {
