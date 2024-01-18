@@ -7,7 +7,17 @@
     "prenom" : "Mathis",
     "id" : 1,
     "niveau" : 5,
-    "dateDeNaissance" : null
+    "dateDeNaissance" : null,
+    "nomPrenom" : "GUILLOU Mathis"
+  }, {
+    "email" : "lopezalexis@gmail.com",
+    "motDePasse" : "password",
+    "nom" : "Lopez",
+    "prenom" : "Alexis",
+    "id" : 2,
+    "niveau" : 5,
+    "dateDeNaissance" : null,
+    "nomPrenom" : "LOPEZ Alexis"
   } ],
   "estPaye" : false,
   "publique" : true,
@@ -16,43 +26,5 @@
   "terrain" : {
     "idTerrain" : 1,
     "numero" : 1
-  }
-}, {
-  "idReservation" : 2,
-  "joueurs" : [ {
-    "email" : "mthsguillou@gmail.com",
-    "motDePasse" : "password",
-    "nom" : "Guillou",
-    "prenom" : "Mathis",
-    "id" : 1,
-    "niveau" : 5,
-    "dateDeNaissance" : null
-  } ],
-  "estPaye" : false,
-  "publique" : true,
-  "heureDebut" : "15:00:00",
-  "date" : "2024-01-18",
-  "terrain" : {
-    "idTerrain" : 2,
-    "numero" : 2
-  }
-}, {
-  "idReservation" : 3,
-  "joueurs" : [ {
-    "email" : "mthsguillou@gmail.com",
-    "motDePasse" : "password",
-    "nom" : "Guillou",
-    "prenom" : "Mathis",
-    "id" : 1,
-    "niveau" : 5,
-    "dateDeNaissance" : null
-  } ],
-  "estPaye" : false,
-  "publique" : true,
-  "heureDebut" : "15:00:00",
-  "date" : "2024-01-19",
-  "terrain" : {
-    "idTerrain" : 3,
-    "numero" : 3
   }
 } ]

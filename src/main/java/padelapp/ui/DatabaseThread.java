@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,11 +20,34 @@ import padelapp.interactions.Terrain;
 import padelapp.utilisateurs.Joueur;
 
 public class DatabaseThread extends Thread {
-    String url = "jdbc:mysql://192.168.56.81/PadelApp"; //Url de connexion a la BDD
-    String username = "admin"; //ID de connexion    
-    String password = "network"; //MDP de connexion
-    String outputPath = "src/main/java/padelapp/ressources/reservations.json";
-    List<Reservation> reservations = new ArrayList<Reservation>();
+    String url; 
+    String username; //ID de connexion    
+    String password; //MDP de connexion
+    String outputPath;
+    List<Reservation> reservations;
+    private CountDownLatch latch;
+    public boolean isDone;
+
+    public DatabaseThread() {
+        super();
+        this.url = "jdbc:mysql://192.168.56.81/PadelApp";//Url de connexion a la BDD
+        this.username = "admin"; //ID de connexion
+        this.password = "network"; //MDP de connexion
+        this.outputPath = "src/main/java/padelapp/ressources/reservations.json";
+        this.reservations = new ArrayList<Reservation>();
+    }
+
+    public DatabaseThread(CountDownLatch ct) {
+        //TODO Auto-generated constructor stub
+        super();
+        this.url = "jdbc:mysql://192.168.56.81/PadelApp";//Url de connexion a la BDD
+        this.username = "admin"; //ID de connexion
+        this.password = "network"; //MDP de connexion
+        this.outputPath = "src/main/java/padelapp/ressources/reservations.json";
+        this.reservations = new ArrayList<Reservation>();
+        this.latch = ct;
+        this.isDone = false;
+    }
 
     @Override
     public void run() {
@@ -40,6 +64,10 @@ public class DatabaseThread extends Thread {
 
             // Fermeture de la connexion
             connection.close();
+
+            latch.countDown();
+
+            this.isDone = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,9 +100,9 @@ public class DatabaseThread extends Thread {
 
                 // Pour la liste des joueurs, vous devez d'abord récupérer les identifiants des joueurs,
                 // puis utiliser ces identifiants pour récupérer les joueurs correspondants de la base de données.
-                String idJoueur = resultSet.getString("idUtilisateur");
-                List<Joueur> joueur = fetchJoueursFromDatabase(connection, idJoueur);
-                resa.setJoueurs(joueur);
+                int idReservation = resultSet.getInt("idReservation");
+                List<Joueur> joueurs = fetchJoueursFromDatabase(connection, idReservation);
+                resa.setJoueurs(joueurs);
 
                 resaList.add(resa);
             }
@@ -88,7 +116,6 @@ public class DatabaseThread extends Thread {
 
         String query = "SELECT * FROM terrain WHERE idTerrain = " + String.valueOf(idTerrain);
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            //preparedStatement.setObject(1, idTerrain);  // Utilisez setObject au lieu de setInt
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -101,32 +128,32 @@ public class DatabaseThread extends Thread {
         return terrain;
     }
 
-    private List<Joueur> fetchJoueursFromDatabase(Connection connection, String idJoueurs) throws SQLException {
+    private List<Joueur> fetchJoueursFromDatabase(Connection connection, int idReservation) throws SQLException {
         List<Joueur> joueurs = new ArrayList<>();
 
-        // Assuming idJoueurs is a comma-separated string of player IDs
-        String[] ids = idJoueurs.split(",");
+        String query = "SELECT * FROM joueurs WHERE idReservation = " + String.valueOf(idReservation) + " ORDER BY idUtilisateur ASC";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                String query2 = "SELECT * FROM utilisateur WHERE idUtilisateur = " + String.valueOf(resultSet.getInt("idUtilisateur"));
+                try (PreparedStatement stmt2 = connection.prepareStatement(query2)) {
+                    ResultSet resultSet2 = stmt2.executeQuery();
+                    if (resultSet2.next()) {
+                        Joueur joueur = new Joueur();
+                        joueur.setEmail(resultSet2.getString("email"));
+                        joueur.setMotDePasse(resultSet2.getString("motDePasse"));
+                        joueur.setNom(resultSet2.getString("nom"));
+                        joueur.setPrenom(resultSet2.getString("prenom"));
+                        joueur.setId(resultSet2.getInt("idUtilisateur"));
+                        joueur.setNiveau(resultSet2.getInt("niveau"));
 
-        for (String id : ids) {
-            String query = "SELECT * FROM utilisateur WHERE idUtilisateur = " + idJoueurs;
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                //preparedStatement.setInt(1, Integer.parseInt(id));
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()) {
-                    Joueur joueur = new Joueur();
-                    joueur.setEmail(resultSet.getString("email"));
-                    joueur.setMotDePasse(resultSet.getString("motDePasse"));
-                    joueur.setNom(resultSet.getString("nom"));
-                    joueur.setPrenom(resultSet.getString("prenom"));
-                    joueur.setId(resultSet.getInt("idUtilisateur"));
-                    joueur.setNiveau(resultSet.getInt("niveau"));
-
-                    joueurs.add(joueur);
+                        joueurs.add(joueur);
+                    }
                 }
             }
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
-
         return joueurs;
     }
 
@@ -147,6 +174,14 @@ public class DatabaseThread extends Thread {
 
     public List<Reservation> getReservations() {
         return reservations;
+    }
+
+    public void setIsDown(boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public boolean getIsDown() {
+        return this.isDone;
     }
 
     public static void main(String[] args) {

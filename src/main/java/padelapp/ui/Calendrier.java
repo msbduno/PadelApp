@@ -2,17 +2,16 @@ package padelapp.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,18 +19,27 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import padelapp.interactions.Horaires;
 import padelapp.interactions.Reservation;
+import padelapp.interactions.Terrain;
+import padelapp.utilisateurs.Joueur;
 import padelapp.utilisateurs.Moderateur;
 
 public class Calendrier {
@@ -46,7 +54,7 @@ public class Calendrier {
     private GridPane dayBox = new GridPane();
     private ScrollPane scrollResa = new ScrollPane();
     private List<Reservation> reservations;
-    private DatabaseThread dbThread = new DatabaseThread();
+    private DatabaseThread dbThread;
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
                             new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"), 
                             new Text("Aout") , new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
@@ -55,8 +63,18 @@ public class Calendrier {
     public Calendrier(LocalDate date, Moderateur moderateur){
         this.moderateur = moderateur;
         
-        this.dbThread.run();
-        
+
+        CountDownLatch latch = new CountDownLatch(1);
+
+        this.dbThread = new DatabaseThread(latch);
+
+        dbThread.start();
+
+        /*
+        while (this.dbThread.getIsDown() != true){   
+        }
+         */
+
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
         //Affichage des mois        
@@ -98,17 +116,10 @@ public class Calendrier {
                     
                     //Definir le mois cliqué
                     setCurrentMonth(finalMonth - 1);
-                    //System.out.println("Mois : " + mois[getCurrentMonth()].getText().toUpperCase());
                 }  
             });
 
             ap.setPrefSize(140, 80);
-            /*
-            ap.setTopAnchor(mois[i], 0.0);
-            ap.setLeftAnchor(mois[i], 0.0);
-            ap.setBottomAnchor(mois[i], 0.0);
-            ap.setRightAnchor(mois[i], 0.0);
-            */
             ap.getChildren().add(mois[i]);
              
             monthBox.add(ap,0, i);
@@ -175,9 +186,8 @@ public class Calendrier {
                         
                         //Definir le jour cliqué
                         setCurrentDay(daysInMonth.get(index));
-                        //System.out.println("Jour : " + getCurrentDay().getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
                         
-                        //afficher les reservations du jour cliqué
+                        //Afficher les reservations du jour cliqué
                         afficherReservations(date.getDayOfMonth() + index );
                     }  
                 });
@@ -227,9 +237,8 @@ public class Calendrier {
                         
                         //Definir le jour cliqué
                         setCurrentDay(daysInMonth.get(index));
-                        //System.out.println("Jour : " + getCurrentDay().getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
                         
-                        //afficher les reservations du jour cliqué
+                        //Afficher les reservations du jour cliqué
                         afficherReservations(index + 1);
                     }  
                 });
@@ -289,6 +298,8 @@ public class Calendrier {
                 //Afficher l'horaire
                 AnchorPane ap2 = new AnchorPane();
                 Text horaire = new Text(Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
+                LocalTime heureA = Horaires.values()[i].getDebut();
+                String horaireString = Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString();
                 ap2.getStyleClass().add("horaire-pane-non-reserve");
                 ap2.setTopAnchor(horaire, 0.0);
                 ap2.setLeftAnchor(horaire, 10.0);
@@ -301,6 +312,7 @@ public class Calendrier {
                 //Afficher le terrain
                 StackPane ap4 = new StackPane(); 
                 Text terrain = new Text(" Terrain " + String.valueOf(l+1) + " ");
+                String terrainString = "Terrain " + String.valueOf(l+1);
                 ap4.getStyleClass().add("terrain-pane");
                 ap.setTopAnchor(ap4, 70.0);
                 ap.setLeftAnchor(ap4, 40.0);
@@ -314,11 +326,11 @@ public class Calendrier {
                 AnchorPane.setTopAnchor(supprBtn, 20.0);
                 AnchorPane.setLeftAnchor(supprBtn, 800.0);
                 ap.getChildren().add(supprBtn);
-
+                
                 //Afficher le bouton modifier
                 Button modifBtn = new Button("MODIFIER");
                 modifBtn.getStyleClass().add("boutons-normal");
-                modifBtn.setOnAction(event -> {
+                modifBtn.setOnAction(e -> {
                     if (modifBtn.getStyleClass().contains("boutons-normal")) {
                         modifBtn.getStyleClass().remove("boutons-normal");
                         modifBtn.getStyleClass().add("boutons-clique");
@@ -326,6 +338,93 @@ public class Calendrier {
                         modifBtn.getStyleClass().remove("boutons-clique");
                         modifBtn.getStyleClass().add("boutons-normal");
                     }
+                    Stage stage = new Stage();
+                    VBox vbox = new VBox();
+
+                    // Ajoutez des champs pour entrer les détails de la réservation
+                    Label dateField = new Label("Date : " + LocalDate.of(2024, currentMonth + 1, day));
+                    Label timeField = new Label("Heure : " + horaireString);
+                    Label terrainField = new Label (terrainString);
+                    ComboBox<String> userComboBox = new ComboBox<>();
+                    userComboBox.setPromptText("Utilisateur");
+                    // Remplissez la liste déroulante avec les noms des utilisateurs
+                    List<Joueur> listJoueurs = fetchJoueursFromDatabase();
+                    for (Joueur j : listJoueurs){
+                        userComboBox.getItems().add(j.getNomPrenom());
+                    }
+                    Button creerUtilisateurButton = new Button("Créer un utilisateur");
+                    creerUtilisateurButton.setOnAction(e2 -> {
+                        Stage stage2 = new Stage();
+                        VBox vbox2 = new VBox();
+
+                        // Ajoutez des champs pour entrer les détails de l'utilisateur
+                        TextField emailField = new TextField();
+                        emailField.setPromptText("Email");
+                        TextField passwordField = new TextField();
+                        passwordField.setPromptText("Mot de passe");
+                        TextField nameField = new TextField();
+                        nameField.setPromptText("Nom");
+                        TextField prenomField = new TextField();
+                        prenomField.setPromptText("Prenom");
+                        TextField niveauField = new TextField();
+                        niveauField.setPromptText("Niveau");
+
+                        Button submitButton = new Button("Enregistrer nouvel utilisateur");
+                        submitButton.setOnAction(e3 -> {
+                            // Validez les entrées et créez un nouvel utilisateur
+                            String email = emailField.getText();
+                            String password = passwordField.getText();
+                            String nom = nameField.getText();
+                            String prenom = prenomField.getText();
+                            int level = Integer.parseInt(niveauField.getText());
+
+                            Joueur joueur = new Joueur(email,password,nom,prenom,listJoueurs.size() + 1,level);
+                            listJoueurs.add(joueur);
+
+                            // Ajoutez l'utilisateur à la base de données
+                            //TODO addUserToDatabase(email, password, name, surname, level);
+
+                            // Mettez à jour la liste déroulante des utilisateurs
+                            userComboBox.getItems().add(nom + " " + prenom);
+
+                            stage2.close();
+                        });
+
+                        vbox2.getChildren().addAll(emailField, passwordField, nameField, prenomField, niveauField, submitButton);
+                        Scene scene2 = new Scene(vbox2, 400, 400);
+                        stage2.setScene(scene2);
+                        stage2.show();
+                    });
+                    HBox hboxUtilisateurs = new HBox();
+                    hboxUtilisateurs.getChildren().addAll(userComboBox, creerUtilisateurButton);
+
+                    CheckBox payeCheckBox = new CheckBox("Payé");
+                    CheckBox publiqueCheckBox = new CheckBox("Publique");
+
+                    Button submitButton = new Button("Enregistrer");
+                    submitButton.setOnAction(e4 -> {
+                        // Validez les entrées et créez une nouvelle réservation
+                        int idRes = reservations.size() + 1;
+                        List<Joueur> joueurs = new ArrayList<>();
+                        joueurs.add(listJoueurs.get(userComboBox.getSelectionModel().getSelectedIndex()));
+                        boolean estPayeR = payeCheckBox.isSelected();
+                        LocalDate dateR = LocalDate.of(2024, currentMonth + 1, day);
+                        LocalTime heureDebutR = heureA;
+                        Terrain terrainR = new Terrain();
+                        //int idRes, List<Joueur> joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain
+                        // Ajoutez la réservation à la base de données
+                        //TODO addReservationToDatabase(date, time, userName);
+
+                        // Mettez à jour l'affichage du calendrier
+                        afficherReservations(day);
+
+                        stage.close();
+                    });
+
+                    vbox.getChildren().addAll(dateField, timeField,terrainField,hboxUtilisateurs,payeCheckBox, publiqueCheckBox,submitButton);
+                    Scene scene = new Scene(vbox, 600,600);
+                    stage.setScene(scene);
+                    stage.show();
                 });
                 AnchorPane.setTopAnchor(modifBtn, 70.0);
                 AnchorPane.setLeftAnchor(modifBtn, 800.0);
@@ -389,18 +488,10 @@ public class Calendrier {
         }
     }
 
-    public void updateReservationsBDD() throws SQLException{
-        //Chargement des reservations
-        String url = "jdbc:mysql://192.168.56.81/PadelApp";
-        String username = "admin";
-        String password = "network";
-        try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            System.out.println("Connexion a la BDD impossible");
-            e.printStackTrace();
-        }
-        
+
+    private List<Joueur> fetchJoueursFromDatabase() {
+        // TODO Auto-generated method stub
+        return reservations.get(0).getJoueurs();
     }
 
     public void deleteReservation(Button bouton, int idReservation){
@@ -413,7 +504,7 @@ public class Calendrier {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
-            //TO DO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
+            //TODO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
             System.out.println("Reservation " + idReservation + " supprimée");
             bouton.getStyleClass().remove("boutons-clique");
             bouton.getStyleClass().add("boutons-normal");
@@ -431,13 +522,13 @@ public class Calendrier {
             bouton.getStyleClass().remove("paye-button");
             bouton.getStyleClass().add("non-paye-button");
             System.out.println("Reservation " + idReservation + " non payée");
-            //TO DO : Gérer le statut payé (dans reservations.json et dans la BDD)
+            //TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
         } else {
             bouton.setText("Statut : Payé");
             bouton.getStyleClass().remove("non-paye-button");
             bouton.getStyleClass().add("paye-button");
             System.out.println("Reservation " + idReservation + " payée");
-            //TO DO : Gérer le statut payé (dans reservations.json et dans la BDD)
+            //TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
         }
     }
 

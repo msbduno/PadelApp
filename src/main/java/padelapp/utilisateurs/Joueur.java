@@ -14,11 +14,10 @@ public class Joueur extends Utilisateur{
         super();
     }
 
-    public Joueur(String em, String mdp, String n, String p, int id, int niv, Date date){
+    public Joueur(String em, String mdp, String n, String p, int id, int niv){
         super(em, mdp, n, p);
         this.id = id;
         this.niveau = niv;
-        this.dateDeNaissance = date;
     }
 
     public int getId() {
@@ -43,5 +42,9 @@ public class Joueur extends Utilisateur{
 
     public void setDateDeNaissance(Date dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
+    }
+
+    public String getNomPrenom(){
+        return this.getNom().toUpperCase() + " " + this.getPrenom();
     }
 }
