@@ -7,8 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Joueur extends Utilisateur{
     private int id;
     private int niveau;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date dateDeNaissance;
+
 
     public Joueur(){
         super();
@@ -28,10 +27,6 @@ public class Joueur extends Utilisateur{
         return niveau;
     }
     
-    public Date getDateDeNaissance() {
-        return dateDeNaissance;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -40,11 +35,8 @@ public class Joueur extends Utilisateur{
         this.niveau = niveau;
     }
 
-    public void setDateDeNaissance(Date dateDeNaissance) {
-        this.dateDeNaissance = dateDeNaissance;
-    }
 
-    public String getNomPrenom(){
+    public String stringNomPrenom(){
         return this.getNom().toUpperCase() + " " + this.getPrenom();
     }
 }

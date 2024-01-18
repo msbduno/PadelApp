@@ -1,23 +1,19 @@
 [ {
-  "idReservation" : 1,
+  "idReservation" : 0,
   "joueurs" : [ {
     "email" : "mthsguillou@gmail.com",
     "motDePasse" : "password",
     "nom" : "Guillou",
     "prenom" : "Mathis",
     "id" : 1,
-    "niveau" : 5,
-    "dateDeNaissance" : null,
-    "nomPrenom" : "GUILLOU Mathis"
+    "niveau" : 5
   }, {
     "email" : "lopezalexis@gmail.com",
     "motDePasse" : "password",
     "nom" : "Lopez",
     "prenom" : "Alexis",
     "id" : 2,
-    "niveau" : 5,
-    "dateDeNaissance" : null,
-    "nomPrenom" : "LOPEZ Alexis"
+    "niveau" : 5
   } ],
   "estPaye" : false,
   "publique" : true,

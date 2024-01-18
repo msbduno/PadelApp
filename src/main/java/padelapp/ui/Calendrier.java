@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,18 +61,10 @@ public class Calendrier {
 
     public Calendrier(LocalDate date, Moderateur moderateur){
         this.moderateur = moderateur;
-        
 
-        CountDownLatch latch = new CountDownLatch(1);
-
-        this.dbThread = new DatabaseThread(latch);
+        this.dbThread = new DatabaseThread();
 
         dbThread.start();
-
-        /*
-        while (this.dbThread.getIsDown() != true){   
-        }
-         */
 
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
@@ -312,7 +303,7 @@ public class Calendrier {
                 //Afficher le terrain
                 StackPane ap4 = new StackPane(); 
                 Text terrain = new Text(" Terrain " + String.valueOf(l+1) + " ");
-                String terrainString = "Terrain " + String.valueOf(l+1);
+                int numTerrain = l+1;
                 ap4.getStyleClass().add("terrain-pane");
                 ap.setTopAnchor(ap4, 70.0);
                 ap.setLeftAnchor(ap4, 40.0);
@@ -344,13 +335,15 @@ public class Calendrier {
                     // Ajoutez des champs pour entrer les détails de la réservation
                     Label dateField = new Label("Date : " + LocalDate.of(2024, currentMonth + 1, day));
                     Label timeField = new Label("Heure : " + horaireString);
-                    Label terrainField = new Label (terrainString);
+                    Label terrainField = new Label ("Terrain : " + numTerrain);
                     ComboBox<String> userComboBox = new ComboBox<>();
                     userComboBox.setPromptText("Utilisateur");
                     // Remplissez la liste déroulante avec les noms des utilisateurs
                     List<Joueur> listJoueurs = fetchJoueursFromDatabase();
-                    for (Joueur j : listJoueurs){
-                        userComboBox.getItems().add(j.getNomPrenom());
+                    if (listJoueurs.size() != 0){
+                        for (Joueur j : listJoueurs){
+                            userComboBox.getItems().add(j.stringNomPrenom());
+                        }
                     }
                     Button creerUtilisateurButton = new Button("Créer un utilisateur");
                     creerUtilisateurButton.setOnAction(e2 -> {
@@ -410,7 +403,9 @@ public class Calendrier {
                         boolean estPayeR = payeCheckBox.isSelected();
                         LocalDate dateR = LocalDate.of(2024, currentMonth + 1, day);
                         LocalTime heureDebutR = heureA;
-                        Terrain terrainR = new Terrain();
+                        Terrain terrainR = new Terrain(numTerrain,numTerrain);
+
+                        Reservation reservation = new Reservation(idRes, joueurs, estPayeR, estPayeR, heureDebutR, dateR, terrainR);
                         //int idRes, List<Joueur> joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain
                         // Ajoutez la réservation à la base de données
                         //TODO addReservationToDatabase(date, time, userName);
@@ -491,7 +486,7 @@ public class Calendrier {
 
     private List<Joueur> fetchJoueursFromDatabase() {
         // TODO Auto-generated method stub
-        return reservations.get(0).getJoueurs();
+        return null;
     }
 
     public void deleteReservation(Button bouton, int idReservation){

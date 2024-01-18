@@ -24,31 +24,19 @@ public class DatabaseThread extends Thread {
     String url; 
     String username; //ID de connexion    
     String password; //MDP de connexion
-    String outputPath;
+    String outputPath1;
+    String outputPath2;
     List<Reservation> reservations;
     List<Moderateur> moderateurs = new ArrayList<Moderateur>();
-    private CountDownLatch latch;
-    public boolean isDone;
 
     public DatabaseThread() {
         super();
         this.url = "jdbc:mysql://192.168.56.81/PadelApp";//Url de connexion a la BDD
         this.username = "admin"; //ID de connexion
         this.password = "network"; //MDP de connexion
-        this.outputPath = "src/main/java/padelapp/ressources/reservations.json";
+        this.outputPath1 = "src/main/java/padelapp/ressources/reservations.json";
+        this.outputPath2 = "src/main/java/padelapp/ressources/moderateurs.json";
         this.reservations = new ArrayList<Reservation>();
-    }
-
-    public DatabaseThread(CountDownLatch ct) {
-        //TODO Auto-generated constructor stub
-        super();
-        this.url = "jdbc:mysql://192.168.56.81/PadelApp";//Url de connexion a la BDD
-        this.username = "admin"; //ID de connexion
-        this.password = "network"; //MDP de connexion
-        this.outputPath = "src/main/java/padelapp/ressources/reservations.json";
-        this.reservations = new ArrayList<Reservation>();
-        this.latch = ct;
-        this.isDone = false;
     }
 
     @Override
@@ -58,20 +46,16 @@ public class DatabaseThread extends Thread {
 
             // Etape 3 : Extraction des données
             this.reservations = fetchReseravationFromDatabase(connection);
-            this.moderateurs = fetchModerateursFromDatabase(connection);
+            //this.moderateurs = fetchModerateursFromDatabase(connection);
 
             // Etape 4 : Ecriture des données au format JSON dans un fichier
             writeReservationToJsonFile(this.reservations);
-            writeModerateurToJsonFile(this.moderateurs);
+            //writeModerateurToJsonFile(this.moderateurs);
 
-            System.out.println("Données extraites de la base de données et écrites dans le fichier " + outputPath);
+            System.out.println("Données extraites de la base de données et écrites dans le fichier " + outputPath1);
 
             // Fermeture de la connexion
             connection.close();
-
-            latch.countDown();
-
-            this.isDone = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -193,7 +177,7 @@ public class DatabaseThread extends Thread {
 
         try {
             // Utilisation de Jackson pour convertir les objets en format JSON
-            objectMapper.writeValue(new File(outputPath), data);
+            objectMapper.writeValue(new File(outputPath1), data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -208,7 +192,7 @@ public class DatabaseThread extends Thread {
 
         try {
             // Utilisation de Jackson pour convertir les objets en format JSON
-            objectMapper.writeValue(new File(outputPath), data);
+            objectMapper.writeValue(new File(outputPath2), data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -216,14 +200,6 @@ public class DatabaseThread extends Thread {
 
     public List<Reservation> getReservations() {
         return reservations;
-    }
-
-    public void setIsDown(boolean isDone) {
-        this.isDone = isDone;
-    }
-
-    public boolean getIsDown() {
-        return this.isDone;
     }
 
     public static void main(String[] args) {
