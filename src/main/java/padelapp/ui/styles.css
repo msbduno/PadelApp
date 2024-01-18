@@ -72,16 +72,6 @@
     -fx-line-spacing: 44.8px;
 }
 
-.boutons-pane {
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-background-color: #FFFF;
-    -fx-text-fill: #000;
-    -fx-font-family: 'Inter';
-    -fx-font-size: 20px;
-    -fx-font-weight: BOLD;
-}
-
 .horaire-pane-reserve {
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
@@ -180,4 +170,44 @@
     -fx-background-radius: 25px;
     -fx-background-color: #5551FF;
     -fx-border-radius: 25px;
+}
+
+.boutons-normal {
+    -fx-background-color: #EFE8E9;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-line-spacing: 0.6em;
+}
+
+.boutons-clique {
+    -fx-background-color: #5551FF;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-line-spacing: 0.6em;
+}
+
+.non-paye-button {
+    -fx-background-color: #F00;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-line-spacing: 0.6em;
+}
+
+.paye-button {
+    -fx-background-color: #3F0;
+    -fx-text-fill: #000;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 16px;
+    -fx-font-style: normal;
+    -fx-font-weight: bold; /* 700 is equivalent to 'bold' */
+    -fx-line-spacing: 0.6em;
 }

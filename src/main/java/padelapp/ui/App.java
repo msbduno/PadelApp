@@ -10,9 +10,11 @@ import padelapp.utilisateurs.Moderateur;
 
 public class App extends Application {
     private Calendrier calendrier;
+    private Blog blog;
 
     public App(Moderateur moderateur) {
         this.calendrier = new Calendrier(LocalDate.now(),moderateur);
+        this.blog = new Blog();
     }
 
     public static void main(String[] args) {
@@ -33,6 +35,25 @@ public class App extends Application {
         VBox vBox = new VBox(toolBar, this.calendrier.getView());
         
         Scene scene = new Scene(vBox, 1280, 720);
+        button1.setOnAction(event -> {
+            // Créez et affichez la scène de réservation ici
+            Scene reservationScene = new Scene(new VBox(toolBar, this.calendrier.getView()), 1280, 720);
+            reservationScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            toolBar.getStyleClass().add("tool-bar");
+            button1.getStyleClass().add("button");
+            button2.getStyleClass().add("button");
+            primaryStage.setScene(reservationScene);
+        });
+
+        button2.setOnAction(event -> {
+            // Créez et affichez la scène de blog ici
+            Scene blogScene = new Scene(new VBox(toolBar, this.blog.getView()), 1280, 720);
+            blogScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            toolBar.getStyleClass().add("tool-bar");
+            button1.getStyleClass().add("button");
+            button2.getStyleClass().add("button");
+            primaryStage.setScene(blogScene);
+        });
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         toolBar.getStyleClass().add("tool-bar");
         button1.getStyleClass().add("button");

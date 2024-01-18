@@ -34,7 +34,7 @@ public class DatabaseThread extends Thread {
             this.reservations = fetchReseravationFromDatabase(connection);
 
             // Etape 4 : Ecriture des données au format JSON dans un fichier
-            writeDataToJsonFile(this.reservations);
+            writeReservationsToJsonFile(this.reservations);
 
             System.out.println("Données extraites de la base de données et écrites dans le fichier " + outputPath);
 
@@ -58,7 +58,8 @@ public class DatabaseThread extends Thread {
                 Reservation resa = new Reservation();
 
                 // Initialiser les propriétés de l'objet en fonction des colonnes de la base de données
-                resa.setEstPaye(resultSet.getBoolean("estPaye")); // /!\ A AJOUTER DANS LA BDD /!\
+                resa.setIdReservation(resultSet.getInt("idReservation"));
+                resa.setEstPaye(resultSet.getBoolean("estPaye")); 
                 resa.setPublique(resultSet.getBoolean("estPublique"));
                 resa.setHeureDebut(resultSet.getTime("heureDebut").toLocalTime());
                 resa.setDate(resultSet.getDate("dateRes").toLocalDate());
@@ -129,7 +130,7 @@ public class DatabaseThread extends Thread {
         return joueurs;
     }
 
-    private void writeDataToJsonFile(List<Reservation> data) {
+    private void writeReservationsToJsonFile(List<Reservation> data) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

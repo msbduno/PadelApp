@@ -1,4 +1,5 @@
 [ {
+  "idReservation" : 1,
   "joueurs" : [ {
     "email" : "mthsguillou@gmail.com",
     "motDePasse" : "password",
@@ -17,6 +18,7 @@
     "numero" : 1
   }
 }, {
+  "idReservation" : 2,
   "joueurs" : [ {
     "email" : "mthsguillou@gmail.com",
     "motDePasse" : "password",
@@ -35,6 +37,7 @@
     "numero" : 2
   }
 }, {
+  "idReservation" : 3,
   "joueurs" : [ {
     "email" : "mthsguillou@gmail.com",
     "motDePasse" : "password",

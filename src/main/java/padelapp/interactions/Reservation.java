@@ -7,6 +7,7 @@ import java.util.List;
 import padelapp.utilisateurs.Joueur;
 
 public class Reservation {
+    private int idReservation;
     private List<Joueur> joueurs;
     private boolean estPaye;
     private boolean publique; 
@@ -16,13 +17,22 @@ public class Reservation {
 
     public Reservation (){}
 
-    public Reservation(List<Joueur> joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain){
+    public Reservation(int idRes, List<Joueur> joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain){
+        this.idReservation = idRes;
         this.joueurs = joueurs;
         this.estPaye = estPaye;
         this.publique = publique;
         this.heureDebut = heureDebut;
         this.date = date;
         this.terrain = terrain;
+    }
+
+    public int getIdReservation() {
+        return idReservation;
+    }
+
+    public void setIdReservation(int idRes) {
+        this.idReservation = idRes;
     }
 
     public List<Joueur> getJoueurs() {
