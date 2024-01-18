@@ -1,1 +1,19 @@
-[{"joueurs":null,"estPaye":false,"publique":false,"heureDebut":null,"date":null,"terrain":null}]
+[ {
+  "joueurs" : [ {
+    "email" : "mthsguillou@gmail.com",
+    "motDePasse" : "password",
+    "nom" : "Guillou",
+    "prenom" : "Mathis",
+    "id" : 1,
+    "niveau" : 5,
+    "dateDeNaissance" : null
+  } ],
+  "estPaye" : false,
+  "publique" : true,
+  "heureDebut" : "15:00:00",
+  "date" : "2024-01-18",
+  "terrain" : {
+    "idTerrain" : 1,
+    "numero" : 1
+  }
+} ]

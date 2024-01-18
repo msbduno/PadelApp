@@ -80,8 +80,7 @@ public class Reservation {
             + String.valueOf(this.joueurs.get(i).getId()) + "\n" + String.valueOf(this.joueurs.get(i).getNiveau()) + "\n";
         }
         res += this.date.toString() + "\n" + this.heureDebut.toString() + "\n" + String.valueOf(this.estPaye) + "\n" 
-        + String.valueOf(this.publique) + "\n" + String.valueOf(this.terrain.getNumero()) + "\n" 
-        + String.valueOf(this.terrain.getEstReserve()) + "\n";
+        + String.valueOf(this.publique) + "\n" + String.valueOf(this.terrain.getNumero()) + "\n";
         return res;
     }
 }

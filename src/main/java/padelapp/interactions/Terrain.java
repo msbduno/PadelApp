@@ -1,29 +1,30 @@
 package padelapp.interactions;
 
 public class Terrain {
+    private int idTerrain;
     private int numero;
-    private boolean estReserve;
 
     public Terrain (){}
 
-    public Terrain(int num, boolean estReserve){
+    public Terrain(int idT, int num, boolean estReserve){
+        this.idTerrain = idT;
         this.numero = num;
-        this.estReserve = estReserve;
+    }
+
+    public int getIdTerrain() {
+        return idTerrain;
+    }
+
+    public void setIdTerrain(int idT) {
+        this.idTerrain = idT;
     }
 
     public int getNumero() {
         return numero;
     }
     
-    public boolean getEstReserve() {
-        return estReserve;
-    }
-
     public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    public void setEstReserve(boolean estReserve) {
-        this.estReserve = estReserve;
-    }
 }
