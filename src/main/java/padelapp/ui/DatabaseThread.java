@@ -38,7 +38,7 @@ public class DatabaseThread extends Thread {
 
             // Etape 4 : Ecriture des données au format JSON dans un fichier
             writeReservationToJsonFile(this.reservations);
-            writeModerateurToJsonFile(this.reservations);
+            writeModerateurToJsonFile(this.moderateurs);
 
             System.out.println("Données extraites de la base de données et écrites dans le fichier " + outputPath);
 
@@ -172,7 +172,7 @@ public class DatabaseThread extends Thread {
         }
     }
 
-    private void writeModerateurToJsonFile(List<Reservation> data) {
+    private void writeModerateurToJsonFile(List<Moderateur> data) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
