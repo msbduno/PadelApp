@@ -486,7 +486,7 @@ public class Calendrier {
 
     private List<Joueur> fetchJoueursFromDatabase() {
         // TODO Auto-generated method stub
-        return null;
+        return reservations.get(0).getJoueurs();
     }
 
     public void deleteReservation(Button bouton, int idReservation){
