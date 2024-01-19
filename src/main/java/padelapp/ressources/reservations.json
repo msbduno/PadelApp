@@ -23,4 +23,62 @@
     "idTerrain" : 1,
     "numero" : 1
   }
+}, {
+  "idReservation" : 0,
+  "joueurs" : [ ],
+  "estPaye" : true,
+  "publique" : true,
+  "heureDebut" : "09:00:00",
+  "date" : "2024-01-18",
+  "terrain" : {
+    "idTerrain" : 3,
+    "numero" : 3
+  }
+}, {
+  "idReservation" : 0,
+  "joueurs" : [ ],
+  "estPaye" : true,
+  "publique" : true,
+  "heureDebut" : "09:00:00",
+  "date" : "2024-01-18",
+  "terrain" : {
+    "idTerrain" : 2,
+    "numero" : 2
+  }
+}, {
+  "idReservation" : 0,
+  "joueurs" : [ {
+    "email" : "mthsguillou@gmail.com",
+    "motDePasse" : "password",
+    "nom" : "Guillou",
+    "prenom" : "Mathis",
+    "id" : 1,
+    "niveau" : 5
+  } ],
+  "estPaye" : true,
+  "publique" : true,
+  "heureDebut" : "09:00:00",
+  "date" : "2024-01-19",
+  "terrain" : {
+    "idTerrain" : 3,
+    "numero" : 3
+  }
+}, {
+  "idReservation" : 0,
+  "joueurs" : [ {
+    "email" : "lopezalexis@gmail.com",
+    "motDePasse" : "password",
+    "nom" : "Lopez",
+    "prenom" : "Alexis",
+    "id" : 2,
+    "niveau" : 5
+  } ],
+  "estPaye" : true,
+  "publique" : true,
+  "heureDebut" : "09:00:00",
+  "date" : "2024-01-19",
+  "terrain" : {
+    "idTerrain" : 2,
+    "numero" : 2
+  }
 } ]

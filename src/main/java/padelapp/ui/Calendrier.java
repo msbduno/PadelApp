@@ -2,12 +2,19 @@ package padelapp.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -35,6 +42,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import padelapp.interactions.Horaires;
 import padelapp.interactions.Reservation;
 import padelapp.interactions.Terrain;
@@ -54,76 +62,85 @@ public class Calendrier {
     private ScrollPane scrollResa = new ScrollPane();
     private List<Reservation> reservations;
     private DatabaseThread dbThread;
+    private Connection connection;
+    private List<Joueur> listJoueurs;
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
-                            new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"), 
-                            new Text("Aout") , new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
-                            new Text("Decembre")};             
+            new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"),
+            new Text("Aout"), new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
+            new Text("Decembre") };
 
-    public Calendrier(LocalDate date, Moderateur moderateur){
+    public Calendrier(LocalDate date, Moderateur moderateur) {
         this.moderateur = moderateur;
+        String url = "jdbc:mysql://192.168.56.81/PadelApp";
+        String username = "admin";
+        String password = "network";
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        this.dbThread = new DatabaseThread();
+        this.dbThread = new DatabaseThread(this);
 
         dbThread.start();
 
         this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
-        //Affichage des mois        
-        for (int i = 0; i < 12; i++){
+        // Affichage des mois
+        for (int i = 0; i < 12; i++) {
             StackPane ap = new StackPane();
-            //Lancement de l'application 
-            if (i == date.getMonthValue() - 1){ 
+            // Lancement de l'application
+            if (i == date.getMonthValue() - 1) {
                 ap.getStyleClass().remove("month-pane");
                 ap.getStyleClass().add("month-pane-highlighted");
                 updateDaysDisplay(date, date.getMonthValue());
-                setCurrentMonth(date.getMonthValue() - 1); 
-            }
-            else {
+                setCurrentMonth(date.getMonthValue() - 1);
+            } else {
                 ap.getStyleClass().remove("month-pane-highlighted");
                 ap.getStyleClass().add("month-pane");
             }
-            
-            //Etape necessaire pour que la variable soit accessible dans la fonction handle
+
+            // Etape necessaire pour que la variable soit accessible dans la fonction handle
             final LocalDate finalDate = date;
-            final int finalMonth = i+ 1;
+            final int finalMonth = i + 1;
             final StackPane finalAp = ap;
             ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    
-                    //Surligner en blanc tous les mois
-                    for (Node node : monthBox.getChildren()){
-                        if (node instanceof StackPane){
+
+                    // Surligner en blanc tous les mois
+                    for (Node node : monthBox.getChildren()) {
+                        if (node instanceof StackPane) {
                             node.getStyleClass().remove("month-pane-highlighted");
                             node.getStyleClass().add("month-pane");
                         }
                     }
-                    //Mettre a jour l'affichage des jours du mois cliqué
-                    updateDaysDisplay(finalDate, finalMonth); 
+                    // Mettre a jour l'affichage des jours du mois cliqué
+                    updateDaysDisplay(finalDate, finalMonth);
 
-                    //Surligner en Bleu le mois cliqué
+                    // Surligner en Bleu le mois cliqué
                     finalAp.getStyleClass().remove("month-pane");
                     finalAp.getStyleClass().add("month-pane-highlighted");
-                    
-                    //Definir le mois cliqué
+
+                    // Definir le mois cliqué
                     setCurrentMonth(finalMonth - 1);
-                }  
+                }
             });
 
             ap.setPrefSize(140, 80);
             ap.getChildren().add(mois[i]);
-             
-            monthBox.add(ap,0, i);
+
+            monthBox.add(ap, 0, i);
         }
 
-        //Affichage des jours 
+        // Affichage des jours
         scrollDays.setPrefSize(140, 720);
         scrollDays.setContent(dayBox);
         scrollDays.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollDays.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         dayBox.setGridLinesVisible(true);
-        
-        //Affichage des reservations
+
+        // Affichage des reservations
         scrollResa.setPrefSize(1000, 720);
         scrollResa.setContent(resaLayout);
         scrollResa.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -134,36 +151,35 @@ public class Calendrier {
     }
 
     private void updateDaysDisplay(LocalDate date, int month) {
-        if (date.getMonth().getValue() == month){
+        if (date.getMonth().getValue() == month) {
             dayBox.getChildren().clear();
             daysInMonth.clear();
             daysInMonth.add(date.getDayOfWeek());
 
-            for (int i = 1; i < (date.getMonth().length(true) - date.getDayOfMonth()) + 1; i++){
-                daysInMonth.add(daysInMonth.get(i-1).plus(1));
+            for (int i = 1; i < (date.getMonth().length(true) - date.getDayOfMonth()) + 1; i++) {
+                daysInMonth.add(daysInMonth.get(i - 1).plus(1));
             }
             int jourActuel = date.getDayOfMonth();
-            for (int i = 0; i < daysInMonth.size(); i++){
+            for (int i = 0; i < daysInMonth.size(); i++) {
                 AnchorPane ap = new AnchorPane();
-                //Lancement de l'application
-                if (i == 0){
+                // Lancement de l'application
+                if (i == 0) {
                     ap.getStyleClass().remove("day-pane");
                     ap.getStyleClass().add("day-pane-highlighted");
                     afficherReservations(date.getDayOfMonth());
-                }
-                else {
+                } else {
                     ap.getStyleClass().remove("day-pane-highlighted");
                     ap.getStyleClass().add("day-pane");
                 }
-                //etape necessaire pour que la variable soit accessible dans la fonction handle
+                // etape necessaire pour que la variable soit accessible dans la fonction handle
                 final int index = i;
                 final AnchorPane finalAp = ap;
                 ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        //Surligner en blanc tous les jours
-                        for (Node node : dayBox.getChildren()){
-                            if (node instanceof AnchorPane){
+                        // Surligner en blanc tous les jours
+                        for (Node node : dayBox.getChildren()) {
+                            if (node instanceof AnchorPane) {
                                 node.getStyleClass().remove("day-pane-highlighted");
                                 node.getStyleClass().add("day-pane");
                                 dayBox.setGridLinesVisible(true);
@@ -171,20 +187,20 @@ public class Calendrier {
                             }
                         }
 
-                        //Surligner en Bleu le mois cliqué
+                        // Surligner en Bleu le mois cliqué
                         finalAp.getStyleClass().remove("day-pane");
                         finalAp.getStyleClass().add("day-pane-highlighted");
-                        
-                        //Definir le jour cliqué
+
+                        // Definir le jour cliqué
                         setCurrentDay(daysInMonth.get(index));
-                        
-                        //Afficher les reservations du jour cliqué
-                        afficherReservations(date.getDayOfMonth() + index );
-                    }  
+
+                        // Afficher les reservations du jour cliqué
+                        afficherReservations(date.getDayOfMonth() + index);
+                    }
                 });
-                
+
                 ap.setPrefSize(240, 80);
-                dayBox.add(ap,0,i);
+                dayBox.add(ap, 0, i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
                 AnchorPane.setTopAnchor(jourNom, 15.0);
                 AnchorPane.setLeftAnchor(jourNom, 15.0);
@@ -195,46 +211,45 @@ public class Calendrier {
                 AnchorPane.setLeftAnchor(jourNumero, 10.0);
                 ap.getChildren().add(jourNumero);
             }
-        }
-        else {
+        } else {
             dayBox.getChildren().clear();
             daysInMonth.clear();
             daysInMonth = getDaysOfMonth(date.getYear(), month);
             int jourDebut = 1;
-            for (int i = 0; i < daysInMonth.size(); i++){
+            for (int i = 0; i < daysInMonth.size(); i++) {
                 AnchorPane ap = new AnchorPane();
-                //Afficher le bon style au changement de mois
+                // Afficher le bon style au changement de mois
                 ap.getStyleClass().remove("day-pane-highlighted");
                 ap.getStyleClass().add("day-pane");
-                //Etape necessaire pour que la variable soit accessible dans la fonction handle
+                // Etape necessaire pour que la variable soit accessible dans la fonction handle
                 final int index = i;
                 final AnchorPane finalAp = ap;
-                
+
                 ap.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        //Surligner en blanc tous les jours
-                        for (Node node : dayBox.getChildren()){
-                            if (node instanceof AnchorPane){
+                        // Surligner en blanc tous les jours
+                        for (Node node : dayBox.getChildren()) {
+                            if (node instanceof AnchorPane) {
                                 node.getStyleClass().remove("day-pane-highlighted");
                                 node.getStyleClass().add("day-pane");
-                                scrollDays.setVvalue(scrollDays.getVmin()); //remet le scroll au debut (fonctionne pas)
+                                scrollDays.setVvalue(scrollDays.getVmin()); // remet le scroll au debut (fonctionne pas)
                             }
                         }
 
-                        //Surligner en Bleu le mois cliqué
+                        // Surligner en Bleu le mois cliqué
                         finalAp.getStyleClass().remove("day-pane");
                         finalAp.getStyleClass().add("day-pane-highlighted");
-                        
-                        //Definir le jour cliqué
+
+                        // Definir le jour cliqué
                         setCurrentDay(daysInMonth.get(index));
-                        
-                        //Afficher les reservations du jour cliqué
+
+                        // Afficher les reservations du jour cliqué
                         afficherReservations(index + 1);
-                    }  
+                    }
                 });
                 ap.setPrefSize(240, 80);
-                dayBox.add(ap,0,i);
+                dayBox.add(ap, 0, i);
                 Text jourNom = new Text(daysInMonth.get(i).getDisplayName(TextStyle.FULL, Locale.FRENCH).toUpperCase());
                 AnchorPane.setTopAnchor(jourNom, 15.0);
                 AnchorPane.setLeftAnchor(jourNom, 15.0);
@@ -246,8 +261,7 @@ public class Calendrier {
                 ap.getChildren().add(jourNumero);
             }
         }
-        
-        
+
     }
 
     public List<DayOfWeek> getDaysOfMonth(int year, int month) {
@@ -263,34 +277,39 @@ public class Calendrier {
         return days;
     }
 
-    public List<Reservation> loadReservationsFromJson(String filename){
+    public List<Reservation> loadReservationsFromJson(String filename) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         try {
             InputStream is = getClass().getResourceAsStream(filename);
-            return mapper.readValue(is, new TypeReference<List<Reservation>>(){});
+            return mapper.readValue(is, new TypeReference<List<Reservation>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private void afficherReservations(int day){
+    private void afficherReservations(int day) {
+        this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
+
         resaLayout.getChildren().clear();
         int m = 0;
-        for (int i=0; i < Horaires.values().length; i++){ //Chaque horaire
-            for (int l = 0; l < 4; l++){ //Pour chaque terrain par heure 
+        for (int i = 0; i < Horaires.values().length; i++) { // Chaque horaire
+            for (int l = 0; l < 4; l++) { // Pour chaque terrain par heure
                 AnchorPane ap = new AnchorPane();
-                //Afficher une reservation
+                // Afficher une reservation
                 ap.getStyleClass().add("resa-pane");
-                ap.setPrefSize(1000,120);
-                resaLayout.add(ap,0,m);
+                ap.setPrefSize(1000, 120);
+                resaLayout.add(ap, 0, m);
                 m++;
-                //Afficher l'horaire
+                // Afficher l'horaire
                 AnchorPane ap2 = new AnchorPane();
-                Text horaire = new Text(Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
+                Text horaire = new Text(
+                        Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString());
                 LocalTime heureA = Horaires.values()[i].getDebut();
-                String horaireString = Horaires.values()[i].getDebut().toString() + " - " + Horaires.values()[i].getFin().toString();
+                String horaireString = Horaires.values()[i].getDebut().toString() + " - "
+                        + Horaires.values()[i].getFin().toString();
                 ap2.getStyleClass().add("horaire-pane-non-reserve");
                 ap2.setTopAnchor(horaire, 0.0);
                 ap2.setLeftAnchor(horaire, 10.0);
@@ -300,51 +319,51 @@ public class Calendrier {
                 ap.getChildren().add(ap2);
                 ap2.getChildren().add(horaire);
 
-                //Afficher le terrain
-                StackPane ap4 = new StackPane(); 
-                Text terrain = new Text(" Terrain " + String.valueOf(l+1) + " ");
-                int numTerrain = l+1;
+                // Afficher le terrain
+                StackPane ap4 = new StackPane();
+                Text terrain = new Text(" Terrain " + String.valueOf(l + 1) + " ");
+                int numTerrain = l + 1;
                 ap4.getStyleClass().add("terrain-pane");
                 ap.setTopAnchor(ap4, 70.0);
                 ap.setLeftAnchor(ap4, 40.0);
                 ap.getChildren().add(ap4);
                 ap4.getChildren().add(terrain);
 
-                //Afficher le bouton supprimer
+                // Afficher le bouton supprimer
                 Button supprBtn = new Button("SUPPRIMER");
                 supprBtn.getStyleClass().add("boutons-normal");
-                
+
                 AnchorPane.setTopAnchor(supprBtn, 20.0);
                 AnchorPane.setLeftAnchor(supprBtn, 800.0);
                 ap.getChildren().add(supprBtn);
-                
-                //Afficher le bouton modifier
+
+                // Afficher le bouton modifier
                 Button modifBtn = new Button("MODIFIER");
                 modifBtn.getStyleClass().add("boutons-normal");
                 modifBtn.setOnAction(e -> {
-                    if (modifBtn.getStyleClass().contains("boutons-normal")) {
-                        modifBtn.getStyleClass().remove("boutons-normal");
-                        modifBtn.getStyleClass().add("boutons-clique");
-                    } else {
-                        modifBtn.getStyleClass().remove("boutons-clique");
-                        modifBtn.getStyleClass().add("boutons-normal");
-                    }
+                    modifBtn.getStyleClass().remove("boutons-normal");
+                    modifBtn.getStyleClass().add("boutons-clique");
+
                     Stage stage = new Stage();
                     VBox vbox = new VBox();
 
                     // Ajoutez des champs pour entrer les détails de la réservation
                     Label dateField = new Label("Date : " + LocalDate.of(2024, currentMonth + 1, day));
                     Label timeField = new Label("Heure : " + horaireString);
-                    Label terrainField = new Label ("Terrain : " + numTerrain);
+                    Label terrainField = new Label("Terrain : " + numTerrain);
                     ComboBox<String> userComboBox = new ComboBox<>();
                     userComboBox.setPromptText("Utilisateur");
                     // Remplissez la liste déroulante avec les noms des utilisateurs
-                    List<Joueur> listJoueurs = fetchJoueursFromDatabase();
-                    if (listJoueurs.size() != 0){
-                        for (Joueur j : listJoueurs){
-                            userComboBox.getItems().add(j.stringNomPrenom());
-                        }
+
+                    try {
+                        this.listJoueurs = fetchJoueursFromDatabase(connection);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
                     }
+                    for (Joueur j : this.listJoueurs) {
+                        userComboBox.getItems().add(j.stringNomPrenom());
+                    }
+
                     Button creerUtilisateurButton = new Button("Créer un utilisateur");
                     creerUtilisateurButton.setOnAction(e2 -> {
                         Stage stage2 = new Stage();
@@ -371,11 +390,11 @@ public class Calendrier {
                             String prenom = prenomField.getText();
                             int level = Integer.parseInt(niveauField.getText());
 
-                            Joueur joueur = new Joueur(email,password,nom,prenom,listJoueurs.size() + 1,level);
-                            listJoueurs.add(joueur);
+                            Joueur joueur = new Joueur(email, password, nom, prenom, listJoueurs.size() + 1, level);
+                            this.listJoueurs.add(joueur);
 
                             // Ajoutez l'utilisateur à la base de données
-                            //TODO addUserToDatabase(email, password, name, surname, level);
+                            addUserToDatabase(joueur);
 
                             // Mettez à jour la liste déroulante des utilisateurs
                             userComboBox.getItems().add(nom + " " + prenom);
@@ -383,7 +402,8 @@ public class Calendrier {
                             stage2.close();
                         });
 
-                        vbox2.getChildren().addAll(emailField, passwordField, nameField, prenomField, niveauField, submitButton);
+                        vbox2.getChildren().addAll(emailField, passwordField, nameField, prenomField, niveauField,
+                                submitButton);
                         Scene scene2 = new Scene(vbox2, 400, 400);
                         stage2.setScene(scene2);
                         stage2.show();
@@ -403,21 +423,37 @@ public class Calendrier {
                         boolean estPayeR = payeCheckBox.isSelected();
                         LocalDate dateR = LocalDate.of(2024, currentMonth + 1, day);
                         LocalTime heureDebutR = heureA;
-                        Terrain terrainR = new Terrain(numTerrain,numTerrain);
+                        Terrain terrainR = new Terrain(numTerrain, numTerrain);
 
-                        Reservation reservation = new Reservation(idRes, joueurs, estPayeR, estPayeR, heureDebutR, dateR, terrainR);
-                        //int idRes, List<Joueur> joueurs, boolean estPaye, boolean publique, LocalTime heureDebut, LocalDate date, Terrain terrain
+                        Reservation reservation = new Reservation(idRes, joueurs, estPayeR, estPayeR, heureDebutR,
+                                dateR, terrainR);
                         // Ajoutez la réservation à la base de données
-                        //TODO addReservationToDatabase(date, time, userName);
+                        try {
+                            addReservationToDatabase(reservation);
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
 
+                        dbThread.start();
                         // Mettez à jour l'affichage du calendrier
                         afficherReservations(day);
+
+                        modifBtn.getStyleClass().remove("boutons-clique");
+                        modifBtn.getStyleClass().add("boutons-normal");
 
                         stage.close();
                     });
 
-                    vbox.getChildren().addAll(dateField, timeField,terrainField,hboxUtilisateurs,payeCheckBox, publiqueCheckBox,submitButton);
-                    Scene scene = new Scene(vbox, 600,600);
+                    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                        public void handle(WindowEvent we) {
+                            modifBtn.getStyleClass().remove("boutons-clique");
+                            modifBtn.getStyleClass().add("boutons-normal");
+                        }
+                    });
+
+                    vbox.getChildren().addAll(dateField, timeField, terrainField, hboxUtilisateurs, payeCheckBox,
+                            publiqueCheckBox, submitButton);
+                    Scene scene = new Scene(vbox, 600, 600);
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -425,19 +461,21 @@ public class Calendrier {
                 AnchorPane.setLeftAnchor(modifBtn, 800.0);
                 ap.getChildren().add(modifBtn);
 
-                for (int j=0; j < reservations.size(); j++){
-                    if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut()) 
-                    && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day)) 
-                    && reservations.get(j).getTerrain().getNumero() == l+1){
-                        //Pour que les variables soient tjrs accessibles
+                for (int j = 0; j < reservations.size(); j++) {
+                    if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut())
+                            && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day))
+                            && reservations.get(j).getTerrain().getNumero() == l + 1) {
+                        // Pour que les variables soient tjrs accessibles
                         final boolean finalEstPaye = reservations.get(j).getEstPaye();
                         final int indexRes = j;
 
-                        //Affichage des joueurs
-                        AnchorPane ap3 = new AnchorPane(); //Pane pour les joueurs
+                        // Affichage des joueurs
+                        AnchorPane ap3 = new AnchorPane(); // Pane pour les joueurs
                         Text joueurs = new Text();
-                        for (int k = 0; k < reservations.get(j).getJoueurs().size(); k++){
-                            joueurs.setText(joueurs.getText() + reservations.get(j).getJoueurs().get(k).getNom().toUpperCase() + " " + reservations.get(j).getJoueurs().get(k).getPrenom() + "\n");      
+                        for (int k = 0; k < reservations.get(j).getJoueurs().size(); k++) {
+                            joueurs.setText(
+                                    joueurs.getText() + reservations.get(j).getJoueurs().get(k).getNom().toUpperCase()
+                                            + " " + reservations.get(j).getJoueurs().get(k).getPrenom() + "\n");
                         }
                         ap3.getStyleClass().add("joueurs-pane");
                         ap3.setTopAnchor(joueurs, 10.0);
@@ -448,23 +486,22 @@ public class Calendrier {
                         ap.getChildren().add(ap3);
                         ap3.getChildren().add(joueurs);
 
-                        //Changement de l'horaire en reservé
+                        // Changement de l'horaire en reservé
                         ap2.getStyleClass().remove("horaire-pane-non-reserve");
                         ap2.getStyleClass().add("horaire-pane-reserve");
 
-                        //Affichage du statut (payé ou non)
-                        Button payeBtn = new Button(); //Bouton pour le statut
-                        if (reservations.get(j).getEstPaye() == true){
+                        // Affichage du statut (payé ou non)
+                        Button payeBtn = new Button(); // Bouton pour le statut
+                        if (reservations.get(j).getEstPaye() == true) {
                             payeBtn.setText("Statut : Payé");
                             payeBtn.getStyleClass().remove("non-paye-button");
                             payeBtn.getStyleClass().add("paye-button");
-                        }
-                        else {
+                        } else {
                             payeBtn.setText("Statut : Non Payé");
                             payeBtn.getStyleClass().remove("paye-button");
                             payeBtn.getStyleClass().add("non-paye-button");
                         }
-                        
+
                         payeBtn.setOnAction(event -> {
                             updatePaye(payeBtn, finalEstPaye, indexRes);
                         });
@@ -472,24 +509,49 @@ public class Calendrier {
                         AnchorPane.setLeftAnchor(payeBtn, 500.0);
                         ap.getChildren().add(payeBtn);
 
-                        //Event pour le bouton supprimer
+                        // Event pour le bouton supprimer
                         supprBtn.setOnAction(event -> {
                             deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation());
                         });
                     }
                 }
             }
-            
+
         }
     }
 
 
-    private List<Joueur> fetchJoueursFromDatabase() {
-        // TODO Auto-generated method stub
-        return reservations.get(0).getJoueurs();
+    private List<Joueur> fetchJoueursFromDatabase(Connection connection) throws SQLException {
+        List<Joueur> joueurs = new ArrayList<>();
+
+        String query = "SELECT * FROM utilisateur ORDER BY idUtilisateur ASC";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                String query2 = "SELECT * FROM utilisateur WHERE idUtilisateur = "
+                        + String.valueOf(resultSet.getInt("idUtilisateur"));
+                try (PreparedStatement stmt2 = connection.prepareStatement(query2)) {
+                    ResultSet resultSet2 = stmt2.executeQuery();
+                    if (resultSet2.next()) {
+                        Joueur joueur = new Joueur();
+                        joueur.setEmail(resultSet2.getString("email"));
+                        joueur.setMotDePasse(resultSet2.getString("motDePasse"));
+                        joueur.setNom(resultSet2.getString("nom"));
+                        joueur.setPrenom(resultSet2.getString("prenom"));
+                        joueur.setId(resultSet2.getInt("idUtilisateur"));
+                        joueur.setNiveau(resultSet2.getInt("niveau"));
+
+                        joueurs.add(joueur);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return joueurs;
     }
 
-    public void deleteReservation(Button bouton, int idReservation){
+    public void deleteReservation(Button bouton, int idReservation) {
         bouton.getStyleClass().remove("boutons-normal");
         bouton.getStyleClass().add("boutons-clique");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -498,32 +560,82 @@ public class Calendrier {
         alert.setContentText("Êtes-vous sûr de vouloir supprimer cette réservation ?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK){
-            //TODO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // TODO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
             System.out.println("Reservation " + idReservation + " supprimée");
             bouton.getStyleClass().remove("boutons-clique");
             bouton.getStyleClass().add("boutons-normal");
-        }
-        else if (result.isPresent() && result.get() == ButtonType.CANCEL){
+        } else if (result.isPresent() && result.get() == ButtonType.CANCEL) {
             System.out.println("Reservation " + idReservation + " gardée");
             bouton.getStyleClass().remove("boutons-clique");
             bouton.getStyleClass().add("boutons-normal");
         }
     }
 
-    public void updatePaye(Button bouton, boolean estPaye, int idReservation){
+    public void updatePaye(Button bouton, boolean estPaye, int idReservation) {
         if (bouton.getText().equals("Statut : Payé")) {
             bouton.setText("Statut : Non Payé");
             bouton.getStyleClass().remove("paye-button");
             bouton.getStyleClass().add("non-paye-button");
             System.out.println("Reservation " + idReservation + " non payée");
-            //TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
+            // TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
         } else {
             bouton.setText("Statut : Payé");
             bouton.getStyleClass().remove("non-paye-button");
             bouton.getStyleClass().add("paye-button");
             System.out.println("Reservation " + idReservation + " payée");
-            //TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
+            // TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
+        }
+    }
+
+    public void addUserToDatabase(Joueur joueur) {
+        String query = "INSERT INTO utilisateur (idUtilisateur, email, motDePasse, nom, prenom, niveau, estModerateur) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setInt(1, joueur.getId());
+            stmt.setString(2, joueur.getEmail());
+            stmt.setString(3, joueur.getMotDePasse());
+            stmt.setString(4, joueur.getNom());
+            stmt.setString(5, joueur.getPrenom());
+            stmt.setInt(6, joueur.getNiveau());
+            stmt.setBoolean(7, false);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addReservationToDatabase(Reservation reservation) throws SQLException {
+        String query = "INSERT INTO reservation (idReservation, idUtilisateur, idTerrain, heureDebut, estPublique, dateRes, nombreDeJoueurs, estPaye) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setInt(1, reservation.getIdReservation());
+            stmt.setInt(2, reservation.getJoueurs().get(0).getId());
+            stmt.setInt(3, reservation.getTerrain().getIdTerrain());
+            stmt.setTime(4, Time.valueOf(reservation.getHeureDebut()));
+            ;
+            stmt.setBoolean(5, reservation.getPublique());
+            stmt.setDate(6, Date.valueOf(reservation.getDate()));
+            ;
+            stmt.setInt(7, 4);
+            stmt.setBoolean(8, reservation.getEstPaye());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String query2 = "INSERT INTO joueurs (idReservation, idUtilisateur) VALUES (?, ?)";
+        try (PreparedStatement stmt2 = connection.prepareStatement(query2)) {
+            for (Joueur joueur : reservation.getJoueurs()) {
+                stmt2.setInt(1, reservation.getIdReservation());
+                stmt2.setInt(2, joueur.getId());
+                
+                stmt2.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -554,6 +666,6 @@ public class Calendrier {
 
     public Moderateur getModerateur() {
         return moderateur;
-    }  
+    }
 
 }

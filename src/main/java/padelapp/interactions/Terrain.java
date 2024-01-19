@@ -4,9 +4,10 @@ public class Terrain {
     private int idTerrain;
     private int numero;
 
-    public Terrain (){}
+    public Terrain() {
+    }
 
-    public Terrain(int idT, int num){
+    public Terrain(int idT, int num) {
         this.idTerrain = idT;
         this.numero = num;
     }
@@ -22,7 +23,7 @@ public class Terrain {
     public int getNumero() {
         return numero;
     }
-    
+
     public void setNumero(int numero) {
         this.numero = numero;
     }

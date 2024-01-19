@@ -15,21 +15,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import javafx.application.Platform;
 import padelapp.interactions.Reservation;
 import padelapp.interactions.Terrain;
 import padelapp.utilisateurs.Joueur;
 import padelapp.utilisateurs.Moderateur;
 
 public class DatabaseThread extends Thread {
-    String url; 
-    String username; //ID de connexion    
-    String password; //MDP de connexion
-    String outputPath1;
-    String outputPath2;
-    List<Reservation> reservations;
-    List<Moderateur> moderateurs = new ArrayList<Moderateur>();
+    private String url; 
+    private String username; //ID de connexion    
+    private String password; //MDP de connexion
+    private String outputPath1;
+    private String outputPath2;
+    private List<Reservation> reservations;
+    private List<Moderateur> moderateurs = new ArrayList<Moderateur>();
+    private static Calendrier calendrier;
 
-    public DatabaseThread() {
+    public DatabaseThread(Calendrier cal) {
         super();
         this.url = "jdbc:mysql://192.168.56.81/PadelApp";//Url de connexion a la BDD
         this.username = "admin"; //ID de connexion
@@ -37,6 +39,7 @@ public class DatabaseThread extends Thread {
         this.outputPath1 = "src/main/java/padelapp/ressources/reservations.json";
         this.outputPath2 = "src/main/java/padelapp/ressources/moderateurs.json";
         this.reservations = new ArrayList<Reservation>();
+        DatabaseThread.calendrier = cal;
     }
 
     @Override
@@ -202,9 +205,13 @@ public class DatabaseThread extends Thread {
         return reservations;
     }
 
+    public static Calendrier getCalendrier () {
+        return calendrier;
+    }
+
     public static void main(String[] args) {
         // Création et démarrage du thread
-        DatabaseThread databaseThread = new DatabaseThread();
+        DatabaseThread databaseThread = new DatabaseThread(getCalendrier());
         databaseThread.start();
     }
 }
