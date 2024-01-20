@@ -283,6 +283,7 @@ body {
     background: #5551FF;
     margin-left: 75px;
     margin-top: 45px;
+    margin-top: 110px;
 }
 
 /* Slideshow container */
@@ -371,6 +372,7 @@ body {
     border: 2px solid #E6E6E6;
     background: #FAFAF5;
 }
+
 .fond2 {
     overflow-y: scroll;
     background: #5551FF;
@@ -382,6 +384,7 @@ body {
     border: 2px solid #E6E6E6;
     background: #FAFAF5;
 }
+
 
 .Connexion {
     background-color: #ffffff;
@@ -637,6 +640,10 @@ input {
     margin-left: 130px;
     margin-top: -140px;
 
+    margin-left: 170px;
+    margin-top: -105px;
+
+
 
 }
 
@@ -645,7 +652,11 @@ input {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+
     margin-left: 130px;
+
+    margin-left: 170px;
+
 
 
 
