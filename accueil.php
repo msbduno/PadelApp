@@ -1,17 +1,7 @@
 <?php
 
 include 'informationProfil.php';
-
-
-
 ?>
-
-
-
-
-
-
-
 
 
 
@@ -22,14 +12,15 @@ include 'informationProfil.php';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>4 Glass Walls</title>
+    <title>
+        <?php echo $_TITRE_PAGE ?>
+    </title>
     <link href="style5.css" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body>
+
     <!--  Première div  pour les pages de navigations du site -->
 
     <div class="Navigation">
@@ -43,7 +34,7 @@ include 'informationProfil.php';
         </div>
 
         <div class="accueil">
-            <a href="accueil.php">Accueil</a>
+            <a href="accueil.php" style="font-weight: bold;">Accueil</a>
         </div>
 
         <div class="reservation">
@@ -51,7 +42,7 @@ include 'informationProfil.php';
         </div>
 
         <div class="tournois">
-            <a href="tournois.php" style="font-weight: bold;">Tournois </a>
+            <a href="tournois.php">Tournois </a>
         </div>
 
         <div class="blog">
@@ -81,45 +72,47 @@ include 'informationProfil.php';
             </div>
             <div class="afficherNomProfil">
             
-            <?php
-                $variable1 ="  &nbsp &nbsp "; 
-                echo " Nom : ".$nomUtilisateur; 
-                echo " ".'</br>'; 
-                
-                echo " Prénom :  ".$prenomUtilisateur.'</br>' ;
-                echo " ".'</br>'; ?>
+                <?php
+                    $variable1 ="  &nbsp &nbsp "; 
+                    echo " Nom : ".$nomUtilisateur; 
+                    echo " ".'</br>'; 
+                    
+                    echo " Prénom :  ".$prenomUtilisateur.'</br>' ;
+                    echo " ".'</br>'; ?>
 
-        </div>
-        <div class="afficherNiveauProfil">
-            
-            <?php 
-            echo " ".'</br>';
-            echo "Niveau padel : ".$niveauUtilisateur 
-             ?>
-        </div>
+            </div>
+            <div class="afficherNiveauProfil">
+                
+                <?php 
+                echo " ".'</br>';
+                echo "Niveau padel : ".$niveauUtilisateur 
+                 ?>
+            </div>
 
             <div class="Deconnexion"> <a style="color:white" href="index.php">DECONNEXION</a> </div>
         </div>
     </div>
 
-    </div>
+
+
+
+
+
+
     <!-- Fond de couleur beige  -->
     <div class="fond">
-
-        <!-- Slideshow container -->
         <div class="slideshow-container">
-
             <!-- Full-width images -->
-            <div class="mySlides ">
+            <div class="mySlides" style="text-align: center;">
                 <img src="images/tournois_1.png" width="1000" height="430">
             </div>
 
-            <div class="mySlides ">
-                <img src="images/tournois_1.png" width="1000" height="430">
+            <div class="mySlides" style="text-align: center;">
+                <img src="images/actualites_1.jpg" width="1000" height="430">
             </div>
 
-            <div class="mySlides">
-                <img src="images/tournois_1.png" width="1000" height="430">
+            <div class="mySlides" style="text-align: center;">
+                <img src="images/niveaux_padel.jpg" width="1000" height="430">
             </div>
 
 
@@ -138,7 +131,7 @@ include 'informationProfil.php';
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
             <!--  Bouton pour aller à la réservation -->
-            <a class="Réservation_btn button4" href="inscriptiontournoi.php"> INSCRIPTION TOURNOIS</a>
+            <a class="Réservation_btn" href="reservations.php"> RESERVER UN TERRAIN</a>
 
         </div>
     </div>
@@ -148,9 +141,9 @@ include 'informationProfil.php';
 
 <!-- Code javaScript pour les boutons NOTIFICATIONS et MON PROFIL  -->
 <script src="js/bouton.js"></script>
-
 <!-- Code javaScript por le carrousel d'images  -->
 <script src="js/caroussel.js"></script>
+
 
 
 </html>
