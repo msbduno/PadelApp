@@ -1,78 +1,14 @@
 <?php
-include 'informationProfil.php';
+include 'informationTournois.php';
 
-if (!empty($_SESSION['compte'])) {
+unset($_POST['nomJoueur1']);
+unset($_POST['prenomJoueur1']);
+unset($_POST['mailJoueur1']);
+unset($_POST['nomJoueur2']);
+unset($_POST['prenomJoueur2']);
+unset($_POST['mailJoueur2']);
+unset($_POST['nomTournoi']);
 
-
-
-    $sql4 = "SELECT nom, niveau, idTournois
-        FROM tournois WHERE
-        idTournois = '1'";
-
-    $result4 = $conn->query($sql4);
-    if (!$result4) {
-        exit($conn->$error);
-    }
-
-
-
-    $nb4 = $result4->num_rows;
-    if ($nb4) {
-        //récupération des infos de l'utilisateur
-        $row4 = $result4->fetch_assoc();
-        $nomTournois = $row4['nom'];
-        $niveauTournois = $row4['niveau'];
-        $idTournois = $row4['idTournois'];
-
-    }
-
-
-    if (isset($_POST['tournoi_submit']) && $_POST['tournoi_submit'] == 1) {
-        if (
-            !empty($_POST['nomJoueur1']) &&
-            !empty($_POST['prenomJoueur1']) &&
-            !empty($_POST['mailJoueur1']) &&
-            !empty($_POST['nomJoueur2']) &&
-            !empty($_POST['prenomJoueur2']) &&
-            !empty($_POST['mailJoueur2']) &&
-            !empty($_POST['nomTournoi'])
-        ) {
-            $mailJoueur2_escaped = $conn->real_escape_string(trim($_POST['mailJoueur2']));
-
-            // Récuperation de l'ID du joueur 2
-            $sql5 = "SELECT idUtilisateur 
-            FROM utilisateur
-            WHERE email = '$mailJoueur2_escaped'";
-
-            $result5 = $conn->query($sql5);
-            if (!$result5) {
-                exit($conn->$error);
-            }
-
-            $nb5 = $result5->num_rows;
-            if ($nb5) {
-                //récupération des infos de l'utilisateur
-                $row5 = $result5->fetch_assoc();
-                $idJoueur2 = $row5['idUtilisateur'];
-            }
-
-            $idJoueur1 = $_SESSION['compte'];
-
-            $sql6 = "INSERT INTO equipe
-            SET idTournois = '$idTournois',
-            idJoueur1 = '$idJoueur1',
-            idJoueur2 = '$idJoueur2'";
-
-            $result6 = $conn->query($sql6);
-            if (!$result6) {
-                exit($conn->$error);
-            }
-
-
-        }
-
-    }
-}
 ?>
 
 
@@ -87,7 +23,7 @@ if (!empty($_SESSION['compte'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>4 Glass Walls</title>
-    <link href="style3.css" rel="stylesheet" type="text/css" />
+    <link href="style4.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -162,15 +98,31 @@ if (!empty($_SESSION['compte'])) {
 
             <ul>
                 <li>
-                    <label for="nomTournoi">Veuillez sélectionner un tournoi&nbsp;:</label>
-                    <select name="nomTournoi" id="nomTournoi">
-                        <option value="null">Sélectionner un tournoi</option>
-                        <option value="1">
-                            <?php echo $nomTournois ?>, niveau
-                            <?php echo $niveauTournois ?>
-                        </option>
 
-                    </select>
+                    <label for="nomTournoi">Veuillez sélectionner un tournoi&nbsp;:</label>
+                    <div class="box">
+                        <select name="nomTournoi" id="nomTournoi">
+                            <option value="null" style="text-align: center;">Sélectionner un tournoi</option>
+                            <option value="1" style="text-align: center;">
+                                <?php echo $nomTournois1 ?>, niveau
+                                <?php echo $niveauTournois1 ?>
+                            </option>
+                            <option value="2" style="text-align: center;">
+                                <?php echo $nomTournois2 ?>, niveau
+                                <?php echo $niveauTournois2 ?>
+                            </option>
+                            <option value="3" style="text-align: center;">
+                                <?php echo $nomTournois3 ?>, niveau
+                                <?php echo $niveauTournois3 ?>
+                            </option>
+                            <option value="4" style="text-align: center;">
+                                <?php echo $nomTournois4 ?>, niveau
+                                <?php echo $niveauTournois4 ?>
+                            </option>
+
+                        </select>
+                    </div>
+
                 </li>
 
                 <li>
@@ -207,9 +159,19 @@ if (!empty($_SESSION['compte'])) {
                     <input type="mail" id="mailJoueur2" name="mailJoueur2" />
                 </li>
 
-                <button name="tournoi_submit" value="1" type="submit">S'INSCRIRE</button>
+
+                <button class="boutontournoi" name="tournoi_submit" value="1" type="submit"
+                    id="tournoi_submit">S'INSCRIRE
+                </button>
+
+                <div class="warning"> 
+                    <img src="images/warning.png" style="width: 10%;">
+                    Attention : le joueur 2 doit avoir un compte 4 GLASS WALLS 
+                </div>
+
 
             </ul>
+
 
 
         </form>

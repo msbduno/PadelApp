@@ -14,7 +14,7 @@ include 'informationProfil.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>4 Glass Walls</title>
-    <link href="style3.css" rel="stylesheet" type="text/css" />
+    <link href="style4.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -85,6 +85,11 @@ include 'informationProfil.php';
 
     <!-- Fond de couleur beige  -->
     <div class="fond">
+
+        <div
+            style="text-align:center; margin-left: auto; margin-right: auto; font-style: Inter; font-weight: bold; font-size: 40px;">
+            PROCHAINEMENT...
+        </div>
 
 
 
