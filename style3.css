@@ -282,8 +282,7 @@ body {
     border-radius: 4px;
     background: #5551FF;
     margin-left: 75px;
-    margin-top: 45px;
-    margin-top: 30px;
+    margin-top: 110px;
 }
 
 /* Slideshow container */
@@ -362,29 +361,16 @@ body {
 }
 
 .fond {
-    
+
     background: #5551FF;
     width: 1440px;
-    height: 550px;
+    height: 530px;
     margin-top: 40px;
     margin-left: 50px;
     border-radius: 24px;
     border: 2px solid #E6E6E6;
     background: #FAFAF5;
 }
-
-.fond2 {
-    overflow-y: scroll;
-    background: #5551FF;
-    width: 1440px;
-    height: 550px;
-    margin-top: 40px;
-    margin-left: 50px;
-    border-radius: 24px;
-    border: 2px solid #E6E6E6;
-    background: #FAFAF5;
-}
-
 
 .Connexion {
     background-color: #ffffff;
@@ -637,12 +623,8 @@ input {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    margin-left: 130px;
-    margin-top: -140px;
-
     margin-left: 170px;
     margin-top: -105px;
-
 
 
 }
@@ -652,11 +634,7 @@ input {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-
-    margin-left: 130px;
-
     margin-left: 170px;
-
 
 
 
@@ -666,92 +644,4 @@ input {
     margin-left: 25px;
     margin-top: 60px;
 
-}
-
-
-.boutontournoi {
-
-    color: #FFF;
-    text-align: center;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 130%;
-    /* 19.5px */
-    display: flex;
-    width: 332px;
-    padding: 4.5px 110px 4.5px 110px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    background: #5551FF;
-    margin-top: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    border-color: #5551FF;
-
-
-}
-
-
-.box {
-    position: absolute;
-    margin-left: 250px;
-    margin-top: -25px;
-   
-
-
-}
-
-.box select {
-    background-color: #5551FF;
-    color: white;
-    padding: 8px;
-    width: 350px;
-    border: none;
-    font-size: 20px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-    -webkit-appearance: button;
-    appearance: button;
-    outline: none;
-  
-}
-
-.box::before {
-    content: "\f13a";
-    font-family: FontAwesome;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 14%;
-    height: 100%;
-    text-align: center;
-    font-size: 28px;
-    line-height: 45px;
-    color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.1);
-    pointer-events: none;
-    
-}
-
-.box:hover::before {
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.box select option {
-    padding: 8px;
-}
-
-
-.warning{
-    width: 500px;
-    height: 50px;
-    /*background-color: #000;*/
-    margin-top: -50px;
-    font-family: Inter;
-    font-weight: bolder;
-    font-size: 15px;
 }

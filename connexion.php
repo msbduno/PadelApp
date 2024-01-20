@@ -53,7 +53,11 @@ if (isset($_POST['connexion_submit']) && $_POST['connexion_submit'] == 1) {
     <title>
         <?php echo $_TITRE_PAGE ?>
     </title>
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="style4.css" />
+=======
+    <link rel="stylesheet" type="text/css" href="style5.css" />
+>>>>>>> bd563ce72e85c6c5c1d8e9f0899cd39cf2d00522
 
 </head>
 

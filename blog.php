@@ -69,14 +69,22 @@ include 'informationProfil.php';
                 <img src="images/default_profil_picture.png" alt="Photo de profil par défaut" width=150px height=150px>
             </div>
             <div class="afficherNomProfil">
-                Bonjour
-                <?php echo $prenomUtilisateur ?>
-                <?php echo $nomUtilisateur ?>
+            
+                <?php
+                    $variable1 ="  &nbsp &nbsp "; 
+                    echo " Nom : ".$nomUtilisateur; 
+                    echo " ".'</br>'; 
+                    
+                    echo " Prénom :  ".$prenomUtilisateur.'</br>' ;
+                    echo " ".'</br>'; ?>
 
             </div>
             <div class="afficherNiveauProfil">
-                Votre niveau de Padel :
-                <?php echo $niveauUtilisateur ?>
+                
+                <?php 
+                echo " ".'</br>';
+                echo "Niveau padel : ".$niveauUtilisateur 
+                 ?>
             </div>
 
             <div class="Deconnexion"> <a style="color:white" href="index.php">DECONNEXION</a> </div>
