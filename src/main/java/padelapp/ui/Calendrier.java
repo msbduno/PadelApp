@@ -1,7 +1,5 @@
 package padelapp.ui;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,10 +16,6 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -65,17 +59,20 @@ public class Calendrier {
     private List<Reservation> reservations;
     private Connection connection;
     private List<Joueur> listJoueurs;
+    private String url;
+    private String username;
+    private String password;
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
-            new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet"),
+            new Text("Avril"), new Text("Mai"), new Text("Juin"), new Text("Juillet "),
             new Text("Aout"), new Text("Septembre"), new Text("Octobre"), new Text("Novembre"),
             new Text("Decembre") };
 
     public Calendrier(LocalDate date, Moderateur moderateur) {
         this.moderateur = moderateur;
-
-        String url = "jdbc:mysql://192.168.56.81/PadelApp";
-        String username = "admin";
-        String password = "network";
+        this.url = "jdbc:mysql://192.168.56.81/PadelApp";
+        //this.url = "jdbc:mysql://192.168.4.202:6666/PadelApp";
+        this.username = "admin";
+        this.password = "network";
 
         try {
             this.connection = DriverManager.getConnection(url, username, password);
@@ -660,8 +657,7 @@ public class Calendrier {
             bouton.getStyleClass().add("non-paye-button");
             System.out.println("Reservation " + idReservation + " non payée");
             try {
-                Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin",
-                        "network");
+                Connection connexion = DriverManager.getConnection(this.url, this.username, this.password);
                 String requete = "UPDATE reservation SET estPaye = 0 WHERE idReservation = ?";
                 try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
                     preparedStatement.setInt(1, idReservation);
@@ -677,8 +673,7 @@ public class Calendrier {
             bouton.getStyleClass().add("paye-button");
             System.out.println("Reservation " + idReservation + " payée");
             try {
-                Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin",
-                        "network");
+                Connection connexion = DriverManager.getConnection(this.url, this.username, this.password);
                 String requete = "UPDATE reservation SET estPaye = 1 WHERE idReservation = ?";
                 try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
                     preparedStatement.setInt(1, idReservation);
@@ -763,8 +758,7 @@ public class Calendrier {
         try {
             // Étape 1 : Établir une connexion à la base de données (remplacez les détails
             // de connexion)
-            Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin",
-                    "network");
+            Connection connexion = DriverManager.getConnection(this.url, this.username, this.password);
 
             // Étape 2 : Construire la requête de suppression
             String requete = "DELETE FROM joueurs WHERE idReservation = ?";

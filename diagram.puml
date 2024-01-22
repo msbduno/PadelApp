@@ -77,7 +77,9 @@ class DatabaseThread {
     +fetchModerateursFromDatabase(connection : Connection) : List<Moderateur>
 }
 DatabaseThread --|> Thread
-
+DatabaseThread "1" -- "*" Reservation
+DatabaseThread "1" -- "*" Moderateur
+DatabaseThread "1" -- "1" Calendrier
 class Connexion {
     -moderateur : Moderateur
     +start(primaryStage : Stage) : void
