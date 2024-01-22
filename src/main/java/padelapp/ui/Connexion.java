@@ -26,7 +26,6 @@ import padelapp.utilisateurs.Moderateur;
 public class Connexion extends Application {
     Moderateur moderateur;
     StackPane stackPane;
-    
 
     @Override
     public void start(Stage primaryStage) {
@@ -47,8 +46,7 @@ public class Connexion extends Application {
             String email = emailField.getText();
             String password = passwordField.getText();
 
-            // Vérifiez les informations de connexion ici
-            // Si les informations de connexion sont correctes, lancez votre application principale
+            //Verifie les info de connexion
             if (checkLogin(email, password)) {
                 try {
                     App mainApp = new App(this.moderateur);
@@ -57,7 +55,7 @@ public class Connexion extends Application {
                     ex.printStackTrace();
                 }
             } else {
-                // Affichez un message d'erreur
+                // Affiche un message d'erreur
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur de connexion");
                 alert.setHeaderText(null);
@@ -72,22 +70,15 @@ public class Connexion extends Application {
         
         VBox vbox = new VBox(10, titleLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton);
         vbox.setPadding(new Insets(10));
-        vbox.setMinSize(400, 400); // Set the size of the VBox
-        vbox.setMaxSize(400, 400); // Set the size of the VBox
+        vbox.setMinSize(400, 400); 
+        vbox.setMaxSize(400, 400); 
 
         AnchorPane anchorPane = new AnchorPane(vbox);
         
-        AnchorPane.setTopAnchor(vbox, 160.0); // Adjust these values to center the VBox
+        AnchorPane.setTopAnchor(vbox, 160.0); 
         AnchorPane.setBottomAnchor(vbox, 160.0);
         AnchorPane.setLeftAnchor(vbox, 440.0);
         AnchorPane.setRightAnchor(vbox, 440.0);
-
-        /* 
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(anchorPane);
-        borderPane.setTop(titleLabel);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-        */
 
         Scene scene = new Scene(anchorPane, 1280, 720);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
@@ -103,7 +94,12 @@ public class Connexion extends Application {
         primaryStage.show();
     }
 
-    // method to check login credentials
+    /**
+     * Vérifie les informations de connexion
+     * @param email
+     * @param password
+     * @return true si les informations sont correctes, false sinon
+     */
     public boolean checkLogin(String email, String password) {
         List<Moderateur> moderateurs = loadModerateursFromJson("/padelapp/ressources/moderateurs.json");
         for (int i = 0; i < moderateurs.size(); i ++){
@@ -115,6 +111,11 @@ public class Connexion extends Application {
         return false;
     }
 
+    /**
+     * Charge les modérateurs depuis le fichier json
+     * @param filename
+     * @return Liste des modérateurs
+     */
     public List<Moderateur> loadModerateursFromJson(String filename){
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

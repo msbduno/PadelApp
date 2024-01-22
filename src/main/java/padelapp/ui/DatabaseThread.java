@@ -42,6 +42,7 @@ public class DatabaseThread extends Thread {
         DatabaseThread.calendrier = cal;
     }
 
+    
     @Override
     public void run() {
         try {
@@ -65,6 +66,12 @@ public class DatabaseThread extends Thread {
 
     }
 
+    /**
+     * Récupère les données de la base de données et les stocke dans une liste d'objets Reservation
+     * @param connection
+     * @return liste de reservations 
+     * @throws SQLException
+     */
     public static List<Reservation> fetchReservationFromDatabase(Connection connection) throws SQLException {
         List<Reservation> resaList = new ArrayList<>();
 
@@ -103,6 +110,13 @@ public class DatabaseThread extends Thread {
         return resaList;
     }
 
+    /**
+     * Recupère le terrain voulu dans la BDD
+     * @param connection
+     * @param idTerrain
+     * @return terrain
+     * @throws SQLException
+     */
     public static Terrain fetchTerrainFromDatabase(Connection connection, int idTerrain) throws SQLException {
         Terrain terrain = null;
 
@@ -120,6 +134,13 @@ public class DatabaseThread extends Thread {
         return terrain;
     }
 
+    /**
+     * Recupère les joueurs de la BDD
+     * @param connection
+     * @param idReservation
+     * @return joueurs
+     * @throws SQLException
+     */
     public static List<Joueur> fetchJoueursFromDatabase(Connection connection, int idReservation) throws SQLException {
         List<Joueur> joueurs = new ArrayList<>();
 

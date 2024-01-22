@@ -149,6 +149,11 @@ public class Calendrier {
         this.view = new HBox(monthBox, scrollDays, scrollResa);
     }
 
+    /**
+     * Affiche les jours du mois cliqué
+     * @param date
+     * @param month
+     */
     private void updateDaysDisplay(LocalDate date, int month) {
         if (date.getMonth().getValue() == month) {
             dayBox.getChildren().clear();
@@ -263,6 +268,12 @@ public class Calendrier {
 
     }
 
+    /**
+     * Retourne les jours du mois voulu
+     * @param year
+     * @param month
+     * @return list des jours du mois
+     */
     public List<DayOfWeek> getDaysOfMonth(int year, int month) {
         YearMonth yearMonth = YearMonth.of(year, month);
         LocalDate firstOfMonth = yearMonth.atDay(1);
@@ -276,6 +287,11 @@ public class Calendrier {
         return days;
     }
 
+    /**
+     * Retourne une liste de reservations en fonction du fichier json donné
+     * @param filename
+     * @return liste des reservations
+     */
     public List<Reservation> loadReservationsFromJson(String filename) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -289,6 +305,10 @@ public class Calendrier {
         return null;
     }
 
+    /**
+     * Affiche toutes les reservations de la base de donnée et gère les évenements liés aux boutons
+     * @param day
+     */
     private void afficherReservations(int day) {
         try {
 
@@ -458,7 +478,7 @@ public class Calendrier {
                             addUserToDatabase(joueur);
 
                             // Mettre à jour la liste déroulante des utilisateurs
-                            userComboBox.getItems().add(nom + " " + prenom);
+                            userComboBox.getItems().add(nom.toUpperCase() + " " + prenom);
 
                             stage2.close();
                         });
@@ -571,11 +591,12 @@ public class Calendrier {
                         AnchorPane.setLeftAnchor(payeBtn, 500.0);
                         ap.getChildren().add(payeBtn);
 
-                        // Event pour le bouton supprimer
+                        //Event pour le bouton supprimer
                         supprBtn.setOnAction(event -> {
                             deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation(), day);
                         });
 
+                        //Event pour le bouton modifier si la reservation existe déjà
                         modifBtn.setOnAction(e6 -> {
                             modifBtn.getStyleClass().remove("boutons-normal");
                             modifBtn.getStyleClass().add("boutons-clique");
@@ -602,6 +623,12 @@ public class Calendrier {
         }
     }
 
+    /**
+     * Retourne une liste des utilisateurs joueurs de la base de donnée
+     * @param connection
+     * @return liste des joueurs
+     * @throws SQLException
+     */
     private List<Joueur> fetchJoueursFromDatabase(Connection connection) throws SQLException {
         List<Joueur> joueurs = new ArrayList<>();
 
@@ -632,6 +659,12 @@ public class Calendrier {
         return joueurs;
     }
 
+    /**
+     * Lance une popup pour valider la suppression d'une reservation
+     * @param bouton
+     * @param idReservation
+     * @param day
+     */
     public void deleteReservation(Button bouton, int idReservation, int day) {
         bouton.getStyleClass().remove("boutons-normal");
         bouton.getStyleClass().add("boutons-clique");
@@ -653,6 +686,12 @@ public class Calendrier {
         }
     }
 
+    /**
+     * Met à jour le statut de paiement d'une reservation dans la base de donnée
+     * @param bouton
+     * @param estPaye
+     * @param idReservation
+     */
     public void updatePaye(Button bouton, boolean estPaye, int idReservation) {
         if (bouton.getText().equals("Statut : Payé")) {
             bouton.setText("Statut : Non Payé");
@@ -691,6 +730,10 @@ public class Calendrier {
         }
     }
 
+    /**
+     * Ajoute un utilisateur à la base de donnée
+     * @param joueur
+     */
     public void addUserToDatabase(Joueur joueur) {
         String query = "INSERT INTO utilisateur (idUtilisateur, email, motDePasse, nom, prenom, niveau, estModerateur) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -709,6 +752,11 @@ public class Calendrier {
         }
     }
 
+    /**
+     * Ajoute une reservation à la base de donnée
+     * @param reservation
+     * @throws SQLException
+     */
     public void addReservationToDatabase(Reservation reservation) throws SQLException {
         String query = "INSERT INTO reservation (idReservation, idUtilisateur, idTerrain, heureDebut, estPublique, dateRes, nombreDeJoueurs, estPaye) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -742,6 +790,11 @@ public class Calendrier {
         }
     }
 
+    /**
+     * Supprime une reservation de la base de donnée
+     * @param idResa
+     * @param day
+     */
     public void deleteReservationInDB(int idResa, int day) {
         try {
             // Étape 1 : Établir une connexion à la base de données (remplacez les détails
