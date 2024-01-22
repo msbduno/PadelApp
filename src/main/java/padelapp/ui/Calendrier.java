@@ -1,6 +1,5 @@
 package padelapp.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -21,7 +20,6 @@ import java.util.Locale;
 import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -37,6 +35,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -85,13 +84,6 @@ public class Calendrier {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // this.dbThread = new DatabaseThread(this);
-
-        // dbThread.start();
-
-        // this.reservations =
-        // loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
         // Affichage des mois
         for (int i = 0; i < 12; i++) {
@@ -358,6 +350,7 @@ public class Calendrier {
 
                     Stage stage = new Stage();
                     stage.setTitle("Modifier une réservation");
+                    stage.getIcons().add(new Image("padelapp/ressources/logo.jpg"));
                     VBox vbox = new VBox();
                     vbox.setPadding(new Insets(10));
                     vbox.setSpacing(10.0);
@@ -413,11 +406,12 @@ public class Calendrier {
                     creerUtilisateurButton.setOnAction(e2 -> {
                         Stage stage2 = new Stage();
                         stage2.setTitle("Créer un nouvel utilisateur");
+                        stage2.getIcons().add(new Image("padelapp/ressources/logo.jpg"));
                         VBox vbox2 = new VBox();
                         vbox2.setPadding(new Insets(10));
                         vbox2.setSpacing(8.0);
 
-                        // Ajoutez des champs pour entrer les détails de l'utilisateur
+                        // Ajouter des champs pour entrer les détails de l'utilisateur
                         Label emailT = new Label("Email");
                         emailT.getStyleClass().add("text-form");
                         TextField emailField = new TextField();
@@ -450,7 +444,7 @@ public class Calendrier {
                         Button submitButton = new Button("Enregistrer nouvel utilisateur");
                         submitButton.getStyleClass().add("submit-button");
                         submitButton.setOnAction(e3 -> {
-                            // Validez les entrées et créez un nouvel utilisateur
+                            // Valider les entrées et créez un nouvel utilisateur
                             String email = emailField.getText();
                             String password = passwordField.getText();
                             String nom = nameField.getText();
@@ -460,10 +454,10 @@ public class Calendrier {
                             Joueur joueur = new Joueur(email, password, nom, prenom, listJoueurs.size() + 1, level);
                             this.listJoueurs.add(joueur);
 
-                            // Ajoutez l'utilisateur à la base de données
+                            // Ajouter l'utilisateur à la base de données
                             addUserToDatabase(joueur);
 
-                            // Mettez à jour la liste déroulante des utilisateurs
+                            // Mettre à jour la liste déroulante des utilisateurs
                             userComboBox.getItems().add(nom + " " + prenom);
 
                             stage2.close();
@@ -484,7 +478,7 @@ public class Calendrier {
                     Button submitButton = new Button("Enregistrer");
                     submitButton.getStyleClass().add("submit-button");
                     submitButton.setOnAction(e4 -> {
-                        // Validez les entrées et créez une nouvelle réservation
+                        // Valider les entrées et créez une nouvelle réservation
                         int idRes = reservations.size() + 1;
                         List<Joueur> joueurs = new ArrayList<>();
                         joueurs.add(listJoueurs.get(userComboBox.getSelectionModel().getSelectedIndex()));
@@ -495,15 +489,14 @@ public class Calendrier {
 
                         Reservation reservation = new Reservation(idRes, joueurs, estPayeR, estPayeR, heureDebutR,
                                 dateR, terrainR);
-                        // Ajoutez la réservation à la base de données
+                        // Ajouter la réservation à la base de données
                         try {
                             addReservationToDatabase(reservation);
                         } catch (SQLException e1) {
                             e1.printStackTrace();
                         }
 
-                        // dbThread.start();
-                        // Mettez à jour l'affichage du calendrier
+                        // Mettre à jour l'affichage du calendrier
                         afficherReservations(day);
 
                         modifBtn.getStyleClass().remove("boutons-clique");
@@ -534,7 +527,7 @@ public class Calendrier {
                     if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut())
                             && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day))
                             && reservations.get(j).getTerrain().getNumero() == l + 1) {
-                        // Pour que les variables soient tjrs accessibles
+                        //Pour que les variables soient tjrs accessibles
                         final boolean finalEstPaye = reservations.get(j).getEstPaye();
                         final int indexRes = j;
 
@@ -572,7 +565,7 @@ public class Calendrier {
                         }
 
                         payeBtn.setOnAction(event -> {
-                            updatePaye(payeBtn, finalEstPaye, indexRes);
+                            updatePaye(payeBtn, finalEstPaye, indexRes + 1);
                         });
                         AnchorPane.setTopAnchor(payeBtn, 30.0);
                         AnchorPane.setLeftAnchor(payeBtn, 500.0);
@@ -581,6 +574,26 @@ public class Calendrier {
                         // Event pour le bouton supprimer
                         supprBtn.setOnAction(event -> {
                             deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation(), day);
+                        });
+
+                        modifBtn.setOnAction(e6 -> {
+                            modifBtn.getStyleClass().remove("boutons-normal");
+                            modifBtn.getStyleClass().add("boutons-clique");
+                            
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Impossible de modifier la réservation");
+                            alert.setContentText("Pour modifier la reservation, il faut d'abord la supprimer puis réappuyer sur le bouton modifier");
+
+                            
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.isPresent() && result.get() == ButtonType.OK) {
+                                modifBtn.getStyleClass().remove("boutons-clique");
+                                modifBtn.getStyleClass().add("boutons-normal");
+                            } else {
+                                modifBtn.getStyleClass().remove("boutons-clique");
+                                modifBtn.getStyleClass().add("boutons-normal");
+                            }
+                          
                         });
                     }
                 }
@@ -646,13 +659,35 @@ public class Calendrier {
             bouton.getStyleClass().remove("paye-button");
             bouton.getStyleClass().add("non-paye-button");
             System.out.println("Reservation " + idReservation + " non payée");
-            // TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
+            try {
+                Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin",
+                        "network");
+                String requete = "UPDATE reservation SET estPaye = 0 WHERE idReservation = ?";
+                try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+                    preparedStatement.setInt(1, idReservation);
+                    preparedStatement.executeUpdate();
+                }
+                connexion.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else {
             bouton.setText("Statut : Payé");
             bouton.getStyleClass().remove("non-paye-button");
             bouton.getStyleClass().add("paye-button");
             System.out.println("Reservation " + idReservation + " payée");
-            // TODO : Gérer le statut payé (dans reservations.json et dans la BDD)
+            try {
+                Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin",
+                        "network");
+                String requete = "UPDATE reservation SET estPaye = 1 WHERE idReservation = ?";
+                try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+                    preparedStatement.setInt(1, idReservation);
+                    preparedStatement.executeUpdate();
+                }
+                connexion.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -711,7 +746,8 @@ public class Calendrier {
         try {
             // Étape 1 : Établir une connexion à la base de données (remplacez les détails
             // de connexion)
-            Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin","network");
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin",
+                    "network");
 
             // Étape 2 : Construire la requête de suppression
             String requete = "DELETE FROM joueurs WHERE idReservation = ?";
@@ -730,7 +766,7 @@ public class Calendrier {
 
                 // Étape 4 : Exécuter la requête de suppression
                 preparedStatement2.executeUpdate();
-            }   
+            }
             // Étape 5 : Fermer la connexion
             connexion.close();
 
@@ -739,7 +775,6 @@ public class Calendrier {
             e.printStackTrace();
         }
     }
-
 
     public HBox getView() {
         return view;

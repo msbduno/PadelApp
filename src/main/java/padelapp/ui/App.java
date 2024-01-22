@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("4GlassWalls");
+        primaryStage.getIcons().add(new Image("padelapp/ressources/logo.jpg"));
         ToolBar toolBar = new ToolBar();
 
         Button button1 = new Button("Reservations");

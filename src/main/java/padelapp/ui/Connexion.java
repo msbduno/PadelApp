@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,6 +31,7 @@ public class Connexion extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Connexion");
+        primaryStage.getIcons().add(new Image("padelapp/ressources/logo.jpg"));
 
         Label titleLabel = new Label("S'IDENTIFIER");
 
