@@ -1,0 +1,145 @@
+@startuml Diagramme de classes
+class Reservation {
+    -idReservation : int
+    -joueurs : List<Joueur>
+    -estPaye : boolean
+    -publique : boolean
+    -heureDebut : LocalTime
+    -date : LocalDate
+    -terrain : Terrain
+    +getIdReservation() : int
+    +setIdReservation(idReservation : int) : void
+    +getJoueurs() : List<Joueur>
+    +setJoueurs(joueurs : List<Joueur>) : void
+    +getEstPaye() : boolean
+    +setEstPaye(estPaye : boolean) : void
+    +getPublique() : boolean
+    +setPublique(publique : boolean) : void
+    +getHeureDebut() : LocalTime
+    +setHeureDebut(heureDebut : LocalTime) : void
+    +getDate() : LocalDate
+    +setDate(date : LocalDate) : void
+    +getTerrain() : Terrain
+    +setTerrain(terrain : Terrain) : void
+    +toString() : String
+}
+Reservation "1" -- "1" Terrain
+Reservation "*" -- "*" Joueur
+class Terrain {
+    -idTerrain : int
+    -numero : int
+    +getIdTerrain() : int
+    +setIdTerrain(idTerrain : int) : void
+    +getNumero() : int
+    +setNumero(numero : int) : void
+}
+class Utilisateur {
+    -email : String
+    -motDePasse : String
+    -nom : String
+    -prenom : String
+    +getEmail() : String
+    +setEmail(email : String) : void
+    +getMotDePasse() : String
+    +setMotDePasse(motDePasse : String) : void
+    +getNom() : String
+    +setNom(nom : String) : void
+    +getPrenom() : String
+    +setPrenom(prenom : String) : void
+}
+class Joueur {
+    -id : int
+    -niveau : int
+    +getId() : int
+    +setId(id : int) : void
+    +getNiveau() : int
+    +setNiveau(niveau : int) : void
+}
+Joueur --|> Utilisateur
+class Moderateur {
+}
+Moderateur --|> Utilisateur
+
+class DatabaseThread {
+    -url : String
+    -username : String
+    -password : String
+    -outputPath1 : String
+    -outputPath2 : String
+    -reservations : List<Reservation>
+    -moderateurs : List<Moderateur>
+    -calendrier : Calendrier
+    +DatabaseThread(cal : Calendrier)
+    +run() : void
+    +fetchReservationFromDatabase(connection : Connection) : List<Reservation>
+    +fetchTerrainFromDatabase(connection : Connection) : List<Terrain>
+    +fetchJoueursFromDatabase(connection : Connection, idReservation : int) : List<Joueur>
+    +fetchModerateursFromDatabase(connection : Connection) : List<Moderateur>
+}
+DatabaseThread --|> Thread
+
+class Connexion {
+    -moderateur : Moderateur
+    +start(primaryStage : Stage) : void
+    +checkLogin(email : String, password : String) : boolean
+    +loadModerateursFromJson(String path) : List<Moderateur>
+}
+Connexion --|> Application
+Connexion "1" -- "1" Moderateur
+class Calendrier {
+    -moderateur : Moderateur
+    -currentMonth : int
+    -currentDay : DayOfWeek
+    -view : HBox
+    -daysInMonth : List<DayOfWeek>
+    -scrollDays : ScrollPane
+    -monthBox : GridPane
+    -resaLayout : GridPane
+    -dayBox : GridPane
+    -scrollResa : ScrollPane
+    -reservations : List<Reservation>
+    -connection : Connection
+    -listJoueurs : List<Joueur>
+    -mois : Text[]
+    +Calendrier(date : LocalDate, moderateur : Moderateur)
+    +updateDaysDisplay(date : LocalDate, month : int) : void
+    +getDaysOfMonth(year : int, month : int) : List<DayOfWeek>
+    +afficherReservations(day : int) : void
+    +fetchJoueursFromDatabase(connection : Connection) : List<Joueur>
+    +deleteReservation(bouton : Button, idReservation : int, day : int) : void
+    +updatePaye(bouton : Button, estPaye : boolean, idReservation : int) : void
+    +addUserToDatabase(joueur : Joueur) : void
+    +addReservationToDatabase(reservation : Reservation) : void
+    +deleteReservationInDB(idReservation : int, day : int) : void
+}
+Calendrier "1" -- "1" Moderateur
+Calendrier "*" -- "*" Reservation
+Calendrier "*" -- "*" Joueur
+class App {
+    -calendrier : Calendrier
+    +App(moderateur : Moderateur)
+    +main(args : String[]) : void
+    +start(primaryStage : Stage) : void
+}
+App --|> Application
+App "1" -- "1" Calendrier
+App "1" -- "1" Moderateur
+enum Horaires {
+    CRENEAU1
+    CRENEAU2
+    CRENEAU3
+    CRENEAU4
+    CRENEAU5
+    CRENEAU6
+    CRENEAU7
+    CRENEAU8
+    CRENEAU9
+    --
+    -debut : LocalTime
+    -fin : LocalTime
+    --
+    +getDebut() : LocalTime
+    +getFin() : LocalTime
+}
+
+@enduml

@@ -170,6 +170,12 @@ public class DatabaseThread extends Thread {
         return joueurs;
     }
 
+    /**
+     * Recupère les modérateurs de la BDD
+     * @param connection
+     * @return moderateurs
+     * @throws SQLException
+     */
     private List<Moderateur> fetchModerateursFromDatabase(Connection connection) throws SQLException {
         List<Moderateur> moderateurs = new ArrayList<>();
 
@@ -193,7 +199,7 @@ public class DatabaseThread extends Thread {
     }
 
     
-
+    
     private void writeReservationToJsonFile(List<Reservation> data) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());

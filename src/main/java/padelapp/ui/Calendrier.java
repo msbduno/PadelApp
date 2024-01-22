@@ -151,6 +151,7 @@ public class Calendrier {
 
     /**
      * Affiche les jours du mois cliqué
+     * 
      * @param date
      * @param month
      */
@@ -270,6 +271,7 @@ public class Calendrier {
 
     /**
      * Retourne les jours du mois voulu
+     * 
      * @param year
      * @param month
      * @return list des jours du mois
@@ -288,25 +290,9 @@ public class Calendrier {
     }
 
     /**
-     * Retourne une liste de reservations en fonction du fichier json donné
-     * @param filename
-     * @return liste des reservations
-     */
-    public List<Reservation> loadReservationsFromJson(String filename) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        try {
-            InputStream is = getClass().getResourceAsStream(filename);
-            return mapper.readValue(is, new TypeReference<List<Reservation>>() {
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Affiche toutes les reservations de la base de donnée et gère les évenements liés aux boutons
+     * Affiche toutes les reservations de la base de donnée et gère les évenements
+     * liés aux boutons
+     * 
      * @param day
      */
     private void afficherReservations(int day) {
@@ -356,20 +342,20 @@ public class Calendrier {
                 // Afficher le bouton supprimer
                 Button supprBtn = new Button("SUPPRIMER");
                 supprBtn.getStyleClass().add("boutons-normal");
-
-                AnchorPane.setTopAnchor(supprBtn, 20.0);
+                supprBtn.setVisible(false);
+                AnchorPane.setTopAnchor(supprBtn, 40.0);
                 AnchorPane.setLeftAnchor(supprBtn, 800.0);
                 ap.getChildren().add(supprBtn);
 
                 // Afficher le bouton modifier
-                Button modifBtn = new Button("MODIFIER");
+                Button modifBtn = new Button("AJOUTER");
                 modifBtn.getStyleClass().add("boutons-normal");
                 modifBtn.setOnAction(e -> {
                     modifBtn.getStyleClass().remove("boutons-normal");
                     modifBtn.getStyleClass().add("boutons-clique");
 
                     Stage stage = new Stage();
-                    stage.setTitle("Modifier une réservation");
+                    stage.setTitle("Ajouter une réservation");
                     stage.getIcons().add(new Image("padelapp/ressources/logo.jpg"));
                     VBox vbox = new VBox();
                     vbox.setPadding(new Insets(10));
@@ -399,26 +385,6 @@ public class Calendrier {
                     }
                     for (Joueur j : this.listJoueurs) {
                         userComboBox.getItems().add(j.stringNomPrenom());
-                    }
-
-                    for (Reservation res : this.reservations) {
-                        if (res.getDate().equals(LocalDate.of(2024, currentMonth + 1, day))
-                                && res.getHeureDebut().equals(heureA) && res.getTerrain().getNumero() == numTerrain) {
-                            userComboBox.getSelectionModel().select(res.getJoueurs().get(0).stringNomPrenom());
-
-                            if (res.getEstPaye() == true) {
-                                payeCheckBox.setSelected(true);
-                            } else {
-                                payeCheckBox.setSelected(false);
-                            }
-
-                            if (res.getPublique() == true) {
-                                publiqueCheckBox.setSelected(true);
-                            } else {
-                                publiqueCheckBox.setSelected(false);
-                            }
-
-                        }
                     }
 
                     Button creerUtilisateurButton = new Button("Créer un utilisateur");
@@ -498,31 +464,41 @@ public class Calendrier {
                     Button submitButton = new Button("Enregistrer");
                     submitButton.getStyleClass().add("submit-button");
                     submitButton.setOnAction(e4 -> {
-                        // Valider les entrées et créez une nouvelle réservation
-                        int idRes = reservations.size() + 1;
-                        List<Joueur> joueurs = new ArrayList<>();
-                        joueurs.add(listJoueurs.get(userComboBox.getSelectionModel().getSelectedIndex()));
-                        boolean estPayeR = payeCheckBox.isSelected();
-                        LocalDate dateR = LocalDate.of(2024, currentMonth + 1, day);
-                        LocalTime heureDebutR = heureA;
-                        Terrain terrainR = new Terrain(numTerrain, numTerrain);
+                        // Valider les entrées et créer une nouvelle réservation
+                        if (!userComboBox.getSelectionModel().isEmpty()) {
+                            int idRes = reservations.size() + 1;
+                            List<Joueur> joueurs = new ArrayList<>();
+                            joueurs.add(listJoueurs.get(userComboBox.getSelectionModel().getSelectedIndex()));
+                            boolean estPayeR = payeCheckBox.isSelected();
+                            LocalDate dateR = LocalDate.of(2024, currentMonth + 1, day);
+                            LocalTime heureDebutR = heureA;
+                            Terrain terrainR = new Terrain(numTerrain, numTerrain);
 
-                        Reservation reservation = new Reservation(idRes, joueurs, estPayeR, estPayeR, heureDebutR,
-                                dateR, terrainR);
-                        // Ajouter la réservation à la base de données
-                        try {
-                            addReservationToDatabase(reservation);
-                        } catch (SQLException e1) {
-                            e1.printStackTrace();
+                            Reservation reservation = new Reservation(idRes, joueurs, estPayeR, estPayeR, heureDebutR,
+                                    dateR, terrainR);
+                            // Ajouter la réservation à la base de données
+                            try {
+                                addReservationToDatabase(reservation);
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            // Mettre à jour l'affichage du calendrier
+                            afficherReservations(day);
+
+                            modifBtn.getStyleClass().remove("boutons-clique");
+                            modifBtn.getStyleClass().add("boutons-normal");
+
+                            stage.close();
+                        } else {
+                            //Si aucun utilisateur est selectionné
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Erreur de création");
+                            alert.setContentText("Vous devez sélectionner un utilisateur.");
+
+                            alert.showAndWait(); 
                         }
 
-                        // Mettre à jour l'affichage du calendrier
-                        afficherReservations(day);
-
-                        modifBtn.getStyleClass().remove("boutons-clique");
-                        modifBtn.getStyleClass().add("boutons-normal");
-
-                        stage.close();
                     });
 
                     stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -539,7 +515,7 @@ public class Calendrier {
                     stage.setScene(scene);
                     stage.show();
                 });
-                AnchorPane.setTopAnchor(modifBtn, 70.0);
+                AnchorPane.setTopAnchor(modifBtn, 40.0);
                 AnchorPane.setLeftAnchor(modifBtn, 800.0);
                 ap.getChildren().add(modifBtn);
 
@@ -547,7 +523,7 @@ public class Calendrier {
                     if (reservations.get(j).getHeureDebut().equals(Horaires.values()[i].getDebut())
                             && reservations.get(j).getDate().equals(LocalDate.of(2024, currentMonth + 1, day))
                             && reservations.get(j).getTerrain().getNumero() == l + 1) {
-                        //Pour que les variables soient tjrs accessibles
+                        // Pour que les variables soient tjrs accessibles
                         final boolean finalEstPaye = reservations.get(j).getEstPaye();
                         final int indexRes = j;
 
@@ -591,31 +567,13 @@ public class Calendrier {
                         AnchorPane.setLeftAnchor(payeBtn, 500.0);
                         ap.getChildren().add(payeBtn);
 
-                        //Event pour le bouton supprimer
+                        // Event pour le bouton supprimer
+                        supprBtn.setVisible(true);
                         supprBtn.setOnAction(event -> {
                             deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation(), day);
                         });
 
-                        //Event pour le bouton modifier si la reservation existe déjà
-                        modifBtn.setOnAction(e6 -> {
-                            modifBtn.getStyleClass().remove("boutons-normal");
-                            modifBtn.getStyleClass().add("boutons-clique");
-                            
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Impossible de modifier la réservation");
-                            alert.setContentText("Pour modifier la reservation, il faut d'abord la supprimer puis réappuyer sur le bouton modifier");
-
-                            
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.isPresent() && result.get() == ButtonType.OK) {
-                                modifBtn.getStyleClass().remove("boutons-clique");
-                                modifBtn.getStyleClass().add("boutons-normal");
-                            } else {
-                                modifBtn.getStyleClass().remove("boutons-clique");
-                                modifBtn.getStyleClass().add("boutons-normal");
-                            }
-                          
-                        });
+                        modifBtn.setVisible(false);
                     }
                 }
             }
@@ -625,6 +583,7 @@ public class Calendrier {
 
     /**
      * Retourne une liste des utilisateurs joueurs de la base de donnée
+     * 
      * @param connection
      * @return liste des joueurs
      * @throws SQLException
@@ -661,6 +620,7 @@ public class Calendrier {
 
     /**
      * Lance une popup pour valider la suppression d'une reservation
+     * 
      * @param bouton
      * @param idReservation
      * @param day
@@ -688,6 +648,7 @@ public class Calendrier {
 
     /**
      * Met à jour le statut de paiement d'une reservation dans la base de donnée
+     * 
      * @param bouton
      * @param estPaye
      * @param idReservation
@@ -732,6 +693,7 @@ public class Calendrier {
 
     /**
      * Ajoute un utilisateur à la base de donnée
+     * 
      * @param joueur
      */
     public void addUserToDatabase(Joueur joueur) {
@@ -754,6 +716,7 @@ public class Calendrier {
 
     /**
      * Ajoute une reservation à la base de donnée
+     * 
      * @param reservation
      * @throws SQLException
      */
@@ -792,6 +755,7 @@ public class Calendrier {
 
     /**
      * Supprime une reservation de la base de donnée
+     * 
      * @param idResa
      * @param day
      */
