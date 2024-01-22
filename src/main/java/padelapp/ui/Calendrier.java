@@ -1,5 +1,6 @@
 package padelapp.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -20,10 +21,12 @@ import java.util.Locale;
 import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -61,7 +64,6 @@ public class Calendrier {
     private GridPane dayBox = new GridPane();
     private ScrollPane scrollResa = new ScrollPane();
     private List<Reservation> reservations;
-    private DatabaseThread dbThread;
     private Connection connection;
     private List<Joueur> listJoueurs;
     private static Text[] mois = new Text[] { new Text("Janvier"), new Text("Fevrier"), new Text("Mars"),
@@ -71,20 +73,25 @@ public class Calendrier {
 
     public Calendrier(LocalDate date, Moderateur moderateur) {
         this.moderateur = moderateur;
+
         String url = "jdbc:mysql://192.168.56.81/PadelApp";
         String username = "admin";
         String password = "network";
+
         try {
-            connection = DriverManager.getConnection(url, username, password);
+            this.connection = DriverManager.getConnection(url, username, password);
+
+            this.reservations = DatabaseThread.fetchReservationFromDatabase(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        this.dbThread = new DatabaseThread(this);
+        // this.dbThread = new DatabaseThread(this);
 
-        dbThread.start();
+        // dbThread.start();
 
-        this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
+        // this.reservations =
+        // loadReservationsFromJson("/padelapp/ressources/reservations.json");
 
         // Affichage des mois
         for (int i = 0; i < 12; i++) {
@@ -291,7 +298,12 @@ public class Calendrier {
     }
 
     private void afficherReservations(int day) {
-        this.reservations = loadReservationsFromJson("/padelapp/ressources/reservations.json");
+        try {
+
+            this.reservations = DatabaseThread.fetchReservationFromDatabase(this.connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         resaLayout.getChildren().clear();
         int m = 0;
@@ -345,16 +357,28 @@ public class Calendrier {
                     modifBtn.getStyleClass().add("boutons-clique");
 
                     Stage stage = new Stage();
+                    stage.setTitle("Modifier une réservation");
                     VBox vbox = new VBox();
+                    vbox.setPadding(new Insets(10));
+                    vbox.setSpacing(10.0);
 
                     // Ajoutez des champs pour entrer les détails de la réservation
                     Label dateField = new Label("Date : " + LocalDate.of(2024, currentMonth + 1, day));
+                    dateField.getStyleClass().add("text-form");
                     Label timeField = new Label("Heure : " + horaireString);
+                    timeField.getStyleClass().add("text-form");
                     Label terrainField = new Label("Terrain : " + numTerrain);
+                    terrainField.getStyleClass().add("text-form");
                     ComboBox<String> userComboBox = new ComboBox<>();
                     userComboBox.setPromptText("Utilisateur");
-                    // Remplissez la liste déroulante avec les noms des utilisateurs
+                    userComboBox.getStyleClass().add("box-form");
 
+                    CheckBox payeCheckBox = new CheckBox("Payé");
+                    payeCheckBox.getStyleClass().add("text-form");
+                    CheckBox publiqueCheckBox = new CheckBox("Publique");
+                    publiqueCheckBox.getStyleClass().add("text-form");
+
+                    // Remplir la liste déroulante avec les noms des utilisateurs
                     try {
                         this.listJoueurs = fetchJoueursFromDatabase(connection);
                     } catch (SQLException e1) {
@@ -364,31 +388,74 @@ public class Calendrier {
                         userComboBox.getItems().add(j.stringNomPrenom());
                     }
 
+                    for (Reservation res : this.reservations) {
+                        if (res.getDate().equals(LocalDate.of(2024, currentMonth + 1, day))
+                                && res.getHeureDebut().equals(heureA) && res.getTerrain().getNumero() == numTerrain) {
+                            userComboBox.getSelectionModel().select(res.getJoueurs().get(0).stringNomPrenom());
+
+                            if (res.getEstPaye() == true) {
+                                payeCheckBox.setSelected(true);
+                            } else {
+                                payeCheckBox.setSelected(false);
+                            }
+
+                            if (res.getPublique() == true) {
+                                publiqueCheckBox.setSelected(true);
+                            } else {
+                                publiqueCheckBox.setSelected(false);
+                            }
+
+                        }
+                    }
+
                     Button creerUtilisateurButton = new Button("Créer un utilisateur");
+                    creerUtilisateurButton.getStyleClass().add("submit-button");
                     creerUtilisateurButton.setOnAction(e2 -> {
                         Stage stage2 = new Stage();
+                        stage2.setTitle("Créer un nouvel utilisateur");
                         VBox vbox2 = new VBox();
+                        vbox2.setPadding(new Insets(10));
+                        vbox2.setSpacing(8.0);
 
                         // Ajoutez des champs pour entrer les détails de l'utilisateur
+                        Label emailT = new Label("Email");
+                        emailT.getStyleClass().add("text-form");
                         TextField emailField = new TextField();
                         emailField.setPromptText("Email");
+                        emailField.getStyleClass().add("box-form");
+                        Label passwordT = new Label("Mot de passe");
+                        passwordT.getStyleClass().add("text-form");
                         TextField passwordField = new TextField();
                         passwordField.setPromptText("Mot de passe");
+                        passwordField.getStyleClass().add("box-form");
+                        Label nameT = new Label("Nom");
+                        nameT.getStyleClass().add("text-form");
                         TextField nameField = new TextField();
                         nameField.setPromptText("Nom");
+                        nameField.getStyleClass().add("box-form");
+                        Label prenomT = new Label("Prenom");
+                        prenomT.getStyleClass().add("text-form");
                         TextField prenomField = new TextField();
                         prenomField.setPromptText("Prenom");
-                        TextField niveauField = new TextField();
-                        niveauField.setPromptText("Niveau");
+                        prenomField.getStyleClass().add("box-form");
+                        Label niveauT = new Label("Niveau");
+                        niveauT.getStyleClass().add("text-form");
+
+                        ComboBox<String> niveauComboBox = new ComboBox<>();
+                        for (int p = 0; p < 11; p++) {
+                            niveauComboBox.getItems().add(String.valueOf(p));
+                        }
+                        niveauComboBox.getStyleClass().add("box-form");
 
                         Button submitButton = new Button("Enregistrer nouvel utilisateur");
+                        submitButton.getStyleClass().add("submit-button");
                         submitButton.setOnAction(e3 -> {
                             // Validez les entrées et créez un nouvel utilisateur
                             String email = emailField.getText();
                             String password = passwordField.getText();
                             String nom = nameField.getText();
                             String prenom = prenomField.getText();
-                            int level = Integer.parseInt(niveauField.getText());
+                            int level = Integer.parseInt(niveauComboBox.getSelectionModel().getSelectedItem());
 
                             Joueur joueur = new Joueur(email, password, nom, prenom, listJoueurs.size() + 1, level);
                             this.listJoueurs.add(joueur);
@@ -402,19 +469,20 @@ public class Calendrier {
                             stage2.close();
                         });
 
-                        vbox2.getChildren().addAll(emailField, passwordField, nameField, prenomField, niveauField,
-                                submitButton);
-                        Scene scene2 = new Scene(vbox2, 400, 400);
+                        vbox2.getChildren().addAll(emailT, emailField, passwordT, passwordField, nameT,
+                                nameField, prenomT, prenomField, niveauT, niveauComboBox, submitButton);
+                        Scene scene2 = new Scene(vbox2, 400, 500);
+                        scene2.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
                         stage2.setScene(scene2);
                         stage2.show();
                     });
+
                     HBox hboxUtilisateurs = new HBox();
                     hboxUtilisateurs.getChildren().addAll(userComboBox, creerUtilisateurButton);
-
-                    CheckBox payeCheckBox = new CheckBox("Payé");
-                    CheckBox publiqueCheckBox = new CheckBox("Publique");
+                    hboxUtilisateurs.setSpacing(10.0);
 
                     Button submitButton = new Button("Enregistrer");
+                    submitButton.getStyleClass().add("submit-button");
                     submitButton.setOnAction(e4 -> {
                         // Validez les entrées et créez une nouvelle réservation
                         int idRes = reservations.size() + 1;
@@ -434,7 +502,7 @@ public class Calendrier {
                             e1.printStackTrace();
                         }
 
-                        dbThread.start();
+                        // dbThread.start();
                         // Mettez à jour l'affichage du calendrier
                         afficherReservations(day);
 
@@ -454,6 +522,7 @@ public class Calendrier {
                     vbox.getChildren().addAll(dateField, timeField, terrainField, hboxUtilisateurs, payeCheckBox,
                             publiqueCheckBox, submitButton);
                     Scene scene = new Scene(vbox, 600, 600);
+                    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -511,7 +580,7 @@ public class Calendrier {
 
                         // Event pour le bouton supprimer
                         supprBtn.setOnAction(event -> {
-                            deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation());
+                            deleteReservation(supprBtn, reservations.get(indexRes).getIdReservation(), day);
                         });
                     }
                 }
@@ -519,7 +588,6 @@ public class Calendrier {
 
         }
     }
-
 
     private List<Joueur> fetchJoueursFromDatabase(Connection connection) throws SQLException {
         List<Joueur> joueurs = new ArrayList<>();
@@ -551,7 +619,7 @@ public class Calendrier {
         return joueurs;
     }
 
-    public void deleteReservation(Button bouton, int idReservation) {
+    public void deleteReservation(Button bouton, int idReservation, int day) {
         bouton.getStyleClass().remove("boutons-normal");
         bouton.getStyleClass().add("boutons-clique");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -561,7 +629,7 @@ public class Calendrier {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // TODO : Gérer la reservation supprimée (dans reservations.json et dans la BDD)
+            deleteReservationInDB(idReservation, day);
             System.out.println("Reservation " + idReservation + " supprimée");
             bouton.getStyleClass().remove("boutons-clique");
             bouton.getStyleClass().add("boutons-normal");
@@ -631,13 +699,47 @@ public class Calendrier {
             for (Joueur joueur : reservation.getJoueurs()) {
                 stmt2.setInt(1, reservation.getIdReservation());
                 stmt2.setInt(2, joueur.getId());
-                
+
                 stmt2.executeUpdate();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
+    public void deleteReservationInDB(int idResa, int day) {
+        try {
+            // Étape 1 : Établir une connexion à la base de données (remplacez les détails
+            // de connexion)
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://192.168.56.81/PadelApp", "admin","network");
+
+            // Étape 2 : Construire la requête de suppression
+            String requete = "DELETE FROM joueurs WHERE idReservation = ?";
+            try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+                // Étape 3 : Paramétrer la valeur de la condition
+                preparedStatement.setInt(1, idResa);
+
+                // Étape 4 : Exécuter la requête de suppression
+                preparedStatement.executeUpdate();
+            }
+
+            String requete2 = "DELETE FROM reservation WHERE idReservation = ?";
+            try (PreparedStatement preparedStatement2 = connexion.prepareStatement(requete2)) {
+                // Étape 3 : Paramétrer la valeur de la condition
+                preparedStatement2.setInt(1, idResa);
+
+                // Étape 4 : Exécuter la requête de suppression
+                preparedStatement2.executeUpdate();
+            }   
+            // Étape 5 : Fermer la connexion
+            connexion.close();
+
+            afficherReservations(day);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public HBox getView() {
         return view;

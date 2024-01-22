@@ -48,8 +48,8 @@ public class DatabaseThread extends Thread {
             Connection connection = DriverManager.getConnection(url, username, password);
 
             // Etape 3 : Extraction des données
-            this.reservations = fetchReseravationFromDatabase(connection);
-            //this.moderateurs = fetchModerateursFromDatabase(connection);
+            this.reservations = fetchReservationFromDatabase(connection);
+            //TODO : this.moderateurs = fetchModerateursFromDatabase(connection);
 
             // Etape 4 : Ecriture des données au format JSON dans un fichier
             writeReservationToJsonFile(this.reservations);
@@ -64,7 +64,8 @@ public class DatabaseThread extends Thread {
         }
 
     }
-    private List<Reservation> fetchReseravationFromDatabase(Connection connection) throws SQLException {
+
+    public static List<Reservation> fetchReservationFromDatabase(Connection connection) throws SQLException {
         List<Reservation> resaList = new ArrayList<>();
 
         // Utilisez PreparedStatement pour éviter les attaques par injection SQL
@@ -77,10 +78,11 @@ public class DatabaseThread extends Thread {
                 Reservation resa = new Reservation();
 
                 // Initialiser les propriétés de l'objet en fonction des colonnes de la base de données
-                resa.setEstPaye(resultSet.getBoolean("estPaye")); // /!\ A AJOUTER DANS LA BDD /!\
+                resa.setEstPaye(resultSet.getBoolean("estPaye")); 
                 resa.setPublique(resultSet.getBoolean("estPublique"));
                 resa.setHeureDebut(resultSet.getTime("heureDebut").toLocalTime());
                 resa.setDate(resultSet.getDate("dateRes").toLocalDate());
+                resa.setIdReservation(resultSet.getInt("idReservation"));
 
                 // Pour le terrain, vous devez d'abord récupérer le numéro du terrain,
                 // puis utiliser ce numéro pour récupérer le terrain correspondant de la base de données.
@@ -101,7 +103,7 @@ public class DatabaseThread extends Thread {
         return resaList;
     }
 
-    private Terrain fetchTerrainFromDatabase(Connection connection, int idTerrain) throws SQLException {
+    public static Terrain fetchTerrainFromDatabase(Connection connection, int idTerrain) throws SQLException {
         Terrain terrain = null;
 
         String query = "SELECT * FROM terrain WHERE idTerrain = " + String.valueOf(idTerrain);
@@ -118,7 +120,7 @@ public class DatabaseThread extends Thread {
         return terrain;
     }
 
-    private List<Joueur> fetchJoueursFromDatabase(Connection connection, int idReservation) throws SQLException {
+    public static List<Joueur> fetchJoueursFromDatabase(Connection connection, int idReservation) throws SQLException {
         List<Joueur> joueurs = new ArrayList<>();
 
         String query = "SELECT * FROM joueurs WHERE idReservation = " + String.valueOf(idReservation) + " ORDER BY idUtilisateur ASC";
